@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Daydreamer</string>
+
+
+    <!-- Warnings & Errors -->
+    <string name="permisison_warning">This app will not run without permission to read from storage. Click to enable permission.</string>
+
+    <!-- Labels -->
+    <string name="enter_vr_label">Enter VR Mode</string>
+    <string name="exit_vr_label">Exit VR Mode</string>
+
+    <!-- Misc -->
+
 </resources>
