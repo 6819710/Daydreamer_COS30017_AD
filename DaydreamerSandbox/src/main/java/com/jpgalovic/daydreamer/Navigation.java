@@ -1,5 +1,6 @@
 package com.jpgalovic.daydreamer;
 
+import android.opengl.GLES20;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -26,10 +27,47 @@ import javax.microedition.khronos.egl.EGLConfig;
 public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private static final String TAG = "NavigationActivity";
 
+    private static final String[] OBJECT_VERTEX_SHADER_CODE =
+        new String[] {
+            "uniform mat4 u_MVP;",
+            "attribute vec4 a_Position;",
+            "attribute vec2 a_UV;",
+            "varying vec2 v_UV;",
+            "",
+            "void main() {",
+            "  v_UV = a_UV;",
+            "  gl_Position = u_MVP * a_Position;",
+            "}",
+        };
+
+    private static final String[] OBJECT_FRAGMENT_SHADER_CODE =
+        new String[] {
+            "precision mediump float;",
+                "varying vec2 v_UV;",
+                "uniform sampler2D u_Texture;",
+                "",
+                "void main() {",
+                "  // The y coordinate of this sample's textures is reversed compared to",
+                "  // what OpenGL expects, so we invert the y coordinate.",
+                "  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));",
+                "}",
+        };
+
+    private int objectProgram;
+
+    private int objectModelViewProjectionParam;
+
+    // Object Data
+    private TexturedMesh objectCRT;
+
+    private float[] modelViewProjection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeGvrView();
+
+        modelViewProjection = new float[16];
     }
 
     public void initializeGvrView() {
@@ -68,9 +106,22 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
     }
 
-
+    /**
+     * Creates the buffers needed to store information about the 3D enviroment.
+     *
+     * <p>Note: OpenGL doen't use Java arrays, but rather needs data formatted for it to understand.
+     * Use of ByteBuffers is hence required.</p>
+     *
+     * @param eglConfig the EGL configuration used when creating the surface.
+     */
     @Override
     public void onSurfaceCreated(EGLConfig eglConfig) {
+        Log.i(TAG, "onSurfaceCreated");
+        GLES20.glClearColor(0.0f,0.0f,0.0f,0.0f);
+
+        objectProgram = Util.compileProgram(OBJECT_VERTEX_SHADER_CODE, OBJECT_FRAGMENT_SHADER_CODE);
+
+        objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
     }
 
@@ -91,5 +142,14 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     @Override
     public void onRendererShutdown() {
         Log.i(TAG, "onRendererShutdown");
+    }
+
+    public void drawCRT() {
+        GLES20.glUseProgram(objectProgram);
+        GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
+
+        // objectCRTTex.bind();
+        objectCRT.draw();
+        Util.checkGLError("drawCRT");
     }
 }
