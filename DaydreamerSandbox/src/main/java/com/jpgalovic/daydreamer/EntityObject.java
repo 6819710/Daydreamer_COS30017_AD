@@ -85,7 +85,7 @@ public class EntityObject {
         modelYaw += yaw;
         modelRoll += roll;
 
-        Matrix.setRotateEulerM(modelRotation, 0, modelPitch, -modelYaw, modelRoll);
+        Matrix.setRotateEulerM(modelRotation, 0, modelPitch, modelYaw, modelRoll);
     }
 
     public void draw(float[] perspective, float[] view, int objectProgram, int objectModelViewProjectionParam) {
