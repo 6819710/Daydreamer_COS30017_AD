@@ -70,18 +70,13 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private int objectModelViewProjectionParam;
 
     // Object Data
-    private TexturedMesh objectCRT;
-    private Texture objectCRTTex;
-    private float[] modelCRT;
-
+    private EntityObject objectCRT;
+    private EntityObject objectTable;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
     private float[] view;
     private float[] headView;
-
-    private float[] modelViewProjection;
-    private float[] modelView;
 
     private float[] headRotation;
 
@@ -95,15 +90,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         camera = new float[16];
         view = new float[16];
 
-        modelViewProjection = new float[16];
-        modelView = new float[16];
-
         headView = new float[16];
-
         headRotation = new float[4];
-
-        // Initialize Object Models
-        modelCRT = new float[16];
     }
 
     public void initializeGvrView() {
@@ -163,13 +151,23 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         // Build ModelView and ModelView Projection for each object.
         // This calculates the position to draw the object.
-        Matrix.multiplyMM(modelView, 0, view, 0, modelCRT, 0);
-        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
-        drawCRT();
+        objectCRT.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
+        objectTable.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
+        objectCRT.rotate(0.0f, 0.0f, 0.0f);
+    }
+
+
+    @Override
+    public void onCardboardTrigger() {
+        Log.i(TAG, "onCardboardTrigger");
+
+        //TODO: Handle Object Detection and Activity Transitions.
+
+        super.onCardboardTrigger();
     }
 
     /**
@@ -191,28 +189,11 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
         objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
-        Matrix.setIdentityM(modelCRT, 0);
-        Matrix.translateM(modelCRT, 0,0.0f,-1.0f, -6.0f);
-
-
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        try {
-            objectCRT = new TexturedMesh(this, "obj/crt_monitor.obj", objectPositionParam, objectUvParam);
-            objectCRTTex = new Texture(this, "obj/crt_monitor_texture.png");
-        } catch (IOException e) {
-            Log.e (TAG, "Unable to initalise objects", e);
-        }
-    }
-
-    @Override
-    public void onCardboardTrigger() {
-        Log.i(TAG, "onCardboardTrigger");
-
-        //TODO: Handle Object Detection and Activity Transitions.
-
-        super.onCardboardTrigger();
+        objectCRT = new EntityObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,-1.28f, -4.5f);
+        objectTable = new EntityObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
     }
 
     @Override
@@ -223,13 +204,5 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     @Override
     public void onRendererShutdown() {
         Log.i(TAG, "onRendererShutdown");
-    }
-
-    public void drawCRT() {
-        GLES20.glUseProgram(objectProgram);
-        GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
-        objectCRTTex.bind();
-        objectCRT.draw();
-        Util.checkGLError("drawCRT");
     }
 }
