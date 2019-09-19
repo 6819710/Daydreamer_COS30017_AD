@@ -192,7 +192,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
         Matrix.setIdentityM(modelCRT, 0);
-        Matrix.translateM(modelCRT, 0,-1.0f,-5.0f, -4.0f);
+        Matrix.translateM(modelCRT, 0,0.0f,-1.0f, -6.0f);
 
 
         Util.checkGLError("onSurfaceCreated");
