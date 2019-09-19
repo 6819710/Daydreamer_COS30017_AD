@@ -157,7 +157,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
     @Override
     public void onFinishFrame(Viewport viewport) {
-        objectCRT.rotate(0.0f, 1.0f, 0.0f);
     }
 
 

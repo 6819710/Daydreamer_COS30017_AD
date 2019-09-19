@@ -28,12 +28,7 @@ public class EntityObject {
 
     protected float[] modelView;
     protected float[] modelViewProjection;
-
     protected float[] modelRotation;
-
-    protected float modelPitch;
-    protected float modelYaw;
-    protected float modelRoll;
 
     /**
      * Initializes Entity Object.
@@ -54,15 +49,9 @@ public class EntityObject {
 
         modelView = new float[16];
         modelViewProjection = new float[16];
-
         modelRotation = new float[16];
 
-        // Set initial rotation data.
-        modelPitch = 0.0f;
-        modelYaw = 0.0f;
-        modelRoll = 0.0f;
-
-        Matrix.setRotateEulerM(modelRotation, 0, modelPitch, modelYaw, modelRoll);
+        Matrix.setRotateEulerM(modelRotation, 0, 0, 0, 0);
 
         //Initialize model data.
         Matrix.setIdentityM(objectModel, 0);
@@ -81,11 +70,9 @@ public class EntityObject {
     }
 
     public void rotate(float pitch, float yaw, float roll) {
-        modelPitch += pitch;
-        modelYaw += yaw;
-        modelRoll += roll;
-
-        Matrix.setRotateEulerM(modelRotation, 0, modelPitch, modelYaw, modelRoll);
+        Matrix.rotateM(modelRotation, 0, pitch, 1, 0, 0);
+        Matrix.rotateM(modelRotation, 0, yaw, 0, 1, 0);
+        Matrix.rotateM(modelRotation, 0, roll, 0, 0, 1);
     }
 
     public void draw(float[] perspective, float[] view, int objectProgram, int objectModelViewProjectionParam) {
