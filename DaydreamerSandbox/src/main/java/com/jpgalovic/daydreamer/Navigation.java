@@ -35,6 +35,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 10.0f;
 
+    private static final float FLOOR_HEIGHT = -2.0f;
+
     private static final String[] OBJECT_VERTEX_SHADER_CODE =
         new String[] {
             "uniform mat4 u_MVP;",
@@ -69,6 +71,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
     // Object Data
     private TexturedMesh objectCRT;
+    private Texture objectCRTTex;
     private float[] modelCRT;
 
 
@@ -88,7 +91,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         super.onCreate(savedInstanceState);
         initializeGvrView();
 
-        // Initalise Cameras, Views and Projection Mapping
+        // Initialize Cameras, Views and Projection Mapping
         camera = new float[16];
         view = new float[16];
 
@@ -99,7 +102,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         headRotation = new float[4];
 
-        // Initalise Object Models
+        // Initialize Object Models
         modelCRT = new float[16];
     }
 
@@ -107,7 +110,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         setContentView(R.layout.common_ui);
 
         GvrView gvrView = findViewById(R.id.gvr_view);
-        gvrView.setEGLConfigChooser(8,8,8,8,16,8);
+        gvrView.setEGLConfigChooser(8, 8, 8, 8, 16, 8);
 
         gvrView.setRenderer(this);
         gvrView.setTransitionViewEnabled(true);
@@ -167,7 +170,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
     @Override
     public void onFinishFrame(Viewport viewport) {
-
     }
 
     /**
@@ -181,7 +183,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     @Override
     public void onSurfaceCreated(EGLConfig eglConfig) {
         Log.i(TAG, "onSurfaceCreated");
-        GLES20.glClearColor(255.0f,255.0f,255.0f,255.0f);
+        GLES20.glClearColor(0.0f,0.0f,0.0f,0.0f);
 
         objectProgram = Util.compileProgram(OBJECT_VERTEX_SHADER_CODE, OBJECT_FRAGMENT_SHADER_CODE);
 
@@ -189,12 +191,16 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
         objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
+        Matrix.setIdentityM(modelCRT, 0);
+        Matrix.translateM(modelCRT, 0,-1.0f,-5.0f, -4.0f);
+
 
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
         try {
             objectCRT = new TexturedMesh(this, "obj/crt_monitor.obj", objectPositionParam, objectUvParam);
+            objectCRTTex = new Texture(this, "obj/crt_monitor_texture.png");
         } catch (IOException e) {
             Log.e (TAG, "Unable to initalise objects", e);
         }
@@ -222,7 +228,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     public void drawCRT() {
         GLES20.glUseProgram(objectProgram);
         GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
-        // objectCRTTex.bind();
+        objectCRTTex.bind();
         objectCRT.draw();
         Util.checkGLError("drawCRT");
     }
