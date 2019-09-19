@@ -1,6 +1,7 @@
 package com.jpgalovic.daydreamer;
 
 import android.opengl.GLES20;
+import android.opengl.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,6 +11,8 @@ import com.google.vr.sdk.base.GvrActivity;
 import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
+
+import java.io.IOException;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -26,6 +29,11 @@ import javax.microedition.khronos.egl.EGLConfig;
  */
 public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private static final String TAG = "NavigationActivity";
+
+    private static final float TARGET_MESH_COUNT = 3;
+
+    private static final float Z_NEAR = 0.01f;
+    private static final float Z_FAR = 10.0f;
 
     private static final String[] OBJECT_VERTEX_SHADER_CODE =
         new String[] {
@@ -55,19 +63,44 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
     private int objectProgram;
 
+    private int objectPositionParam;
+    private int objectUvParam;
     private int objectModelViewProjectionParam;
 
     // Object Data
     private TexturedMesh objectCRT;
+    private float[] modelCRT;
+
+
+    // Cameras, Views and Projection Mapping
+    private float[] camera;
+    private float[] view;
+    private float[] headView;
 
     private float[] modelViewProjection;
+    private float[] modelView;
+
+    private float[] headRotation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeGvrView();
 
+        // Initalise Cameras, Views and Projection Mapping
+        camera = new float[16];
+        view = new float[16];
+
         modelViewProjection = new float[16];
+        modelView = new float[16];
+
+        headView = new float[16];
+
+        headRotation = new float[4];
+
+        // Initalise Object Models
+        modelCRT = new float[16];
     }
 
     public void initializeGvrView() {
@@ -91,14 +124,45 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         setGvrView(gvrView);
     }
 
+    /**
+     * Prepares OpenGL ES before drawing a frame.
+     *
+     * @param headTransform
+     */
     @Override
     public void onNewFrame(HeadTransform headTransform) {
+        //Build the camera matrix and apply it to the ModelView
+        Matrix.setLookAtM(camera, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
 
+        headTransform.getHeadView(headView, 0);
+
+        //TODO: UPDATE AUDIO ENGINE.
+
+        Util.checkGLError("onNewFrame");
     }
 
+    /**
+     * Draws a frame for an eye
+     * @param eye The eye to render. Includes all required transformations.
+     */
     @Override
     public void onDrawEye(Eye eye) {
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
+        // Clear color may not matter if it is completly obscured by an object, however the color
+        // buffer is still cleared because it can help imporve performance.
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        // Apply the transformation to the camera.
+        Matrix.multiplyMM(view, 0, eye.getEyeView(), 0, camera, 0);
+
+        float[] perspective = eye.getPerspective(Z_NEAR, Z_FAR);
+
+        // Build ModelView and ModelView Projection for each object.
+        // This calculates the position to draw the object.
+        Matrix.multiplyMM(modelView, 0, view, 0, modelCRT, 0);
+        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
+        drawCRT();
     }
 
     @Override
@@ -117,12 +181,23 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     @Override
     public void onSurfaceCreated(EGLConfig eglConfig) {
         Log.i(TAG, "onSurfaceCreated");
-        GLES20.glClearColor(0.0f,0.0f,0.0f,0.0f);
+        GLES20.glClearColor(255.0f,255.0f,255.0f,255.0f);
 
         objectProgram = Util.compileProgram(OBJECT_VERTEX_SHADER_CODE, OBJECT_FRAGMENT_SHADER_CODE);
 
+        objectPositionParam = GLES20.glGetAttribLocation(objectProgram, "a_Position");
+        objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
         objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
+
+        Util.checkGLError("onSurfaceCreated");
+
+        // Load Objects
+        try {
+            objectCRT = new TexturedMesh(this, "obj/crt_monitor.obj", objectPositionParam, objectUvParam);
+        } catch (IOException e) {
+            Log.e (TAG, "Unable to initalise objects", e);
+        }
     }
 
     @Override
@@ -147,7 +222,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     public void drawCRT() {
         GLES20.glUseProgram(objectProgram);
         GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, modelViewProjection, 0);
-
         // objectCRTTex.bind();
         objectCRT.draw();
         Util.checkGLError("drawCRT");
