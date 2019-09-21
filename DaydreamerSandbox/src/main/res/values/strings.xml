@@ -10,5 +10,6 @@
     <string name="exit_vr_label">Exit VR Mode</string>
 
     <!-- Misc -->
+    <string name="url_source_code">https://github.com/6819710/Daydreamer_COS30017_AD</string>
 
 </resources>

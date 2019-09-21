@@ -1,6 +1,7 @@
-package com.jpgalovic.daydreamer;
+package com.jpgalovic.daydreamer.model;
 
 import android.opengl.GLES20;
+import android.opengl.Matrix;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -80,5 +81,21 @@ public class Util {
         checkGLError("End of compileProgram");
 
         return program;
+    }
+
+    /**
+     * Calulates angel between two vectors.
+     */
+    public static float angleBetweenVectors(float[] vec1, float[] vec2) {
+        float cosOfAngel = dotProduct(vec1, vec2) / (vectorNorm(vec1) * vectorNorm(vec2));
+        return (float) Math.acos(Math.max(-1.0f, Math.min(1.0f, cosOfAngel)));
+    }
+
+    private static float dotProduct(float[] vec1, float[]vec2) {
+        return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2];
+    }
+
+    private static float vectorNorm(float[] vec) {
+        return Matrix.length(vec[0], vec[1], vec[2]);
     }
 }

@@ -1,15 +1,12 @@
-package com.jpgalovic.daydreamer;
+package com.jpgalovic.daydreamer.model;
 
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
+import android.util.TypedValue;
 
-import com.jpgalovic.daydreamer.Texture;
-import com.jpgalovic.daydreamer.TexturedMesh;
-import com.jpgalovic.daydreamer.Util;
-
-import org.w3c.dom.Text;
+import com.jpgalovic.daydreamer.R;
 
 import java.io.IOException;
 
@@ -19,16 +16,22 @@ import java.io.IOException;
  * <p>Encapsulates all model data, including texture and mesh, position and rotation control as
  * well as rendering tools.</p>
  */
-public class EntityObject {
+public class TexturedMeshObject {
     private  String TAG;
 
-    protected TexturedMesh objectMesh;
-    protected Texture objectTex;
-    protected float[] objectModel;
+    private TexturedMesh objectMesh;
+    private Texture objectTex;
+    private float[] objectModel;
 
-    protected float[] modelView;
-    protected float[] modelViewProjection;
-    protected float[] modelRotation;
+    private float[] modelView;
+    private float[] modelViewProjection;
+    private float[] modelRotation;
+
+    private float[] tempPosition;
+
+    // Convenience Vector for extracting the position from a matrix via manipulation
+    private static final float[] POS_MATRIX_MULTIPLY_VEC = {0.0f, 0.0f, 0.0f, 1.0f};
+    private static final float[] FORWARD_VEC = {0.0f, 0.0f, -1.0f, 1.f};
 
     /**
      * Initializes Entity Object.
@@ -43,13 +46,14 @@ public class EntityObject {
      * @param y inital Y position.
      * @param z inital Z position.
      */
-    EntityObject (Context context, String name, String objFilePath, String texturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
+    public TexturedMeshObject(Context context, String name, String objFilePath, String texturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
         TAG = name;
         objectModel = new float[16];
 
         modelView = new float[16];
         modelViewProjection = new float[16];
         modelRotation = new float[16];
+        tempPosition = new float[16];
 
         Matrix.setRotateEulerM(modelRotation, 0, 0, 0, 0);
 
@@ -65,16 +69,43 @@ public class EntityObject {
         }
     }
 
+    /**
+     * Translates object by given x, y and z value
+     */
     public void translate(float x, float y, float z) {
         Matrix.translateM(objectModel, 0, x, y, z);
     }
 
+    /**
+     * Rotates object about x, y and z axis by given yaw, pitch and roll.
+     * @param pitch angle about x axis
+     * @param yaw angle about y axis
+     * @param roll angle about z axis
+     */
     public void rotate(float pitch, float yaw, float roll) {
         Matrix.rotateM(modelRotation, 0, pitch, 1, 0, 0);
         Matrix.rotateM(modelRotation, 0, yaw, 0, 1, 0);
         Matrix.rotateM(modelRotation, 0, roll, 0, 0, 1);
     }
 
+    /**
+     * Rotates object about a given vector (defined in i, j and k componants, value 0-1)
+     * @param angle angel to rotate
+     * @param i x component
+     * @param j y component
+     * @param k z component
+     */
+    public void roateAxis(float angle, float i, float j, float k) {
+        Matrix.rotateM(modelRotation, 0, angle, i, j, k);
+    }
+
+    /**
+     * Draws object using OpenGL
+     * @param perspective perspective array (based on eye)
+     * @param view view array.
+     * @param objectProgram OpenGl program reference.
+     * @param objectModelViewProjectionParam
+     */
     public void draw(float[] perspective, float[] view, int objectProgram, int objectModelViewProjectionParam) {
         float[] matrix = new float[16];
 
@@ -90,5 +121,18 @@ public class EntityObject {
         objectTex.bind();
         objectMesh.draw();
         Util.checkGLError("drawCRT");
+    }
+
+    /**
+     * Checks if object is within field of view.
+     * @param headView current head view.
+     * @return true if object is within look threshold.
+     */
+    public boolean isLookedAt(float[] headView) {
+        Matrix.multiplyMM(modelView, 0, headView, 0, objectModel, 0);
+        Matrix.multiplyMV(tempPosition, 0, modelView, 0, POS_MATRIX_MULTIPLY_VEC, 0);
+
+        float angle = Util.angleBetweenVectors(tempPosition, FORWARD_VEC);
+        return angle < Values.angle_threshold;
     }
 }

@@ -1,4 +1,4 @@
-package com.jpgalovic.daydreamer;
+package com.jpgalovic.daydreamer.model;
 
 import android.content.Context;
 

@@ -1,5 +1,7 @@
 package com.jpgalovic.daydreamer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -12,7 +14,8 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
-import java.io.IOException;
+import com.jpgalovic.daydreamer.model.TexturedMeshObject;
+import com.jpgalovic.daydreamer.model.Util;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -70,8 +73,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private int objectModelViewProjectionParam;
 
     // Object Data
-    private EntityObject objectCRT;
-    private EntityObject objectTable;
+    private TexturedMeshObject objectCRT;
+    private TexturedMeshObject objectTable;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -164,7 +167,14 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
-        //TODO: Handle Object Detection and Activity Transitions.
+        if(objectCRT.isLookedAt(headView)) {
+            Log.i(TAG, "CRTMonitor");
+
+            // Loads code repository for project in default browser.
+            String url = getResources().getString(R.string.url_source_code);
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        }
 
         super.onCardboardTrigger();
     }
@@ -191,8 +201,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        objectCRT = new EntityObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,-1.28f, -4.5f);
-        objectTable = new EntityObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
+        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,-1.28f, -4.5f);
+        objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
     }
 
     @Override
