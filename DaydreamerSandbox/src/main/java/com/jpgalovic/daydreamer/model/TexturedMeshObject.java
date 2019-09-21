@@ -21,6 +21,7 @@ public class TexturedMeshObject {
 
     private TexturedMesh objectMesh;
     private Texture objectTex;
+    private Texture altObjectTex;
     private float[] objectModel;
 
     private float[] modelView;
@@ -47,6 +48,14 @@ public class TexturedMeshObject {
      * @param z inital Z position.
      */
     public TexturedMeshObject(Context context, String name, String objFilePath, String texturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
+        InitObject(context, name, objFilePath, texturePath, texturePath, positionAttrib, uvAttrib, x, y, z);
+    }
+
+    public TexturedMeshObject(Context context, String name, String objFilePath, String texturePath, String altTexturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
+        InitObject(context, name, objFilePath, texturePath, altTexturePath, positionAttrib, uvAttrib, x, y, z);
+    }
+
+    public void InitObject(Context context, String name, String objFilePath, String texturePath, String altTexturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
         TAG = name;
         objectModel = new float[16];
 
@@ -64,6 +73,7 @@ public class TexturedMeshObject {
         try {
             objectMesh = new TexturedMesh(context, objFilePath, positionAttrib, uvAttrib);
             objectTex = new Texture(context, texturePath);
+            altObjectTex = new Texture(context, altTexturePath);
         } catch (IOException e) {
             Log.e (TAG, "Unable to initialize objects", e);
         }
@@ -100,13 +110,13 @@ public class TexturedMeshObject {
     }
 
     /**
-     * Draws object using OpenGL
+     * Draws object using OpenGL. If object is been looked at, alternate texture will be displayed.
      * @param perspective perspective array (based on eye)
      * @param view view array.
      * @param objectProgram OpenGl program reference.
      * @param objectModelViewProjectionParam
      */
-    public void draw(float[] perspective, float[] view, int objectProgram, int objectModelViewProjectionParam) {
+    public void draw(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
         float[] matrix = new float[16];
 
         // Build modelView and modelViewProjection.
@@ -118,7 +128,11 @@ public class TexturedMeshObject {
         // Draw the object.
         GLES20.glUseProgram(objectProgram);
         GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, matrix, 0);
-        objectTex.bind();
+        if(isLookedAt(headView)) {
+            altObjectTex.bind();
+        } else {
+            objectTex.bind();
+        }
         objectMesh.draw();
         Util.checkGLError("drawCRT");
     }

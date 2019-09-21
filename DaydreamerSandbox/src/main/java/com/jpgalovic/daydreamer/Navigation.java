@@ -154,8 +154,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         // Build ModelView and ModelView Projection for each object.
         // This calculates the position to draw the object.
-        objectCRT.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
-        objectTable.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
+        objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
@@ -201,7 +201,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,-1.28f, -4.5f);
+        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", "obj/crt_monitor_texture_selected.png", objectPositionParam, objectUvParam,0.0f,-1.28f, -4.5f);
         objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
     }
 
