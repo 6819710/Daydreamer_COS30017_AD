@@ -1,7 +1,6 @@
 package com.jpgalovic.daydreamer;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import com.google.vr.sdk.base.Viewport;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
 import com.jpgalovic.daydreamer.model.Util;
 import com.jpgalovic.daydreamer.model.Values;
-import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -165,12 +163,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         if(objectCRT.isLookedAt(headView)) {
             Log.i(TAG, "CRTMonitor");
-
-            /* Coad Loading Funcitonality removed due to inaproriate action.
-            // Loads code repository for project in default browser.
-            String url = getResources().getString(R.string.url_source_code);
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent); */
 
             Intent loadFindTheBlockDemo = new Intent(Navigation.this, FindTheBlock.class);
             startActivity(loadFindTheBlockDemo);

@@ -177,7 +177,7 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        sevenSegmentTimer = new SevenSegmentTimer(this, objectPositionParam, objectUvParam, 0.0f,0.0f, -15.0f, 123);
+        sevenSegmentTimer = new SevenSegmentTimer(this, objectPositionParam, objectUvParam, 0.0f,0.0f, -15.0f, 30);
         sevenSegmentTimer.start();
     }
 
