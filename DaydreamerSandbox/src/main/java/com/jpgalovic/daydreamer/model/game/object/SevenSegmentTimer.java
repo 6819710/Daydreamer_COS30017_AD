@@ -115,6 +115,14 @@ public class SevenSegmentTimer {
         new Timer().execute(countStart);
     }
 
+    /**
+     * Accessor to check if timer has run to zero.
+     * @return true if current count is zero.
+     */
+    public boolean zero() {
+        return currentCount == 0;
+    }
+
     class Timer extends AsyncTask<Integer, Integer, Integer> {
         private  String TAG = "Timer";
         @Override

@@ -14,6 +14,7 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
+import com.jpgalovic.daydreamer.R;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
 import com.jpgalovic.daydreamer.model.Util;
 import com.jpgalovic.daydreamer.model.Values;
@@ -21,45 +22,34 @@ import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
-/**
- * A VR Navigation Activity
- *
- * <p>This activity presents the user a scene consisting of a room that contains a desk with an
- * old school style computer and floating objects that represent the various mini games and
- * demonstrations that are available to the user.</p>
- *
- * <p>Upon selecting the computer screen or one of the floating objects, the user is taken to the
- * relevant activity, respectively the source repository using the devices default web browser or
- * the given mini game or demonstration.</p>
- */
-public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
-    private static final String TAG = "NavigationActivity";
+public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer {
+    private static final String TAG = "FindTheBlockActivity";
 
     private static final String[] OBJECT_VERTEX_SHADER_CODE =
-        new String[] {
-            "uniform mat4 u_MVP;",
-            "attribute vec4 a_Position;",
-            "attribute vec2 a_UV;",
-            "varying vec2 v_UV;",
-            "",
-            "void main() {",
-            "  v_UV = a_UV;",
-            "  gl_Position = u_MVP * a_Position;",
-            "}",
-        };
+            new String[] {
+                    "uniform mat4 u_MVP;",
+                    "attribute vec4 a_Position;",
+                    "attribute vec2 a_UV;",
+                    "varying vec2 v_UV;",
+                    "",
+                    "void main() {",
+                    "  v_UV = a_UV;",
+                    "  gl_Position = u_MVP * a_Position;",
+                    "}",
+            };
 
     private static final String[] OBJECT_FRAGMENT_SHADER_CODE =
-        new String[] {
-            "precision mediump float;",
-                "varying vec2 v_UV;",
-                "uniform sampler2D u_Texture;",
-                "",
-                "void main() {",
-                "  // The y coordinate of this sample's textures is reversed compared to",
-                "  // what OpenGL expects, so we invert the y coordinate.",
-                "  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));",
-                "}",
-        };
+            new String[] {
+                    "precision mediump float;",
+                    "varying vec2 v_UV;",
+                    "uniform sampler2D u_Texture;",
+                    "",
+                    "void main() {",
+                    "  // The y coordinate of this sample's textures is reversed compared to",
+                    "  // what OpenGL expects, so we invert the y coordinate.",
+                    "  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));",
+                    "}",
+            };
 
     private int objectProgram;
 
@@ -68,8 +58,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private int objectModelViewProjectionParam;
 
     // Object Data
-    private TexturedMeshObject objectCRT;
-    private TexturedMeshObject objectTable;
+    private SevenSegmentTimer sevenSegmentTimer;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -77,7 +66,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private float[] headView;
 
     private float[] headRotation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +87,9 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         gvrView.setEGLConfigChooser(8, 8, 8, 8, 16, 8);
 
         gvrView.setRenderer(this);
-        gvrView.setTransitionViewEnabled(true);
+        gvrView.setTransitionViewEnabled(false);
+
+        gvrView.
 
         // Enable Cardboard-trigger feedback.
         gvrView.enableCardboardTriggerEmulation();
@@ -149,32 +139,20 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         // Build ModelView and ModelView Projection for each object.
         // This calculates the position to draw the object.
-        objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
-        objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        sevenSegmentTimer.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
-        objectCRT.rotate(0.0f, 0.5f, 0.0f);
+        // If timer has run out return to menu TODO: Change this to follow design pattern defined in D.2
+        if(sevenSegmentTimer.zero()) {
+            finish();
+        }
     }
-
 
     @Override
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
-
-        if(objectCRT.isLookedAt(headView)) {
-            Log.i(TAG, "CRTMonitor");
-
-            /* Coad Loading Funcitonality removed due to inaproriate action.
-            // Loads code repository for project in default browser.
-            String url = getResources().getString(R.string.url_source_code);
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent); */
-
-            Intent loadFindTheBlockDemo = new Intent(Navigation.this, FindTheBlock.class);
-            startActivity(loadFindTheBlockDemo);
-        }
 
         super.onCardboardTrigger();
     }
@@ -201,8 +179,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,0.0f, -4.5f);
-        objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
+        sevenSegmentTimer = new SevenSegmentTimer(this, objectPositionParam, objectUvParam, 0.0f,0.0f, -15.0f, 123);
+        sevenSegmentTimer.start();
     }
 
     @Override
