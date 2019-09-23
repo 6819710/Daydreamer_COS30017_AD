@@ -16,6 +16,8 @@ import com.google.vr.sdk.base.Viewport;
 
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
 import com.jpgalovic.daydreamer.model.Util;
+import com.jpgalovic.daydreamer.model.Values;
+import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -32,13 +34,6 @@ import javax.microedition.khronos.egl.EGLConfig;
  */
 public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private static final String TAG = "NavigationActivity";
-
-    private static final float TARGET_MESH_COUNT = 3;
-
-    private static final float Z_NEAR = 0.01f;
-    private static final float Z_FAR = 10.0f;
-
-    private static final float FLOOR_HEIGHT = -2.0f;
 
     private static final String[] OBJECT_VERTEX_SHADER_CODE =
         new String[] {
@@ -75,6 +70,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     // Object Data
     private TexturedMeshObject objectCRT;
     private TexturedMeshObject objectTable;
+
+    private SevenSegmentTimer sevenSegmentTimer;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -150,16 +147,19 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         // Apply the transformation to the camera.
         Matrix.multiplyMM(view, 0, eye.getEyeView(), 0, camera, 0);
 
-        float[] perspective = eye.getPerspective(Z_NEAR, Z_FAR);
+        float[] perspective = eye.getPerspective(Values.Z_NEAR, Values.Z_FAR);
 
         // Build ModelView and ModelView Projection for each object.
         // This calculates the position to draw the object.
         objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
         objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+
+        sevenSegmentTimer.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
+        objectCRT.rotate(0.0f, 0.5f, 0.0f);
     }
 
 
@@ -170,10 +170,11 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         if(objectCRT.isLookedAt(headView)) {
             Log.i(TAG, "CRTMonitor");
 
+            /* Coad Loading Funcitonality removed due to inaproriate action.
             // Loads code repository for project in default browser.
             String url = getResources().getString(R.string.url_source_code);
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent);
+            startActivity(browserIntent); */
         }
 
         super.onCardboardTrigger();
@@ -190,7 +191,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     @Override
     public void onSurfaceCreated(EGLConfig eglConfig) {
         Log.i(TAG, "onSurfaceCreated");
-        GLES20.glClearColor(0.0f,0.0f,0.0f,0.0f);
+        GLES20.glClearColor(128.0f,128.0f,128.0f,128.0f);
 
         objectProgram = Util.compileProgram(OBJECT_VERTEX_SHADER_CODE, OBJECT_FRAGMENT_SHADER_CODE);
 
@@ -201,8 +202,11 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", "obj/crt_monitor_texture_selected.png", objectPositionParam, objectUvParam,0.0f,-1.28f, -4.5f);
+        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,0.0f, -4.5f);
         objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
+
+        sevenSegmentTimer = new SevenSegmentTimer(this, objectPositionParam, objectUvParam, 0.0f,0.0f, -15.0f, 123);
+        sevenSegmentTimer.start();
     }
 
     @Override

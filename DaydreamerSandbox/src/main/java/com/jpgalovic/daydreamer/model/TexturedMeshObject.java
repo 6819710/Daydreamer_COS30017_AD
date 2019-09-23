@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import com.jpgalovic.daydreamer.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Core Entity Object Model
@@ -20,8 +21,7 @@ public class TexturedMeshObject {
     private  String TAG;
 
     private TexturedMesh objectMesh;
-    private Texture objectTex;
-    private Texture altObjectTex;
+    private ArrayList<Texture> objectTex;
     private float[] objectModel;
 
     private float[] modelView;
@@ -48,14 +48,43 @@ public class TexturedMeshObject {
      * @param z inital Z position.
      */
     public TexturedMeshObject(Context context, String name, String objFilePath, String texturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
-        InitObject(context, name, objFilePath, texturePath, texturePath, positionAttrib, uvAttrib, x, y, z);
+        InitObject(name, x, y, z);
+
+        try {
+            objectMesh = new TexturedMesh(context, objFilePath, positionAttrib, uvAttrib);
+            objectTex.add(new Texture(context, texturePath));
+            objectTex.add(new Texture(context, texturePath));
+        } catch (IOException e) {
+            Log.e (TAG, "Unable to initialize objects", e);
+        }
     }
 
     public TexturedMeshObject(Context context, String name, String objFilePath, String texturePath, String altTexturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
-        InitObject(context, name, objFilePath, texturePath, altTexturePath, positionAttrib, uvAttrib, x, y, z);
+        InitObject(name, x, y, z);
+
+        try {
+            objectMesh = new TexturedMesh(context, objFilePath, positionAttrib, uvAttrib);
+            objectTex.add(new Texture(context, texturePath));
+            objectTex.add(new Texture(context, altTexturePath));
+        } catch (IOException e) {
+            Log.e (TAG, "Unable to initialize objects", e);
+        }
     }
 
-    public void InitObject(Context context, String name, String objFilePath, String texturePath, String altTexturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
+    public TexturedMeshObject(Context context, String name, String objFilePath, String[] texturePath, int positionAttrib, int uvAttrib, float x, float y, float z) {
+        InitObject(name, x, y, z);
+
+        try {
+            objectMesh = new TexturedMesh(context, objFilePath, positionAttrib, uvAttrib);
+            for(String path : texturePath) {
+                objectTex.add(new Texture(context, path));
+            }
+        } catch (IOException e) {
+            Log.e (TAG, "Unable to initialize objects", e);
+        }
+    }
+
+    public void InitObject(String name, float x, float y, float z) {
         TAG = name;
         objectModel = new float[16];
 
@@ -70,13 +99,7 @@ public class TexturedMeshObject {
         Matrix.setIdentityM(objectModel, 0);
         Matrix.translateM(objectModel, 0, x, y, z);
 
-        try {
-            objectMesh = new TexturedMesh(context, objFilePath, positionAttrib, uvAttrib);
-            objectTex = new Texture(context, texturePath);
-            altObjectTex = new Texture(context, altTexturePath);
-        } catch (IOException e) {
-            Log.e (TAG, "Unable to initialize objects", e);
-        }
+        objectTex = new ArrayList<>();
     }
 
     /**
@@ -117,6 +140,14 @@ public class TexturedMeshObject {
      * @param objectModelViewProjectionParam
      */
     public void draw(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
+        if(isLookedAt(headView)) {
+            draw(perspective, view, 1, objectProgram, objectModelViewProjectionParam);
+        } else {
+            draw(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
+        }
+    }
+
+    public void draw(float[] perspective, float[] view, int textureIndex, int objectProgram, int objectModelViewProjectionParam) {
         float[] matrix = new float[16];
 
         // Build modelView and modelViewProjection.
@@ -128,11 +159,7 @@ public class TexturedMeshObject {
         // Draw the object.
         GLES20.glUseProgram(objectProgram);
         GLES20.glUniformMatrix4fv(objectModelViewProjectionParam, 1, false, matrix, 0);
-        if(isLookedAt(headView)) {
-            altObjectTex.bind();
-        } else {
-            objectTex.bind();
-        }
+        objectTex.get(textureIndex).bind();
         objectMesh.draw();
         Util.checkGLError("drawCRT");
     }
@@ -147,6 +174,6 @@ public class TexturedMeshObject {
         Matrix.multiplyMV(tempPosition, 0, modelView, 0, POS_MATRIX_MULTIPLY_VEC, 0);
 
         float angle = Util.angleBetweenVectors(tempPosition, FORWARD_VEC);
-        return angle < Values.angle_threshold;
+        return angle < Values.ANGLE_THRESHOLD;
     }
 }
