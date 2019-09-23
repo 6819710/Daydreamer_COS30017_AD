@@ -89,8 +89,6 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         gvrView.setRenderer(this);
         gvrView.setTransitionViewEnabled(false);
 
-        gvrView.
-
         // Enable Cardboard-trigger feedback.
         gvrView.enableCardboardTriggerEmulation();
 
