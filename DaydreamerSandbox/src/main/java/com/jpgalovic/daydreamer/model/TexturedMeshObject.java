@@ -102,6 +102,11 @@ public class TexturedMeshObject {
         objectTex = new ArrayList<>();
     }
 
+    public void setPosition(float x, float y, float z) {
+        Matrix.setIdentityM(objectModel, 0);
+        translate(x, y, z);
+    }
+
     /**
      * Translates object by given x, y and z value
      */

@@ -20,6 +20,8 @@ import com.jpgalovic.daydreamer.model.Util;
 import com.jpgalovic.daydreamer.model.Values;
 import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
 
+import java.util.Random;
+
 import javax.microedition.khronos.egl.EGLConfig;
 
 public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer {
@@ -57,8 +59,19 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
     private int objectUvParam;
     private int objectModelViewProjectionParam;
 
+    private Random rand;
+
     // Object Data
     private SevenSegmentTimer sevenSegmentTimer;
+    private TexturedMeshObject block;
+
+    // Game Data
+    private int score;
+
+    private static final float MAX_YAW = 100.0f;
+    private static final float MAX_PITCH = 25.0f;
+    private static final float MIN_TARGET_DISTANCE = 5.0f;
+    private static final float MAX_TARGET_DISTANCE = 10.0f;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -78,6 +91,9 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
 
         headView = new float[16];
         headRotation = new float[4];
+
+        score = 0;
+        rand = new Random();
     }
 
     public void initializeGvrView() {
@@ -135,13 +151,17 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
 
         float[] perspective = eye.getPerspective(Values.Z_NEAR, Values.Z_FAR);
 
-        // Build ModelView and ModelView Projection for each object.
-        // This calculates the position to draw the object.
+        // Draw each object.
         sevenSegmentTimer.draw(perspective, view, objectProgram, objectModelViewProjectionParam);
+        block.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
+        // Rotate Block about XYZ
+        block.rotate(1,1,1);
+
         // If timer has run out return to menu TODO: Change this to follow design pattern defined in D.2
         if(sevenSegmentTimer.zero()) {
             finish();
@@ -151,6 +171,12 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
     @Override
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
+
+        // Handle Block Found. Increment Score then re-position block to be found again.
+        if(block.isLookedAt(headView)) {
+            score++;
+            newTaget();
+        }
 
         super.onCardboardTrigger();
     }
@@ -179,6 +205,9 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         // Load Objects
         sevenSegmentTimer = new SevenSegmentTimer(this, objectPositionParam, objectUvParam, 0.0f,0.0f, -15.0f, 30);
         sevenSegmentTimer.start();
+
+        block = new TexturedMeshObject(this, "Block", "obj/cube.obj", "obj/cube.png", "obj/cube_selected.png", objectPositionParam, objectUvParam,0.0f,0.0f, -10f);
+        newTaget();
     }
 
     @Override
@@ -189,5 +218,27 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
     @Override
     public void onRendererShutdown() {
         Log.i(TAG, "onRendererShutdown");
+    }
+
+    private void newTaget() {
+        // calculate random yaw, pitch and distance
+        float theta = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * MAX_YAW);
+        float phi = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * MAX_PITCH);
+        float radius = rand.nextFloat() * (MAX_TARGET_DISTANCE - MIN_TARGET_DISTANCE) + MIN_TARGET_DISTANCE;
+
+        // Calculate target position based on theta, phi and radius
+        float x = (float) (radius * Math.sin(theta) * Math.cos(phi));
+        float y = (float) (radius * Math.sin(theta) * Math.sin(phi));
+        float z = (float) (radius * Math.cos(theta));
+
+        /*
+         * Get theta, phi, dist from (x,y,z)
+         * radius = sqrt(x*x + y*y + z*z);
+         * theta = acos(z / radius);
+         * phi = atan2 (y, x);
+         */
+
+        // Set position of block
+        block.setPosition(x, y, z);
     }
 }
