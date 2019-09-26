@@ -68,11 +68,6 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
     // Game Data
     private int score;
 
-    private static final float MAX_YAW = 100.0f;
-    private static final float MAX_PITCH = 25.0f;
-    private static final float MIN_TARGET_DISTANCE = 5.0f;
-    private static final float MAX_TARGET_DISTANCE = 10.0f;
-
     // Cameras, Views and Projection Mapping
     private float[] camera;
     private float[] view;
@@ -222,9 +217,9 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
 
     private void newTaget() {
         // calculate random yaw, pitch and distance
-        float theta = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * MAX_YAW);
-        float phi = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * MAX_PITCH);
-        float radius = rand.nextFloat() * (MAX_TARGET_DISTANCE - MIN_TARGET_DISTANCE) + MIN_TARGET_DISTANCE;
+        float theta = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW);
+        float phi = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH);
+        float radius = rand.nextFloat() * (Values.MAX_TARGET_DISTANCE - Values.MIN_TARGET_DISTANCE) + Values.MIN_TARGET_DISTANCE;
 
         // Calculate target position based on theta, phi and radius
         float x = (float) (radius * Math.sin(theta) * Math.cos(phi));
