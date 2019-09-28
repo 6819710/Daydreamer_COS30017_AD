@@ -20,7 +20,6 @@ public class Letter {
     private int letter;
 
     public Letter(Context context, int objectPositionParam, int objectUvParam, float x, float y, float z, String letter) {
-        float offset = 1.9f;
         letterObjects = new ArrayList<>();
 
         String[] letterObj = {
@@ -56,6 +55,28 @@ public class Letter {
 
     public void setLetter(int letter) {
         this.letter = letter;
+    }
+
+    /**
+     * Increments to the next letter.
+     * Letter rolls over from Z -> A.
+     */
+    public void next() {
+        ++letter;
+        if(letter >= 26) {
+            letter = 0;
+        }
+    }
+
+    /**
+     * Decrements to the previous letter.
+     * Letter rolls over from A -> Z.
+     */
+    public void prev() {
+        --letter;
+        if(letter < 0) {
+            letter = 25;
+        }
     }
 
     public void setLetter(String letter) {

@@ -13,8 +13,10 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
+import com.jpgalovic.daydreamer.model.game.object.LetterSelector;
 import com.jpgalovic.daydreamer.model.util.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
+import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 
@@ -69,6 +71,10 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     // Object Data
     private TexturedMeshObject objectCRT;
     private TexturedMeshObject objectTable;
+    private LetterSelector objectLetterSelector1;
+    private LetterSelector objectLetterSelector2;
+    private LetterSelector objectLetterSelector3;
+    private TexturedMeshObject objectSave;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -152,8 +158,12 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         // Build ModelView and ModelView Projection for each object.
         // This calculates the position to draw the object.
-        objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
-        objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        //objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        //objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectLetterSelector1.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectLetterSelector2.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectLetterSelector3.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectSave.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
@@ -166,11 +176,24 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
-        if(objectCRT.isLookedAt(headView)) {
+        /*if(objectCRT.isLookedAt(headView)) {
             Log.i(TAG, "CRTMonitor");
 
             Intent loadFindTheBlockDemo = new Intent(Navigation.this, FindTheBlock.class);
             startActivity(loadFindTheBlockDemo);
+        }*/
+
+        int score = 150; //Score used for testing
+
+        objectLetterSelector1.isLookedAt(headView);
+        objectLetterSelector2.isLookedAt(headView);
+        objectLetterSelector3.isLookedAt(headView);
+
+        if(objectSave.isLookedAt(headView)) {
+            HighScoreManager highScore = new HighScoreManager(this, "find_the_block_scores.csv");
+            String name = objectLetterSelector1.getLetter() + objectLetterSelector2.getLetter() + objectLetterSelector3.getLetter();
+            highScore.setNewHighScore(name, score);
+            //TODO: Load High Score Display Board.
         }
 
         super.onCardboardTrigger();
@@ -200,6 +223,10 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         // Load Objects
         objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,0.0f, -4.5f);
         objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
+        objectLetterSelector1 = new LetterSelector(this, objectPositionParam, objectUvParam, -1.3f, 0.0f, -4.0f);
+        objectLetterSelector2 = new LetterSelector(this, objectPositionParam, objectUvParam, 0.0f, 0.0f, -4.0f);
+        objectLetterSelector3 = new LetterSelector(this, objectPositionParam, objectUvParam, 1.3f, 0.0f, -4.0f);
+        objectSave = new TexturedMeshObject(this, "Save", "obj/save.obj", "obj/save.png", "obj/save_selected.png", objectPositionParam, objectUvParam, 0.0f, -1.8f, -4.0f);
     }
 
     @Override
