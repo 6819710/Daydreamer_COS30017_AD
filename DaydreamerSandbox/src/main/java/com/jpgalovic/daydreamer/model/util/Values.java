@@ -1,4 +1,4 @@
-package com.jpgalovic.daydreamer.model;
+package com.jpgalovic.daydreamer.model.util;
 
 public class Values {
     public static final float ANGLE_THRESHOLD = 0.2f;

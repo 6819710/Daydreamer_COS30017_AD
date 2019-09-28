@@ -1,4 +1,4 @@
-package com.jpgalovic.daydreamer.model;
+package com.jpgalovic.daydreamer.model.util;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;

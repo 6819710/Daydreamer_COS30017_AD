@@ -13,10 +13,10 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
-import com.jpgalovic.daydreamer.model.FileManager;
+import com.jpgalovic.daydreamer.model.util.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
-import com.jpgalovic.daydreamer.model.Util;
-import com.jpgalovic.daydreamer.model.Values;
+import com.jpgalovic.daydreamer.model.util.Util;
+import com.jpgalovic.daydreamer.model.util.Values;
 
 import javax.microedition.khronos.egl.EGLConfig;
 

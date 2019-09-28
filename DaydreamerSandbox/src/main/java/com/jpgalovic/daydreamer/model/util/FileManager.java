@@ -1,4 +1,4 @@
-package com.jpgalovic.daydreamer.model;
+package com.jpgalovic.daydreamer.model.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;

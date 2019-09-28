@@ -1,7 +1,5 @@
 package com.jpgalovic.daydreamer;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -14,10 +12,9 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
-import com.jpgalovic.daydreamer.R;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
-import com.jpgalovic.daydreamer.model.Util;
-import com.jpgalovic.daydreamer.model.Values;
+import com.jpgalovic.daydreamer.model.util.Util;
+import com.jpgalovic.daydreamer.model.util.Values;
 import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
 
 import java.util.Random;

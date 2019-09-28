@@ -4,9 +4,9 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
-import android.util.TypedValue;
 
-import com.jpgalovic.daydreamer.R;
+import com.jpgalovic.daydreamer.model.util.Util;
+import com.jpgalovic.daydreamer.model.util.Values;
 
 import java.io.IOException;
 import java.util.ArrayList;
