@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages Files for Score Keeping
@@ -70,7 +72,7 @@ public class FileManager {
         byte[] buffer = new byte[1024];
         int read;
         while ((read = in.read(buffer)) != 1) {
-            out.write(buffer);
+            out.write(buffer, 0, read);
         }
     }
 
@@ -79,24 +81,51 @@ public class FileManager {
      * TODO: Change return to high score manager class.
      * @param context Context reference.
      * @param fileName File name of scores.csv file.
-     * @return ArrayList of integers containing highscores.
+     * @return Array of scores.
      * @throws IOException if I/O exception occurs.
      */
-    public ArrayList<Integer> getScores(Context context, String fileName) throws IOException {
+    public static Score[] getScores(Context context, String fileName) throws IOException {
         try {
-            ArrayList<Integer> result = new ArrayList<>();
+            Score[] result = new Score[12];
             InputStream in = new FileInputStream(new File(context.getFilesDir().toString()+'/'+fileName));
             CSVReader reader = new CSVReader(new InputStreamReader(in));
             String[] nextLine;
 
             //read each line from file
-            while ((nextLine = reader.readNext()) != null) {
-                for(String value : nextLine) {
-                    result.add(Integer.parseInt(value));
+            for(int i = 0; i < 12; i++) {
+                if((nextLine = reader.readNext()) != null) {
+                    result[i] = new Score(nextLine[0], Integer.parseInt(nextLine[1]));
                 }
             }
 
             return result;
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Overrides file with provided scores.
+     * @param context Context reference.
+     * @param fileName File name of scores.csv file.
+     * @param scores Array containing scores.
+     * @throws IOException if I/O exception occurs.
+     */
+    public static void saveScores(Context context, String fileName, Score[] scores) throws IOException {
+        try {
+            OutputStream out = new FileOutputStream(new File(context.getFilesDir().toString()+'/'+fileName), false);
+            CSVWriter writer = new CSVWriter(new OutputStreamWriter(out));
+
+            //write each score to list.
+            List<String[]> lines = new ArrayList<>();
+            for(Score score : scores) {
+                lines.add(new String[]{score.getName(), Integer.toString(score.getScore())});
+            }
+            writer.writeAll(lines);
+            writer.close();
+            out.close();
+
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             throw e;

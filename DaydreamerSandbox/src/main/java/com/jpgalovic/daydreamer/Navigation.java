@@ -15,6 +15,7 @@ import com.google.vr.sdk.base.Viewport;
 
 import com.jpgalovic.daydreamer.model.util.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
+import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 
