@@ -13,7 +13,7 @@ public class LetterSelector {
     public LetterSelector(Context context, int objectPositionParam, int objectUvParam, float x, float y, float z) {
         float offset = 1.0f;
 
-        letter = new Letter(context, objectPositionParam, objectUvParam, x, y, z, "A");
+        letter = new Letter(context, objectPositionParam, objectUvParam, x, y, z, 'A', true);
         up = new TexturedMeshObject(context, "up", "obj/arrow.obj", "obj/arrow.png", "obj/arrow_selected.png", objectPositionParam, objectUvParam, x, y + offset, z);
         down = new TexturedMeshObject(context, "down", "obj/arrow.obj", "obj/arrow.png", "obj/arrow_selected.png", objectPositionParam, objectUvParam, x, y - offset, z);
 
@@ -25,7 +25,7 @@ public class LetterSelector {
      * @return string containing current letter.
      */
     public String getLetter() {
-        return letter.getLetter();
+        return Character.toString(letter.getLetter());
     }
 
     public void draw(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {

@@ -77,6 +77,13 @@ public class HighScoreManager {
         return saveHighScores();
     }
 
+    public Score getScore(int index) {
+        if(index < 0 || index > 11) {
+            throw new RuntimeException("Index out of bounds.");
+        }
+        return highScores[index];
+    }
+
     /**
      * Utility function to swap values at indexes a & b;
      * @param a index of first value.

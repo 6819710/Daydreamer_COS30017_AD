@@ -144,7 +144,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         if(objectCRT.isLookedAt(headView)) {
             Log.i(TAG, "CRTMonitor");
 
-            Intent loadFindTheBlockDemo = new Intent(Navigation.this, FindTheBlock.class);
+            Intent loadFindTheBlockDemo = new Intent(Navigation.this, HighScores.class);
             startActivity(loadFindTheBlockDemo);
         }
 

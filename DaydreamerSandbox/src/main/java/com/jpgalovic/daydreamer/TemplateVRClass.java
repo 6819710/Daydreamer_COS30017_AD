@@ -1,3 +1,5 @@
+package com.jpgalovic.daydreamer;
+
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -9,7 +11,6 @@ import com.google.vr.sdk.base.GvrActivity;
 import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
-import com.jpgalovic.daydreamer.R;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 
@@ -92,7 +93,7 @@ public class TemplateVRClass extends GvrActivity implements GvrView.StereoRender
     @Override
     public void onNewFrame(HeadTransform headTransform) {
         // Build camera matrix.
-        Matrix.setLookAtM(camera, 0, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(camera, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
 
         // Get headView.
         headTransform.getHeadView(headView, 0);

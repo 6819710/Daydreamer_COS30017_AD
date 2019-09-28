@@ -49,6 +49,13 @@
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
             android:enableVrMode="@string/gvr_vr_mode_component"
             android:resizeableActivity="false" />
+
+        <activity
+            android:name=".HighScores"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
+            android:enableVrMode="@string/gvr_vr_mode_component"
+            android:resizeableActivity="false" />
     </application>
 
 </manifest>

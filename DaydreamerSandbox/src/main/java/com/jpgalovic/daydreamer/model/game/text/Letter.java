@@ -11,15 +11,16 @@ import java.util.ArrayList;
  */
 public class Letter {
     private static final String TAG = "Letter";
-    private static final String[] letterString = {
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    private static final char[] letterCharArray = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     };
 
     private ArrayList<TexturedMeshObject> letterObjects;
+    private boolean allLoaded;
     private int letter;
 
-    public Letter(Context context, int objectPositionParam, int objectUvParam, float x, float y, float z, String letter) {
+    public Letter(Context context, int objectPositionParam, int objectUvParam, float x, float y, float z, char letter, boolean loadAll) {
         letterObjects = new ArrayList<>();
 
         String[] letterObj = {
@@ -42,15 +43,21 @@ public class Letter {
                 "obj/char/y.png", "obj/char/z.png",
         };
 
-        for(int i = 0; i < 26; i++) {
-            letterObjects.add(new TexturedMeshObject(context, letterString[i], letterObj[i], letterTex[i], objectPositionParam, objectUvParam, x, y, z));
-        }
-
         setLetter(letter);
+        allLoaded = loadAll;
+
+        // If loadAll is true, all letters will be loaded, otherwise only the given letter will be loaded (to save memory);
+        if(loadAll) {
+            for(int i = 0; i < 26; i++) {
+                letterObjects.add(new TexturedMeshObject(context, Character.toString(letterCharArray[i]), letterObj[i], letterTex[i], objectPositionParam, objectUvParam, x, y, z));
+            }
+        } else {
+            letterObjects.add(new TexturedMeshObject(context, Character.toString(letterCharArray[this.letter]), letterObj[this.letter], letterTex[this.letter], objectPositionParam, objectUvParam, x, y, z));
+        }
     }
 
-    public String getLetter() {
-        return letterString[letter];
+    public char getLetter() {
+        return letterCharArray[letter];
     }
 
     public void setLetter(int letter) {
@@ -79,10 +86,10 @@ public class Letter {
         }
     }
 
-    public void setLetter(String letter) {
+    public void setLetter(char letter) {
         this.letter = 0;
         for(int i = 0; i < 26; i++) {
-            if(letterString[i] == letter) {
+            if(letterCharArray[i] == letter) {
                 this.letter = i;
                 return;
             }
@@ -90,6 +97,10 @@ public class Letter {
     }
 
     public void draw(float[] perspective, float[] view, int objectProgram, int objectModelViewProjectionParam) {
-        letterObjects.get(letter).draw(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
+        if(allLoaded) {
+            letterObjects.get(letter).draw(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
+        } else {
+            letterObjects.get(0).draw(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
+        }
     }
 }
