@@ -36,32 +36,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private static final String TAG = "NavigationActivity";
 
-    private static final String[] OBJECT_VERTEX_SHADER_CODE =
-        new String[] {
-            "uniform mat4 u_MVP;",
-            "attribute vec4 a_Position;",
-            "attribute vec2 a_UV;",
-            "varying vec2 v_UV;",
-            "",
-            "void main() {",
-            "  v_UV = a_UV;",
-            "  gl_Position = u_MVP * a_Position;",
-            "}",
-        };
-
-    private static final String[] OBJECT_FRAGMENT_SHADER_CODE =
-        new String[] {
-            "precision mediump float;",
-                "varying vec2 v_UV;",
-                "uniform sampler2D u_Texture;",
-                "",
-                "void main() {",
-                "  // The y coordinate of this sample's textures is reversed compared to",
-                "  // what OpenGL expects, so we invert the y coordinate.",
-                "  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));",
-                "}",
-        };
-
     private int objectProgram;
 
     private int objectPositionParam;
@@ -190,7 +164,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         Log.i(TAG, "onSurfaceCreated");
         GLES20.glClearColor(128.0f,128.0f,128.0f,128.0f);
 
-        objectProgram = Util.compileProgram(OBJECT_VERTEX_SHADER_CODE, OBJECT_FRAGMENT_SHADER_CODE);
+        objectProgram = Util.compileProgram(Values.OBJECT_VERTEX_SHADER, Values.OBJECT_FRAGMENT_SHADER);
 
         objectPositionParam = GLES20.glGetAttribLocation(objectProgram, "a_Position");
         objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
