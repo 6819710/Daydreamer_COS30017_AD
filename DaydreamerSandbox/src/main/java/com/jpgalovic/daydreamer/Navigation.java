@@ -13,6 +13,7 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
+import com.jpgalovic.daydreamer.model.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
 import com.jpgalovic.daydreamer.model.Util;
 import com.jpgalovic.daydreamer.model.Values;
@@ -88,6 +89,9 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         headView = new float[16];
         headRotation = new float[4];
+
+        // Copy high score data if freshly installed.
+        FileManager.copyAssets(this);
     }
 
     public void initializeGvrView() {
