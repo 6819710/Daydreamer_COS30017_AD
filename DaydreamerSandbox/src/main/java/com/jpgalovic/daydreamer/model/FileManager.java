@@ -4,11 +4,17 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 /**
  * Manages Files for Score Keeping
@@ -41,7 +47,7 @@ public class FileManager {
                     OutputStream out;
 
                     in = assetManager.open("files/" + fileName);
-                    out = new FileOutputStream(context.getFilesDir().toString() + "/" + fileName);
+                    out = new FileOutputStream(context.getFilesDir().toString() + '/' + fileName);
                     copyFiles(in, out);
                     in.close();
                     out.flush();
@@ -65,6 +71,35 @@ public class FileManager {
         int read;
         while ((read = in.read(buffer)) != 1) {
             out.write(buffer);
+        }
+    }
+
+    /**
+     * Reads scores from the given scores.csv file.
+     * TODO: Change return to high score manager class.
+     * @param context Context reference.
+     * @param fileName File name of scores.csv file.
+     * @return ArrayList of integers containing highscores.
+     * @throws IOException if I/O exception occurs.
+     */
+    public ArrayList<Integer> getScores(Context context, String fileName) throws IOException {
+        try {
+            ArrayList<Integer> result = new ArrayList<>();
+            InputStream in = new FileInputStream(new File(context.getFilesDir().toString()+'/'+fileName));
+            CSVReader reader = new CSVReader(new InputStreamReader(in));
+            String[] nextLine;
+
+            //read each line from file
+            while ((nextLine = reader.readNext()) != null) {
+                for(String value : nextLine) {
+                    result.add(Integer.parseInt(value));
+                }
+            }
+
+            return result;
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            throw e;
         }
     }
 }
