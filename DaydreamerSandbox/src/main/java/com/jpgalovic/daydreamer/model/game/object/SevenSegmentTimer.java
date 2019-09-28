@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.jpgalovic.daydreamer.model.TexturedMesh;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
 
 import java.util.ArrayList;

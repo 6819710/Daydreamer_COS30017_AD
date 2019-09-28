@@ -15,7 +15,6 @@ import com.google.vr.sdk.base.Viewport;
 
 import com.jpgalovic.daydreamer.model.util.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
-import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 
@@ -102,7 +101,8 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         gvrView.setEGLConfigChooser(8, 8, 8, 8, 16, 8);
 
         gvrView.setRenderer(this);
-        gvrView.setTransitionViewEnabled(true);
+        //gvrView.setTransitionViewEnabled(true);
+        gvrView.setTransitionViewEnabled(false);
 
         // Enable Cardboard-trigger feedback.
         gvrView.enableCardboardTriggerEmulation();
