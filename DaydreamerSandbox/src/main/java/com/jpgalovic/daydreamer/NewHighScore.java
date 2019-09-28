@@ -1,6 +1,5 @@
 package com.jpgalovic.daydreamer;
 
-import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -13,54 +12,45 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
-import com.jpgalovic.daydreamer.model.game.object.LetterSelector;
-import com.jpgalovic.daydreamer.model.util.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
+import com.jpgalovic.daydreamer.model.game.object.LetterSelector;
 import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
+import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
+
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
-/**
- * A VR Navigation Activity
- *
- * <p>This activity presents the user a scene consisting of a room that contains a desk with an
- * old school style computer and floating objects that represent the various mini games and
- * demonstrations that are available to the user.</p>
- *
- * <p>Upon selecting the computer screen or one of the floating objects, the user is taken to the
- * relevant activity, respectively the source repository using the devices default web browser or
- * the given mini game or demonstration.</p>
- */
-public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
-    private static final String TAG = "NavigationActivity";
+public class NewHighScore extends GvrActivity implements GvrView.StereoRenderer {
+    private static final String TAG = "NewHighScoreActivity";
 
     private static final String[] OBJECT_VERTEX_SHADER_CODE =
-        new String[] {
-            "uniform mat4 u_MVP;",
-            "attribute vec4 a_Position;",
-            "attribute vec2 a_UV;",
-            "varying vec2 v_UV;",
-            "",
-            "void main() {",
-            "  v_UV = a_UV;",
-            "  gl_Position = u_MVP * a_Position;",
-            "}",
-        };
+            new String[] {
+                    "uniform mat4 u_MVP;",
+                    "attribute vec4 a_Position;",
+                    "attribute vec2 a_UV;",
+                    "varying vec2 v_UV;",
+                    "",
+                    "void main() {",
+                    "  v_UV = a_UV;",
+                    "  gl_Position = u_MVP * a_Position;",
+                    "}",
+            };
 
     private static final String[] OBJECT_FRAGMENT_SHADER_CODE =
-        new String[] {
-            "precision mediump float;",
-                "varying vec2 v_UV;",
-                "uniform sampler2D u_Texture;",
-                "",
-                "void main() {",
-                "  // The y coordinate of this sample's textures is reversed compared to",
-                "  // what OpenGL expects, so we invert the y coordinate.",
-                "  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));",
-                "}",
-        };
+            new String[] {
+                    "precision mediump float;",
+                    "varying vec2 v_UV;",
+                    "uniform sampler2D u_Texture;",
+                    "",
+                    "void main() {",
+                    "  // The y coordinate of this sample's textures is reversed compared to",
+                    "  // what OpenGL expects, so we invert the y coordinate.",
+                    "  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));",
+                    "}",
+            };
 
     private int objectProgram;
 
@@ -69,8 +59,10 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private int objectModelViewProjectionParam;
 
     // Object Data
-    private TexturedMeshObject objectCRT;
-    private TexturedMeshObject objectTable;
+    private LetterSelector objectLetterSelector1;
+    private LetterSelector objectLetterSelector2;
+    private LetterSelector objectLetterSelector3;
+    private TexturedMeshObject objectSave;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -78,7 +70,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private float[] headView;
 
     private float[] headRotation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +82,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
 
         headView = new float[16];
         headRotation = new float[4];
-
-        // Copy high score data if freshly installed.
-        FileManager.copyAssets(this);
     }
 
     public void initializeGvrView() {
@@ -103,7 +91,6 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         gvrView.setEGLConfigChooser(8, 8, 8, 8, 16, 8);
 
         gvrView.setRenderer(this);
-        //gvrView.setTransitionViewEnabled(true);
         gvrView.setTransitionViewEnabled(false);
 
         // Enable Cardboard-trigger feedback.
@@ -153,25 +140,31 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         float[] perspective = eye.getPerspective(Values.Z_NEAR, Values.Z_FAR);
 
         // Draw each object.
-        objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
-        objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectLetterSelector1.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectLetterSelector2.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectLetterSelector3.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectSave.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
-        objectCRT.rotate(0.0f, 0.5f, 0.0f);
     }
-
 
     @Override
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
-        if(objectCRT.isLookedAt(headView)) {
-            Log.i(TAG, "CRTMonitor");
+        int score = 150; //Score used for testing
 
-            Intent loadFindTheBlockDemo = new Intent(Navigation.this, FindTheBlock.class);
-            startActivity(loadFindTheBlockDemo);
+        objectLetterSelector1.isLookedAt(headView);
+        objectLetterSelector2.isLookedAt(headView);
+        objectLetterSelector3.isLookedAt(headView);
+
+        if(objectSave.isLookedAt(headView)) {
+            HighScoreManager highScore = new HighScoreManager(this, "find_the_block_scores.csv");
+            String name = objectLetterSelector1.getLetter() + objectLetterSelector2.getLetter() + objectLetterSelector3.getLetter();
+            highScore.setNewHighScore(name, score);
+            //TODO: Load High Score Display Board.
         }
 
         super.onCardboardTrigger();
@@ -199,8 +192,10 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,0.0f, -4.5f);
-        objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
+        objectLetterSelector1 = new LetterSelector(this, objectPositionParam, objectUvParam, -1.3f, 0.0f, -4.0f);
+        objectLetterSelector2 = new LetterSelector(this, objectPositionParam, objectUvParam, 0.0f, 0.0f, -4.0f);
+        objectLetterSelector3 = new LetterSelector(this, objectPositionParam, objectUvParam, 1.3f, 0.0f, -4.0f);
+        objectSave = new TexturedMeshObject(this, "Save", "obj/save.obj", "obj/save.png", "obj/save_selected.png", objectPositionParam, objectUvParam, 0.0f, -1.8f, -4.0f);
     }
 
     @Override

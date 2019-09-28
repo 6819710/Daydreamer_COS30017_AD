@@ -33,12 +33,22 @@
                 <category android:name="com.google.intent.category.CARDBOARD" />
             </intent-filter>
         </activity>
+
+        <!-- Demo Activities -->
         <activity
             android:name=".FindTheBlock"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
             android:enableVrMode="@string/gvr_vr_mode_component"
-            android:resizeableActivity="false"/>
+            android:resizeableActivity="false" />
+
+        <!-- Auxiliary Activities -->
+        <activity
+            android:name=".NewHighScore"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
+            android:enableVrMode="@string/gvr_vr_mode_component"
+            android:resizeableActivity="false" />
     </application>
 
 </manifest>
