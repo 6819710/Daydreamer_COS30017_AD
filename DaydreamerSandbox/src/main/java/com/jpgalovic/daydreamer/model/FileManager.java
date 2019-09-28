@@ -31,21 +31,24 @@ public class FileManager {
         }
 
         for(String fileName : files) {
-            Log.i(TAG, "files=>"+fileName);
             try {
-                File file = new File(context.getFilesDir().toString()+"/"+fileName);
-                if(!file.exists()) {
+                File file = new File(context.getFilesDir().toString() + "/" + fileName);
+                if (file.exists()) {
+                    Log.i(TAG, "File: " + fileName + " already exists");
+                } else {
+                    Log.i(TAG, "Copying File: " + fileName);
                     InputStream in;
                     OutputStream out;
 
-                    in = assetManager.open("files/"+fileName);
-                    out = new FileOutputStream(context.getFilesDir().toString()+"/"+fileName);
-                    copyFiles(in,out);
+                    in = assetManager.open("files/" + fileName);
+                    out = new FileOutputStream(context.getFilesDir().toString() + "/" + fileName);
+                    copyFiles(in, out);
                     in.close();
                     out.flush();
                     out.close();
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
         }
