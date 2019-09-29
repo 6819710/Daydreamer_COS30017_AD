@@ -60,10 +60,6 @@ public class Letter {
         return letterCharArray[letter];
     }
 
-    public void setLetter(int letter) {
-        this.letter = letter;
-    }
-
     /**
      * Increments to the next letter.
      * Letter rolls over from Z -> A.

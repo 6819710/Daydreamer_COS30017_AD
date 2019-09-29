@@ -16,7 +16,6 @@ import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
