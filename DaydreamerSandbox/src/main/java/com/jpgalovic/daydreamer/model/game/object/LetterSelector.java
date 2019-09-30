@@ -39,9 +39,9 @@ public class LetterSelector {
      * @param headView current head view.
      */
     public void isLookedAt(float[] headView) {
-        if(up.isLookedAt(headView)) {
+        if(up.isLookedAtFine(headView)) {
             letter.next();
-        } else if (down.isLookedAt(headView)) {
+        } else if (down.isLookedAtFine(headView)) {
             letter.prev();
         }
     }

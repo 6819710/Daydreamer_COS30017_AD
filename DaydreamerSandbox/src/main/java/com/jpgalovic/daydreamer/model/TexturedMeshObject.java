@@ -181,4 +181,17 @@ public class TexturedMeshObject {
         float angle = Util.angleBetweenVectors(tempPosition, FORWARD_VEC);
         return angle < Values.ANGLE_THRESHOLD;
     }
+
+    /**
+     * Checks if the object is within the fine fild of view (narrower angle).
+     * @param headView
+     * @return
+     */
+    public boolean isLookedAtFine(float[] headView) {
+        Matrix.multiplyMM(modelView, 0, headView, 0, objectModel, 0);
+        Matrix.multiplyMV(tempPosition, 0, modelView, 0, POS_MATRIX_MULTIPLY_VEC, 0);
+
+        float angle = Util.angleBetweenVectors(tempPosition, FORWARD_VEC);
+        return angle < Values.ANGLE_THRESHOLD_FINE;
+    }
 }
