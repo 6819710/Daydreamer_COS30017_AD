@@ -45,6 +45,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     // Object Data
     private TexturedMeshObject objectCRT;
     private TexturedMeshObject objectTable;
+    private TexturedMeshObject objectFindTheBlock;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -129,6 +130,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         // Draw each object.
         objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
         objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectFindTheBlock.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
@@ -144,8 +146,17 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         if(objectCRT.isLookedAt(headView)) {
             Log.i(TAG, "CRTMonitor");
 
-            Intent loadFindTheBlockDemo = new Intent(Navigation.this, HighScores.class);
-            startActivity(loadFindTheBlockDemo);
+            // Load High Scores Activity.
+            Intent intent = new Intent(Navigation.this, HighScores.class);
+            startActivity(intent);
+        }
+        
+        if(objectFindTheBlock.isLookedAt(headView)) {
+            Log.i(TAG, "FindTheBlock");
+
+            // Load Find the Block Activity.
+            Intent intent = new Intent(Navigation.this, FindTheBlock.class);
+            startActivity(intent);
         }
 
         super.onCardboardTrigger();
@@ -175,6 +186,15 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         // Load Objects
         objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,0.0f, -4.5f);
         objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
+        objectFindTheBlock = new TexturedMeshObject(this, "FindTheBlockTitle", "obj/find_the_block_title.obj", "obj/find_the_block_title.png", "obj/find_the_block_title_selected.png", objectPositionParam, objectUvParam, 3.4641f,  0.0f, -2.0f);
+        objectFindTheBlock.rotate(0.0f, -30.0f, 0.0f);
+
+        /**
+         *   X          Z       Angle
+         *   3.4641     -2      -30
+         *   -3.4641    -2      30
+         *   2
+         */
     }
 
     @Override
