@@ -13,10 +13,8 @@ import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
-import com.jpgalovic.daydreamer.model.game.object.LetterSelector;
 import com.jpgalovic.daydreamer.model.util.FileManager;
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
-import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 
@@ -46,6 +44,7 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
     private TexturedMeshObject objectCRT;
     private TexturedMeshObject objectTable;
     private TexturedMeshObject objectFindTheBlock;
+    private TexturedMeshObject objectBlock;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -131,11 +130,13 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         objectCRT.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
         objectTable.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
         objectFindTheBlock.draw(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectBlock.draw(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
         objectCRT.rotate(0.0f, 0.5f, 0.0f);
+        objectBlock.rotate(0.1f, 0.5f, 0.1f);
     }
 
 
@@ -187,13 +188,14 @@ public class Navigation extends GvrActivity implements GvrView.StereoRenderer {
         objectCRT = new TexturedMeshObject(this, "CRT", "obj/crt_monitor.obj", "obj/crt_monitor_texture.png", objectPositionParam, objectUvParam,0.0f,0.0f, -4.5f);
         objectTable = new TexturedMeshObject(this, "Table", "obj/table.obj", "obj/table_texture.png", objectPositionParam, objectUvParam, 0.0f, -3.5f, -4.0f);
         objectFindTheBlock = new TexturedMeshObject(this, "FindTheBlockTitle", "obj/find_the_block_title.obj", "obj/find_the_block_title.png", "obj/find_the_block_title_selected.png", objectPositionParam, objectUvParam, 3.4641f,  0.0f, -2.0f);
-        objectFindTheBlock.rotate(0.0f, -30.0f, 0.0f);
+        objectFindTheBlock.rotate(0.0f, -60.0f, 0.0f);
+        objectBlock = new TexturedMeshObject(this, "Block", "obj/cube.obj", "obj/cube.png", objectPositionParam, objectUvParam, 5.19615f, 0.0f, -3.0f);
 
         /**
-         *   X          Z       Angle
-         *   3.4641     -2      -30
-         *   -3.4641    -2      30
-         *   2
+         *   Object Locations Refernce for distance 4
+         *   A  -60.0f      -30.0f      0.0f    30.0f       60.0f
+         *   X  3.4641f     2.0f        0.0f    -2.0f       -3.4641f
+         *   Z  -2.0f       -3.4641f    -4.0f   -3.4641f    -2.0f
          */
     }
 
