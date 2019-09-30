@@ -1,2 +1,2 @@
-include ':DaydreamerSandbox'
+include ':DaydreamerSandbox', ':Daydream'
 rootProject.name='Daydreamer'
