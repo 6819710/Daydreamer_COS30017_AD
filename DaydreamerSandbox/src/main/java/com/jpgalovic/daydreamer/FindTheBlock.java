@@ -1,5 +1,6 @@
 package com.jpgalovic.daydreamer;
 
+import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
 
 import com.jpgalovic.daydreamer.model.TexturedMeshObject;
+import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
 import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
@@ -128,8 +130,16 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         // Rotate Block about XYZ
         block.rotate(1,1,1);
 
-        // If timer has run out return to menu TODO: Change this to follow design pattern defined in D.2
+        // If timer has run out check if score is new high score then load either the
+        // "New High Score" or "High Scores" activity respectively.
         if(sevenSegmentTimer.zero()) {
+            Intent intent = new Intent(FindTheBlock.this, HighScores.class);
+            HighScoreManager manager = new HighScoreManager(this, "find_the_block_scores.csv");
+            if(manager.isHighScore(score)) {
+                intent = new Intent(FindTheBlock.this, NewHighScore.class);
+                intent.putExtra("score", score);
+            }
+            startActivity(intent);
             finish();
         }
     }
@@ -140,8 +150,8 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
 
         // Handle Block Found. Increment Score then re-position block to be found again.
         if(block.isLookedAt(headView)) {
-            score++;
-            newTaget();
+            score = score + rand.nextInt((20 - 10) + 1) + 10;
+            newTarget();
         }
 
         super.onCardboardTrigger();
@@ -173,7 +183,7 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         sevenSegmentTimer.start();
 
         block = new TexturedMeshObject(this, "Block", "obj/cube.obj", "obj/cube.png", "obj/cube_selected.png", objectPositionParam, objectUvParam,0.0f,0.0f, -10f);
-        newTaget();
+        newTarget();
     }
 
     @Override
@@ -186,7 +196,7 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         Log.i(TAG, "onRendererShutdown");
     }
 
-    private void newTaget() {
+    private void newTarget() {
         // calculate random yaw, pitch and distance
         float theta = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW);
         float phi = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH);
