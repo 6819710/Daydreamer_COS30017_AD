@@ -1,5 +1,6 @@
 package com.jpgalovic.daydreamer;
 
+import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
@@ -17,9 +18,6 @@ import com.jpgalovic.daydreamer.model.game.object.LetterSelector;
 import com.jpgalovic.daydreamer.model.util.HighScoreManager;
 import com.jpgalovic.daydreamer.model.util.Util;
 import com.jpgalovic.daydreamer.model.util.Values;
-import com.jpgalovic.daydreamer.model.game.object.SevenSegmentTimer;
-
-import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -37,6 +35,8 @@ public class NewHighScore extends GvrActivity implements GvrView.StereoRenderer 
     private LetterSelector objectLetterSelector2;
     private LetterSelector objectLetterSelector3;
     private TexturedMeshObject objectSave;
+
+    int score;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -56,6 +56,10 @@ public class NewHighScore extends GvrActivity implements GvrView.StereoRenderer 
 
         headView = new float[16];
         headRotation = new float[4];
+
+        // Load Data
+        Bundle extra = getIntent().getExtras();
+        score = extra.getInt("score");
     }
 
     public void initializeGvrView() {
@@ -90,8 +94,6 @@ public class NewHighScore extends GvrActivity implements GvrView.StereoRenderer 
         Matrix.setLookAtM(camera, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
 
         headTransform.getHeadView(headView, 0);
-
-        //TODO: UPDATE AUDIO ENGINE.
 
         Util.checkGLError("onNewFrame");
     }
@@ -128,17 +130,20 @@ public class NewHighScore extends GvrActivity implements GvrView.StereoRenderer 
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
-        int score = 150; //Score used for testing
-
         objectLetterSelector1.isLookedAt(headView);
         objectLetterSelector2.isLookedAt(headView);
         objectLetterSelector3.isLookedAt(headView);
 
         if(objectSave.isLookedAt(headView)) {
+            // Save High Score
             HighScoreManager highScore = new HighScoreManager(this, "find_the_block_scores.csv");
             String name = objectLetterSelector1.getLetter() + objectLetterSelector2.getLetter() + objectLetterSelector3.getLetter();
             highScore.setNewHighScore(name, score);
-            //TODO: Load High Score Display Board.
+
+            // Load High Scores
+            Intent intent = new Intent(NewHighScore.this, HighScores.class);
+            startActivity(intent);
+            finish();
         }
 
         super.onCardboardTrigger();
