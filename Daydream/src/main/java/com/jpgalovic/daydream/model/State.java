@@ -26,7 +26,7 @@ public abstract class State {
 
     /**
      * Adds given state to array list of connected states.
-     * @param state connected state
+     * @param state                         Connected state.
      */
     public void addConnection(State state) {
         connected.add(state);
@@ -34,8 +34,11 @@ public abstract class State {
 
     /**
      * Initialises state.
+     * @param context                       Application Context.
+     * @param objectPositionParam           Object Position Parameter.
+     * @param objectUVParam                 Object UV Parameter.
      */
-    public abstract void init();
+    public abstract void init(Context context, int objectPositionParam, int objectUVParam);
 
     /**
      * Processees User Inputs. TODO: Determine types of imput to expose to method.
@@ -45,7 +48,7 @@ public abstract class State {
     /**
      * Updates the state.
      */
-    public abstract State upate();
+    public abstract State update();
 
     /**
      * Renders the view for a given perspective.

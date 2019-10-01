@@ -14,6 +14,7 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
+import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
@@ -37,8 +38,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     // Activity Data
     // TODO: Include Global Data.
 
-    // State Engine Componants
-    // TODO: Include State Engine. (Handles Game State Switching)
+    // State Engine Components
+    State state;
     // TODO: Include Game States Definitions.
 
 
