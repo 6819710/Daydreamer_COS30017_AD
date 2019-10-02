@@ -13,10 +13,16 @@ public class Navigation extends State {
     //private TexturedMeshObject objectBlock;
 
     // State Data
-    // TODO: Add State Data Here
+    boolean loadCRT;
 
     public Navigation() {
         super("STATE_NAVIGATION");
+        loadCRT = false;
+    }
+
+    @Override
+    public void onDisplay() {
+        loadCRT = false;
     }
 
     @Override
@@ -26,12 +32,19 @@ public class Navigation extends State {
     }
 
     @Override
-    public void input() {
-        // TODO: Process User Inputs.
+    public void input(float[] headView) {
+        if(objectCRT.isLookedAt(headView)) {
+            loadCRT = true;
+        }
     }
 
     @Override
     public State update() {
+        if(loadCRT) {
+            connected.get(0).onDisplay();
+            return connected.get(0);
+        }
+
         objectCRT.rotate(0.0f, 0.5f, 0.0f);
         return this;
     }

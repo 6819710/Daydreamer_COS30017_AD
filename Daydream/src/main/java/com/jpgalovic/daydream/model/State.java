@@ -22,6 +22,7 @@ public abstract class State {
      */
     public State(String tag) {
         this.TAG = tag;
+        connected = new ArrayList<>();
     }
 
     /**
@@ -33,6 +34,15 @@ public abstract class State {
     }
 
     /**
+     * Method to be run on displayed.
+     * NOTE: Should only be called by connected states.
+     * Expected usage:
+     * connected.get().onDisplay();
+     * return connected.get();
+     */
+    public void onDisplay() {}
+
+    /**
      * Initialises state.
      * @param context                       Application Context.
      * @param objectPositionParam           Object Position Parameter.
@@ -41,9 +51,9 @@ public abstract class State {
     public abstract void init(Context context, int objectPositionParam, int objectUVParam);
 
     /**
-     * Processees User Inputs. TODO: Determine types of imput to expose to method.
+     * Processees User Inputs. TODO: Determine types of input to expose to method.
      */
-    public abstract void input();
+    public abstract void input(float[] headView);
 
     /**
      * Updates the state.

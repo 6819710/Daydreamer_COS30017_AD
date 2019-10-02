@@ -14,6 +14,7 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
+import com.jpgalovic.daydream.model.FindTheBlock;
 import com.jpgalovic.daydream.model.Navigation;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.util.Util;
@@ -40,6 +41,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     State state;
 
     Navigation navigation;
+    FindTheBlock findTheBlock;
 
 
     @Override
@@ -56,6 +58,11 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         // Construct State Engine Components.
         navigation = new Navigation();
+        findTheBlock = new FindTheBlock();
+
+        // Link States.
+        navigation.addConnection(findTheBlock);
+        findTheBlock.addConnection(navigation);
 
         // Initialise GVR View.
         initialiseGvrView();
@@ -152,6 +159,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         // Load Objects
         navigation.init(this, objectPositionParam, objectUvParam);
+        findTheBlock.init(this, objectPositionParam, objectUvParam);
 
         state = navigation;
     }
@@ -164,5 +172,17 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     @Override
     public void onRendererShutdown() {
         Log.i(TAG, "onRendererShutdown");
+    }
+
+    /**
+     * Handles Google Cardboard Trigger.
+     */
+    @Override
+    public void onCardboardTrigger() {
+        Log.i(TAG, "onCardboardTrigger");
+
+        state.input(headView);
+
+        super.onCardboardTrigger();
     }
 }

@@ -2,17 +2,28 @@ package com.jpgalovic.daydream.model;
 
 import android.content.Context;
 
-public class StateTemplate extends State {
+import com.jpgalovic.daydream.model.util.Timer;
+
+public class FindTheBlock extends State {
     // Object Data
     // TODO: Add Object Data Here
 
     // State Data
-    // TODO: Add State Data Here
+    Timer timer;
 
+    public FindTheBlock() {
+        super("STATE_FIND_THE_BLOCK");
+    }
+
+    @Override
+    public void onDisplay() {
+        timer = new Timer(10);
+        timer.start();
+    }
 
     @Override
     public void init(Context context, int objectPositionParam, int objectUVParam) {
-        // TODO: Initialise each Object and StateData.
+
     }
 
     @Override
@@ -22,7 +33,10 @@ public class StateTemplate extends State {
 
     @Override
     public State update() {
-        // TODO: Process State Updates.
+        if(timer.getCount() == 0) { // Exit Timer has expired.
+            connected.get(0).onDisplay();
+            return connected.get(0);
+        }
         return this;
     }
 
