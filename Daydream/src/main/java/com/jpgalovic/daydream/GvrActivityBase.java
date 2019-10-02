@@ -14,7 +14,9 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
+import com.jpgalovic.daydream.model.Navigation;
 import com.jpgalovic.daydream.model.State;
+import com.jpgalovic.daydream.model.object.TexturedMeshObject;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
@@ -35,12 +37,10 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private float[] headView;
     private float[] headRotation;
 
-    // Activity Data
-    // TODO: Include Global Data.
-
     // State Engine Components
     State state;
-    // TODO: Include Game States Definitions.
+
+    Navigation navigation;
 
 
     @Override
@@ -55,8 +55,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headView = new float[16];
         headRotation = new float[16];
 
-        // Initialise Activity Data
-        // TODO: Add activity data initialisation elements here.
+        // Construct State Engine Components.
+        navigation = new Navigation();
 
         // Initialise GVR View.
         initialiseGvrView();
@@ -72,7 +72,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         gvrView.setEGLConfigChooser(8,8,8,8,16,8);
         gvrView.setRenderer(this);
-        gvrView.setTransitionViewEnabled(true);
+        gvrView.setTransitionViewEnabled(false);
         
         // Enable Cardboard-trigger feedback.
         gvrView.enableCardboardTriggerEmulation();
@@ -100,7 +100,6 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headTransform.getHeadView(headView, 0);
 
         // Update Audio Engine
-
         Util.checkGLError("onNewFrame");
     }
 
@@ -121,7 +120,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         float[] perspective = eye.getPerspective(Values.Z_NEAR, Values.Z_FAR);
 
         // Draw each object.
-        // TODO: Draw each object here.
+        state.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 
     /**
@@ -129,7 +128,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
      */
     @Override
     public void onFinishFrame(Viewport viewport) {
-
+        state = state.update();
     }
 
     /**
@@ -153,7 +152,9 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        // TODO: Initialise Object Data Here.
+        navigation.init(this, objectPositionParam, objectUvParam);
+
+        state = navigation;
     }
 
     @Override

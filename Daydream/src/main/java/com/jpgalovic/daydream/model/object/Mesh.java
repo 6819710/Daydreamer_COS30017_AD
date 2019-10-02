@@ -58,7 +58,7 @@ public class Mesh {
      * Note: before this is called a u_MVP should be set with glUniformMatrix4fv(), and a texture
      * should be bound to GL_TEXTURE0.
      */
-    public void draw() {
+    public void render() {
         GLES20.glEnableVertexAttribArray(positionAttrib);
         GLES20.glVertexAttribPointer(positionAttrib, 3, GLES20.GL_FLOAT, false, 0, vertices);
         GLES20.glEnableVertexAttribArray(uvAttrib);

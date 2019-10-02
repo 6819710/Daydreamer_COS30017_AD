@@ -9,16 +9,16 @@ import android.opengl.GLUtils;
 import java.io.IOException;
 
 public class Texture {
-    private final int[] texureID = new int[1];
+    private final int[] textureID = new int[1];
 
     /**
-     * Inialises the texture
+     * Initialises the texture
      *
      * @param context Context for loading the texture file.
      * @param texturePath Path to the image to use for the texture.
      */
     public Texture (Context context, String texturePath) throws IOException {
-        GLES20.glGenTextures(1, texureID, 0);
+        GLES20.glGenTextures(1, textureID, 0);
         bind();
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
@@ -35,6 +35,6 @@ public class Texture {
     /** binds the texture to GL_TEXTURE0. */
     public void bind() {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texureID[0]);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureID[0]);
     }
 }

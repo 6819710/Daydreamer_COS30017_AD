@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Daydream</string>
+
+
+    <!-- Object Locations -->
+    <string name="obj_crt_moniter_obj">obj/crt_monitor.obj</string>
+    <string-array name="obj_crt_monitor_tex">
+        <item>obj/crt_monitor.png</item>
+        <item>obj/crt_monitor_selected.png</item>
+    </string-array>
+
+    <string name="obj_table_obj">obj/table.obj</string>
+    <string-array name="obj_table_tex">
+        <item>obj/table.png</item>
+    </string-array>
 </resources>

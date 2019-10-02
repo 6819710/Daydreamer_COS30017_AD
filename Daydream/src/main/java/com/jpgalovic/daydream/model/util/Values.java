@@ -13,6 +13,9 @@ public class Values {
     public static final float MIN_TARGET_DISTANCE = 2.0f;
     public static final float MAX_TARGET_DISTANCE = 10.0f;
 
+    public static final float[] POS_MATRIX_MULTIPLY_VEC = {0.0f, 0.0f, 0.0f, 1.0f};
+    public static final float[] FORWARD_VEC = {0.0f, 0.0f, -1.0f, 1.f};
+
     public static final String[] OBJECT_VERTEX_SHADER =
             new String[] {
                 "uniform mat4 u_MVP;",
