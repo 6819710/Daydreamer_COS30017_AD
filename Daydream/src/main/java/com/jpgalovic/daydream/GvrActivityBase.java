@@ -16,7 +16,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 
 import com.jpgalovic.daydream.model.Navigation;
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.TexturedMeshObject;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
