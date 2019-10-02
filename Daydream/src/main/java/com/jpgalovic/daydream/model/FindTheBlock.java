@@ -7,10 +7,12 @@ import com.jpgalovic.daydream.model.util.Timer;
 
 public class FindTheBlock extends State {
     // Object Data
-    SevenSegmentTimer sevenSegmentTimer;
+    private SevenSegmentTimer sevenSegmentTimer;
 
     // State Data
-    Timer timer;
+    private Timer timer;
+
+    private boolean flagExit;
 
     public FindTheBlock() {
         super("STATE_FIND_THE_BLOCK");
@@ -19,6 +21,8 @@ public class FindTheBlock extends State {
     @Override
     public void onDisplay() {
         sevenSegmentTimer.start(10);
+        timer = new Timer();
+        flagExit = false;
     }
 
     @Override
@@ -33,12 +37,13 @@ public class FindTheBlock extends State {
 
     @Override
     public State update() {
-        if(timer.getCount() == 0) { // Exit Timer has expired.
+        if(timer.zero()) { // Exit Timer has expired.
             connected.get(0).onDisplay();
             return connected.get(0);
-        } else if(sevenSegmentTimer.zero()) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
+        } else if(sevenSegmentTimer.zero() && flagExit == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
             timer = new Timer(3);
             timer.start();
+            flagExit = true;
         }
         return this;
     }

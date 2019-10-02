@@ -11,7 +11,13 @@ public class Timer {
     private int startCount;
     private int delay;
 
+    private boolean started;
+
     AsyncTimer timer;
+
+    public Timer() {
+        this(0, 0);
+    }
 
     /**
      * Initialises Timer
@@ -30,6 +36,7 @@ public class Timer {
         this.count = 0;
         this.startCount = count;
         this.delay = delay;
+        started = false;
         timer = new AsyncTimer();
     }
 
@@ -39,6 +46,7 @@ public class Timer {
     public void start() {
         count = startCount;
         timer.execute(startCount, delay);
+        started = true;
     }
 
     /**
@@ -47,6 +55,10 @@ public class Timer {
      */
     public int getCount() {
         return count;
+    }
+
+    public boolean zero() {
+        return count == 0 && started;
     }
 
     private class AsyncTimer extends AsyncTask<Integer, Integer, Integer> {

@@ -13,7 +13,7 @@ public class SevenSegmentTimer {
     private TexturedMeshObject tens;
     private TexturedMeshObject hundreds;
 
-    Timer timer;
+    private Timer timer;
 
     /**
      * Constructs Three Digit Seven Segment Timer
@@ -31,7 +31,7 @@ public class SevenSegmentTimer {
         tens = new TexturedMeshObject(context, "TENS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x, y, z, 0.0f, 0.0f, 0.0f);
         hundreds = new TexturedMeshObject(context, "HUNDREDS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x - offset, y, z, 0.0f, 0.0f, 0.0f);
 
-        timer = new Timer(0);
+        //timer = new Timer(0);
     }
 
     /**
@@ -85,6 +85,7 @@ public class SevenSegmentTimer {
      */
     public void start(int count) {
         timer = new Timer(count);
+        timer.start();
     }
 
     /**
@@ -101,6 +102,6 @@ public class SevenSegmentTimer {
      * @return true if timer count == 0.
      */
     public boolean zero() {
-        return timer.getCount() == 0;
+        return timer.zero();
     }
 }
