@@ -52,6 +52,8 @@ public class TexturedMeshObject {
         } catch (IOException e) {
             Log.e(TAG, "Unable to initialise objects", e);
         }
+
+        int i = 0;
     }
 
     /**

@@ -2,11 +2,12 @@ package com.jpgalovic.daydream.model;
 
 import android.content.Context;
 
+import com.jpgalovic.daydream.model.object.compound.SevenSegmentTimer;
 import com.jpgalovic.daydream.model.util.Timer;
 
 public class FindTheBlock extends State {
     // Object Data
-    // TODO: Add Object Data Here
+    SevenSegmentTimer sevenSegmentTimer;
 
     // State Data
     Timer timer;
@@ -17,13 +18,12 @@ public class FindTheBlock extends State {
 
     @Override
     public void onDisplay() {
-        timer = new Timer(10);
-        timer.start();
+        sevenSegmentTimer.start(10);
     }
 
     @Override
     public void init(Context context, int objectPositionParam, int objectUVParam) {
-
+        sevenSegmentTimer = new SevenSegmentTimer(context, objectPositionParam, objectUVParam, 0.0f, 0.0f, -10.0f);
     }
 
     @Override
@@ -36,12 +36,15 @@ public class FindTheBlock extends State {
         if(timer.getCount() == 0) { // Exit Timer has expired.
             connected.get(0).onDisplay();
             return connected.get(0);
+        } else if(sevenSegmentTimer.zero()) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
+            timer = new Timer(3);
+            timer.start();
         }
         return this;
     }
 
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
-        // TODO: Render Scene
+        sevenSegmentTimer.render(perspective, view, objectProgram, objectModelViewProjectionParam);
     }
 }
