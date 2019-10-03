@@ -65,9 +65,9 @@ public class Timer {
         @Override
         protected Integer doInBackground(Integer... values) {
             try {
-                for(int i = values[0]; i > 0; i--) {
+                for(int i = values[0]; i >= 0; i--) {
                     Thread.sleep(values[1]);
-                    publishProgress(i);
+                    publishProgress(new Integer[]{i});
                 }
             } catch (InterruptedException e) {
                 Log.e(TAG, e.toString());
@@ -78,11 +78,6 @@ public class Timer {
         @Override
         protected void onProgressUpdate(Integer... values) {
             count = values[0];
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            count = integer;
         }
     }
 }
