@@ -20,7 +20,7 @@ public class FindTheBlock extends State {
 
     @Override
     public void onDisplay() {
-        sevenSegmentTimer.start(10);
+        sevenSegmentTimer.start(30);
         timer = new Timer();
         flagExit = false;
     }

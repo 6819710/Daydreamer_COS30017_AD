@@ -109,6 +109,16 @@ public class TexturedMeshObject {
     }
 
     /**
+     * Sets rotation of object.
+     * @param   pitch                             Pitch rotation of object.
+     * @param   yaw                               Yaw rotation of object.
+     * @param   roll                              Roll rotation of object.
+     */
+    public void setRotation(float pitch, float yaw, float roll) {
+        Matrix.setRotateEulerM(modelRot, 0, pitch, yaw, roll);
+    }
+
+    /**
      * Rotates object (Relative Angles)
      * @param   pitch                             Pitch rotation of object.
      * @param   yaw                               Yaw rotation of object.
@@ -118,39 +128,6 @@ public class TexturedMeshObject {
         Matrix.rotateM(modelRot, 0, pitch, 1,  0, 0);
         Matrix.rotateM(modelRot, 0, yaw, 0,  1, 0);
         Matrix.rotateM(modelRot, 0, roll, 0,  0, 1);
-    }
-
-    /**
-     * Rotates object about a given point
-     * @param   x                                 X coordinate of object.
-     * @param   y                                 Y coordinate of object.
-     * @param   z                                 Z coordinate of object.
-     * @param   pitch                             Pitch rotation of object.
-     * @param   yaw                               Yaw rotation of object.
-     * @param   roll                              Roll rotation of object.
-     */
-    public void rotateAbout(float x, float y, float z, float pitch, float yaw, float roll) {
-        // Calculate vector from current object location.
-        float i = x - modelPos[12];
-        float j = y - modelPos[13];
-        float k = z - modelPos[14];
-
-        // Calculate Radius, Theta and Phi TODO: Determine relationship between yaw pitch and roll and theta and phi
-        float rad = (float) Math.sqrt(i*i + j*j + k*k);
-        float theta = (float) Math.acos(k / rad);
-        float phi = (float) Math.atan2(j, i);
-
-        float pitchRad = (float)(pitch * Math.PI) / 180.0f;
-        float yawRad = (float)(yaw * Math.PI) / 180.0f;
-
-        // Calculate Relative Position.
-        float relX = (float) (rad * Math.sin(theta + pitchRad) * Math.cos(phi + yawRad));
-        float relY = (float) (rad * Math.sin(theta + pitchRad) * Math.sin(phi + yawRad));
-        float relZ = (float) (rad * Math.cos(theta + pitchRad));
-
-        // Translate and rotate object.
-        translate(relX, relY, relZ);
-        rotate(pitch, yaw, roll);
     }
 
     /**
