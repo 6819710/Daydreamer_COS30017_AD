@@ -1,8 +1,9 @@
-package com.jpgalovic.daydream.model;
+package com.jpgalovic.daydream.model.state;
 
 import android.content.Context;
 
 import com.jpgalovic.daydream.R;
+import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.object.TexturedMeshObject;
 
 public class Navigation extends State {

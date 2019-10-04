@@ -14,8 +14,8 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
-import com.jpgalovic.daydream.model.FindTheBlock;
-import com.jpgalovic.daydream.model.Navigation;
+import com.jpgalovic.daydream.model.state.FindTheBlock;
+import com.jpgalovic.daydream.model.state.Navigation;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
@@ -25,9 +25,6 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
     // OpenGL Parameters
     private int objectProgram;
-
-    private int objectPositionParam;
-    private int objectUvParam;
     private int objectModelViewProjectionParam;
 
     // Cameras, Views and Projection Mapping
@@ -151,8 +148,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         objectProgram = Util.compileProgram(Values.OBJECT_VERTEX_SHADER, Values.OBJECT_FRAGMENT_SHADER);
 
-        objectPositionParam = GLES20.glGetAttribLocation(objectProgram, "a_Position");
-        objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
+        int objectPositionParam = GLES20.glGetAttribLocation(objectProgram, "a_Position");
+        int objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
         objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
         Util.checkGLError("onSurfaceCreated");
