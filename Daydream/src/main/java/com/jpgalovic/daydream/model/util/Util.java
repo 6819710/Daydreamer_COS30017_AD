@@ -5,6 +5,8 @@ import android.opengl.Matrix;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.Random;
+
 import static android.opengl.GLU.gluErrorString;
 
 /**
@@ -12,6 +14,8 @@ import static android.opengl.GLU.gluErrorString;
  */
 public class Util {
     private static final String TAG = "Util";
+
+    private static Random rand = new Random();
 
     /** Flag to enable debug builds to fail quickly. IMPORTANT: Disable flag for release version. */
     private  static final boolean HALT_ON_GL_ERROR = true;
@@ -22,7 +26,7 @@ public class Util {
     /**
      * Checks GLES20.glGetError and fails quickly if the state isn't GL_NO_ERROR.
      *
-     * @param label Lable to report in case of error.
+     * @param   label           Label to report in case of error.
      */
     public static void checkGLError(String label) {
         int error = GLES20.glGetError();
@@ -42,11 +46,11 @@ public class Util {
 
     /**
      * Builds GL shader program from a vertex and fragment shader code.
-     * The vertex and fragment shaders are passed as arrays of strings in order to make compilation
+     * The vertex and fragment shader is passed as arrays of strings in order to make compilation
      * issues easier.
      *
-     * @param vertexCode GELS20 vertex shader program.
-     * @param fragmentCode GLES20 fragment shader program.
+     * @param   vertexCode      GELS20 vertex shader program.
+     * @param   fragmentCode    GLES20 fragment shader program.
      * @return GLES20 Program ID.
      */
     public static int compileProgram(String[] vertexCode, String[] fragmentCode) {
@@ -84,7 +88,7 @@ public class Util {
     }
 
     /**
-     * Calulates angel between two vectors.
+     * Calculates angel between two vectors.
      */
     public static float angleBetweenVectors(float[] vec1, float[] vec2) {
         float cosOfAngel = dotProduct(vec1, vec2) / (vectorNorm(vec1) * vectorNorm(vec2));
@@ -97,5 +101,38 @@ public class Util {
 
     private static float vectorNorm(float[] vec) {
         return Matrix.length(vec[0], vec[1], vec[2]);
+    }
+
+    /**
+     * Calculates a random position within the scope of the distances set by MAX_YAW, MAX_PITCH and MAX_TARGET_DISTANCE/MIN_TARGET_DISTANCE
+     * @return                  Matrix with random position.
+     */
+    public static float[] randomPosition() {
+        // Calculate random yaw, pitch and distance values.
+        float theta = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW);
+        float phi = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH);
+        float magnitude = rand.nextFloat() * (Values.MAX_TARGET_DISTANCE - Values.MIN_TARGET_DISTANCE) + Values.MIN_TARGET_DISTANCE;
+
+        return calculatePosition(magnitude, theta, phi);
+    }
+
+    /**
+     * Calculates vector components from angles theta and phi, and magnitude.
+     * @param   magnitude       Magnitude of Vector
+     * @param   theta           Angle Theta of Vector
+     * @param   phi             Angle Phi of Vector
+     * @return                  Matrix with calculated position.
+     */
+    public static float[] calculatePosition(float magnitude, float theta, float phi) {
+        float[] result = new float[16];
+
+        float x = (float) (magnitude * Math.sin(theta) * Math.cos(phi));
+        float y = (float) (magnitude * Math.sin(theta) * Math.sin(phi));
+        float z = (float) (magnitude * Math.cos(theta));
+
+        Matrix.setIdentityM(result, 0);
+        Matrix.translateM(result, 0, x, y, z);
+
+        return result;
     }
 }
