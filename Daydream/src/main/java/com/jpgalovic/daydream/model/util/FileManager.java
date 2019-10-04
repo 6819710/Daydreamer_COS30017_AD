@@ -4,18 +4,27 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.jpgalovic.daydream.model.object.score.Score;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileManager {
     private static final String TAG = "FILE_MANAGER";
 
     /**
      * Copies assets files to local storage if file does not already exist.
-     * @param   context   Application Context.
+     * @param   context         Application Context.
      */
     public static void copyAssets(Context context) {
         AssetManager assetManager = context.getAssets();
@@ -63,6 +72,61 @@ public class FileManager {
         int read;
         while ((read = in.read(buffer)) != 1) {
             out.write(buffer, 0, read);
+        }
+    }
+
+    /**
+     * Reads scores from a given CSV File.
+     * @param   context         Application Context.
+     * @param   fileName        File Name.
+     * @return                  Array of Scores.
+     * @throws  IOException     if I/O exception occurs.
+     */
+    public static Score[] getScores(Context context, String fileName) throws IOException {
+        try {
+            Score[] result = new Score[12];
+            InputStream in = new FileInputStream(new File(context.getFilesDir().toString()+'/'+fileName));
+            CSVReader reader = new CSVReader(new InputStreamReader(in));
+            String[] nextLine;
+
+            //read each line from file
+            for(int i = 0; i < 12; i++) {
+                if((nextLine = reader.readNext()) != null) {
+                    result[i] = new Score(nextLine[0], Integer.parseInt(nextLine[1]));
+                }
+            }
+
+            return result;
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Overrides file with provided scores.
+     * @param   context         Context reference.
+     * @param   fileName        File name of scores.csv file.
+     * @param   scores          Array containing scores.
+     * @throws  IOException     if I/O exception occurs.
+     */
+    public static void saveScores(Context context, String fileName, Score[] scores) throws IOException {
+        try {
+            OutputStream out = new FileOutputStream(new File(context.getFilesDir().toString()+'/'+fileName), false);
+            CSVWriter writer = new CSVWriter(new OutputStreamWriter(out));
+
+            //write each score to list.
+            List<String[]> lines = new ArrayList<>();
+            for(Score score : scores) {
+                lines.add(new String[]{score.getName(), Integer.toString(score.getScore())});
+            }
+            writer.writeAll(lines);
+            writer.close();
+            out.close();
+
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            throw e;
         }
     }
 }
