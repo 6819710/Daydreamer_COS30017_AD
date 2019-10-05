@@ -27,11 +27,9 @@ public class SevenSegmentTimer {
     public SevenSegmentTimer(Context context, int objectPositionParam, int objectUVParam, float x, float y, float z) {
         float offset = 1.9f;
 
-        units = new TexturedMeshObject(context, "UNITS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x + offset, y, z, 0.0f, 0.0f, 0.0f);
-        tens = new TexturedMeshObject(context, "TENS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x, y, z, 0.0f, 0.0f, 0.0f);
-        hundreds = new TexturedMeshObject(context, "HUNDREDS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x - offset, y, z, 0.0f, 0.0f, 0.0f);
-
-        //timer = new Timer(0);
+        units = new TexturedMeshObject(context, "OBJECT_UNITS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x + offset, y, z, 0.0f, 0.0f, 0.0f);
+        tens = new TexturedMeshObject(context, "OBJECT_TENS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x, y, z, 0.0f, 0.0f, 0.0f);
+        hundreds = new TexturedMeshObject(context, "OBJECT_HUNDREDS", false, context.getResources().getString(R.string.obj_seven_segment_obj), context.getResources().getStringArray(R.array.obj_seven_segment_tex), objectPositionParam, objectUVParam, x - offset, y, z, 0.0f, 0.0f, 0.0f);
     }
 
     /**

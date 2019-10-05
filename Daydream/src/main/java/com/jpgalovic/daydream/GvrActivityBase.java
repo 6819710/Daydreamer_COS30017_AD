@@ -15,8 +15,10 @@ import com.google.vr.sdk.base.Viewport;
 import javax.microedition.khronos.egl.EGLConfig;
 
 import com.jpgalovic.daydream.model.state.FindTheBlock;
+import com.jpgalovic.daydream.model.state.HighScores;
 import com.jpgalovic.daydream.model.state.Navigation;
 import com.jpgalovic.daydream.model.State;
+import com.jpgalovic.daydream.model.state.NewHighScore;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
@@ -35,11 +37,12 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private float[] headRotation;
 
     // State Engine Components
-    State state;
+    private State state;
 
-    Navigation navigation;
-    FindTheBlock findTheBlock;
-
+    private Navigation navigation;
+    private HighScores highScores;
+    private NewHighScore newHighScore;
+    private FindTheBlock findTheBlock;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -54,12 +57,21 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headRotation = new float[16];
 
         // Construct State Engine Components.
-        navigation = new Navigation();
-        findTheBlock = new FindTheBlock();
+        navigation = new Navigation(this);
+        highScores = new HighScores(this);
+        newHighScore = new NewHighScore(this);
+        findTheBlock = new FindTheBlock(this);
 
         // Link States.
+        navigation.addConnection(highScores);
         navigation.addConnection(findTheBlock);
-        findTheBlock.addConnection(navigation);
+
+        findTheBlock.addConnection(newHighScore);
+        findTheBlock.addConnection(highScores);
+
+        highScores.addConnection(navigation);
+
+        newHighScore.addConnection(highScores);
 
         // Initialise GVR View.
         initialiseGvrView();

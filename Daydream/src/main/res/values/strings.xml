@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Daydream</string>
 
+    <!-- File Locations -->
+    <string name="file_find_the_block">scores_find_the_block.csv</string>
 
     <!-- Object Locations -->
     <string name="obj_crt_moniter_obj">obj/crt_monitor.obj</string>
@@ -27,5 +29,12 @@
         <item>obj/find_the_block/seven_segment_disp_8.png</item>
         <item>obj/find_the_block/seven_segment_disp_9.png</item>
         <item>obj/find_the_block/seven_segment_disp_off.png</item>
+    </string-array>
+
+    <string name="obj_block">obj/find_the_block/block.obj</string>
+
+    <string-array name="obj_block_tex">
+        <item>obj/find_the_block/block.png</item>
+        <item>obj/find_the_block/block_selected.png</item>
     </string-array>
 </resources>

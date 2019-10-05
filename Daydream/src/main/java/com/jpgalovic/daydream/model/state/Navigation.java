@@ -16,8 +16,8 @@ public class Navigation extends State {
     // State Data
     boolean loadCRT;
 
-    public Navigation() {
-        super("STATE_NAVIGATION");
+    public Navigation(Context context) {
+        super("STATE_NAVIGATION", context);
         loadCRT = false;
     }
 

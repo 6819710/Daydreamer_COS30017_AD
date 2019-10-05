@@ -11,6 +11,9 @@ public class HighScores extends State {
     // State Data
     // TODO: Add State Data Here
 
+    public HighScores(Context context) {
+        super("STATE_HIGH_SCORES", context);
+    }
 
     @Override
     public void init(Context context, int objectPositionParam, int objectUVParam) {

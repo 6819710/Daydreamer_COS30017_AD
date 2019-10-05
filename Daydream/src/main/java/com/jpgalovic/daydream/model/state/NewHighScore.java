@@ -1,16 +1,18 @@
-package com.jpgalovic.daydream.model;
+package com.jpgalovic.daydream.model.state;
 
 import android.content.Context;
 
-public class StateTemplate extends State {
+import com.jpgalovic.daydream.model.State;
+
+public class NewHighScore extends State {
     // Object Data
     // TODO: Add Object Data Here
 
     // State Data
     // TODO: Add State Data Here
 
-    public StateTemplate(Context context) {
-        super("STATE_TEMPLATE", context);
+    public NewHighScore(Context context) {
+        super("STATE_NEW_HIGH_SCORE", context);
     }
 
     @Override
