@@ -44,6 +44,48 @@ public class ScoreManager {
     }
 
     /**
+     * Checks if given score qualifies for the score list (note: only 12 scores can be kept)
+     * @param   score           Score to check.
+     * @return                  True if score qualifies for the score list.
+     */
+    public boolean isValidScore(int score) {
+        return score > scores[0].getScore();
+    }
+
+    public boolean setNewScore(String name, int score) {
+        if(isValidScore(score)) {
+            scores[0] = new Score(name, score);
+            sort();
+            return saveScore();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Overrides scores in files.
+     * @return                  True if successfully saved.
+     */
+    private  boolean saveScore() {
+        try {
+            FileManager.saveScores(context, fileName, scores);
+            return true;
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+            // TODO: Handle failure to save scores.
+            return false;
+        }
+    }
+
+    public Score getScore(int index) throws RuntimeException {
+        if(index < 0 || index >= 11) {
+            throw new RuntimeException("Index out of bounds.");
+        } else {
+            return scores[index];
+        }
+    }
+
+    /**
      * Starts quick sort process.
      */
     private void sort() {
