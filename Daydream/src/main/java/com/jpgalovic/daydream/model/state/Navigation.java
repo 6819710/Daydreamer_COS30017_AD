@@ -27,7 +27,7 @@ public class Navigation extends State {
     }
 
     @Override
-    public void init(Context context, int objectPositionParam, int objectUVParam) {
+    public void init(int objectPositionParam, int objectUVParam) {
         objectCRT = new TexturedMeshObject(context, "OBJECT_CRT", false, context.getResources().getString(R.string.obj_crt_moniter_obj), context.getResources().getStringArray(R.array.obj_crt_monitor_tex), objectPositionParam, objectUVParam, 0.0f, 0.0f, -4.0f, 0.0f, 0.0f, 0.0f);
         objectTable = new TexturedMeshObject(context, "OBJECT_TABLE", false, context.getResources().getString(R.string.obj_table_obj), context.getResources().getStringArray(R.array.obj_table_tex), objectPositionParam, objectUVParam, 0.0f, -3.5f, -4.0f, 0.0f, 0.0f, 0.0f);
     }
@@ -42,8 +42,8 @@ public class Navigation extends State {
     @Override
     public State update() {
         if(loadCRT) {
-            connected.get(0).onDisplay();
-            return connected.get(0);
+            connected.get(1).onDisplay();
+            return connected.get(1);
         }
 
         objectCRT.rotate(0.0f, 0.5f, 0.0f);

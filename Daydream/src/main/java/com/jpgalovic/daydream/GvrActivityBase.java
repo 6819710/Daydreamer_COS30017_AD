@@ -19,6 +19,7 @@ import com.jpgalovic.daydream.model.state.HighScores;
 import com.jpgalovic.daydream.model.state.Navigation;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.state.NewHighScore;
+import com.jpgalovic.daydream.model.util.FileManager;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
@@ -75,6 +76,9 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         // Initialise GVR View.
         initialiseGvrView();
+
+        // Initialise Assets
+        FileManager.copyAssets(this);
     }
 
     /**
@@ -167,8 +171,10 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Util.checkGLError("onSurfaceCreated");
 
         // Load Objects
-        navigation.init(this, objectPositionParam, objectUvParam);
-        findTheBlock.init(this, objectPositionParam, objectUvParam);
+        navigation.init(objectPositionParam, objectUvParam);
+        highScores.init(objectPositionParam, objectUvParam);
+        newHighScore.init(objectPositionParam, objectUvParam);
+        findTheBlock.init(objectPositionParam, objectUvParam);
 
         state = navigation;
     }

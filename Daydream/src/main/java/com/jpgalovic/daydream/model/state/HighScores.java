@@ -16,7 +16,7 @@ public class HighScores extends State {
     }
 
     @Override
-    public void init(Context context, int objectPositionParam, int objectUVParam) {
+    public void init(int objectPositionParam, int objectUVParam) {
         // TODO: Initialise each Object and StateData.
     }
 

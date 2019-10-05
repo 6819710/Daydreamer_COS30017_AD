@@ -50,11 +50,10 @@ public abstract class State {
 
     /**
      * Initialises state.
-     * @param   context                         Application Context.
      * @param   objectPositionParam             Object Position Parameter.
      * @param   objectUVParam                   Object UV Parameter.
      */
-    public abstract void init(Context context, int objectPositionParam, int objectUVParam);
+    public abstract void init(int objectPositionParam, int objectUVParam);
 
     /**
      * Processees User Inputs. TODO: Determine types of input to expose to method.
