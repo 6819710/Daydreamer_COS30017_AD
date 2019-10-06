@@ -10,6 +10,7 @@ public class Navigation extends State {
     // Object Data
     private TexturedMeshObject objectCRT;
     private TexturedMeshObject objectTable;
+    private TexturedMeshObject objectHighScores;
     //private TexturedMeshObject objectFindTheBlock;
     //private TexturedMeshObject objectBlock;
 
@@ -30,6 +31,7 @@ public class Navigation extends State {
     public void init(int positionAttribute, int uvAttribute) {
         objectCRT = new TexturedMeshObject(context, "OBJECT_CRT", false, context.getResources().getString(R.string.obj_crt_moniter_obj), context.getResources().getStringArray(R.array.obj_crt_monitor_tex), positionAttribute, uvAttribute, 0.0f, 0.0f, -4.0f, 0.0f, 0.0f, 0.0f);
         objectTable = new TexturedMeshObject(context, "OBJECT_TABLE", false, context.getResources().getString(R.string.obj_table_obj), context.getResources().getStringArray(R.array.obj_table_tex), positionAttribute, uvAttribute, 0.0f, -3.5f, -4.0f, 0.0f, 0.0f, 0.0f);
+        objectHighScores = new TexturedMeshObject(context, "OBJECT_HIGH_SCORES", false, context.getResources().getString(R.string.obj_high_scores), context.getResources().getStringArray(R.array.obj_high_scores_tex), positionAttribute, uvAttribute, 0.0f, 3.0f, -4.0f, 0.0f, 0.0f, 0.0f);
     }
 
     @Override
@@ -54,5 +56,6 @@ public class Navigation extends State {
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
         objectCRT.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
         objectTable.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
+        objectHighScores.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 }

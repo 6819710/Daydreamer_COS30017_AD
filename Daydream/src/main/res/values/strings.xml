@@ -42,7 +42,7 @@
         <item>obj/find_the_block/block_selected.png</item>
     </string-array>
 
-    <string-array name="obj_char">
+    <string-array name="obj_char_obj">
         <item>obj/char/0.obj</item>
         <item>obj/char/1.obj</item>
         <item>obj/char/2.obj</item>
