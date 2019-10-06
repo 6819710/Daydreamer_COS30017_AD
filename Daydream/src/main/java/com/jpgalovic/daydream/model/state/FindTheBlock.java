@@ -44,7 +44,7 @@ public class FindTheBlock extends State {
         block = new TexturedMeshObject(context, "OBJECT_BLOCK", false, context.getResources().getString(R.string.obj_block), context.getResources().getStringArray(R.array.obj_block_tex), objectPositionParam, objectUVParam, 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
         float[] position = Util.randomPosition();
-        block.setPosition(position[0], position[1], position[2]);
+        block.setPosition(position[12], position[13], -position[14]);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FindTheBlock extends State {
         if(flagBlockFound == true && flagExit == false) {
             score += rand.nextInt((20 - 10) + 1) + 10;
             float[] position = Util.randomPosition();
-            block.setPosition(position[0], position[1], position[2]);
+            block.setPosition(position[12], position[13], -position[14]);
             flagBlockFound = false;
         }
 
@@ -86,5 +86,6 @@ public class FindTheBlock extends State {
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
         sevenSegmentTimer.render(perspective, view, objectProgram, objectModelViewProjectionParam);
+        block.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 }
