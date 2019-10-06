@@ -5,6 +5,7 @@
     <string name="file_find_the_block">scores_find_the_block.csv</string>
 
     <!-- Object Locations -->
+    <!-- Navigation Objects -->
     <string name="obj_crt_moniter_obj">obj/crt_monitor.obj</string>
     <string-array name="obj_crt_monitor_tex">
         <item>obj/crt_monitor.png</item>
@@ -21,6 +22,14 @@
         <item>obj/table.png</item>
     </string-array>
 
+    <string name="obj_find_the_block_obj">obj/find_the_block.obj</string>
+
+    <string-array name="obj_find_the_block_tex">
+        <item>obj/find_the_block.png</item>
+        <item>obj/find_the_block_selected.png</item>
+    </string-array>
+
+    <!-- Find The Block Objects -->
     <string name="obj_seven_segment_obj">obj/find_the_block/seven_segment_disp.obj</string>
     <string-array name="obj_seven_segment_tex">
         <item>obj/find_the_block/seven_segment_disp_0.png</item>
