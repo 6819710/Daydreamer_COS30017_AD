@@ -22,7 +22,7 @@ public class NewHighScore extends State {
     }
 
     @Override
-    public void init(int objectPositionParam, int objectUVParam) {
+    public void init(int positionAttribute, int uvAttribute) {
         scoreManager = new ScoreManager(context, pathString);
     }
 
@@ -32,7 +32,7 @@ public class NewHighScore extends State {
     }
 
     @Override
-    public State update() {
+    public State update(int positionAttribute, int uvAttribute) {
         // TODO: Process State Updates.
         return this;
     }

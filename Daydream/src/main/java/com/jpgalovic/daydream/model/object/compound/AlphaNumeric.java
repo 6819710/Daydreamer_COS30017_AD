@@ -17,8 +17,12 @@ public class AlphaNumeric {
 
     private TexturedMeshObject object;
 
+    public AlphaNumeric(Context context, int index, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
+        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric[index]), true, context.getResources().getStringArray(R.array.obj_char)[index], new String[]{context.getResources().getStringArray(R.array.obj_char_tex)[index]}, positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
+    }
+
     public AlphaNumeric(Context context, char alphaNumeric, boolean flagFine, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
-        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric), flagFine, context.getResources().getStringArray(R.array.obj_char)[getIndex(alphaNumeric)], context.getResources().getStringArray(R.array.obj_char_tex), positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
+        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric), flagFine, context.getResources().getStringArray(R.array.obj_char)[getIndex(alphaNumeric)], new String[]{context.getResources().getStringArray(R.array.obj_char_tex)[getIndex(alphaNumeric)]}, positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
     }
 
     private int getIndex(char alphaNumeric) throws RuntimeException {

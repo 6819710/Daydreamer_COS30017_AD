@@ -11,6 +11,11 @@
         <item>obj/crt_monitor_selected.png</item>
     </string-array>
 
+    <string name="obj_high_scores">obj/high_scores.obj</string>
+    <string-array name="obj_high_scores_tex">
+        <item>obj/high_scores.png</item>
+    </string-array>
+
     <string name="obj_table_obj">obj/table.obj</string>
     <string-array name="obj_table_tex">
         <item>obj/table.png</item>

@@ -78,7 +78,7 @@ public class ScoreManager {
     }
 
     public Score getScore(int index) throws RuntimeException {
-        if(index < 0 || index >= 11) {
+        if(index < 0 || index > 11) {
             throw new RuntimeException("Index out of bounds.");
         } else {
             return scores[index];

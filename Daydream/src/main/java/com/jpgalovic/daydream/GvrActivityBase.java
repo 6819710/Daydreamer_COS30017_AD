@@ -29,6 +29,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     // OpenGL Parameters
     private int objectProgram;
     private int objectModelViewProjectionParam;
+    private int objectPositionParam;
+    private int objectUvParam;
 
     // Cameras, Views and Projection Mapping
     private float[] camera;
@@ -147,7 +149,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
      */
     @Override
     public void onFinishFrame(Viewport viewport) {
-        state = state.update();
+        state = state.update(objectPositionParam, objectUvParam);
     }
 
     /**
@@ -164,8 +166,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         objectProgram = Util.compileProgram(Values.OBJECT_VERTEX_SHADER, Values.OBJECT_FRAGMENT_SHADER);
 
-        int objectPositionParam = GLES20.glGetAttribLocation(objectProgram, "a_Position");
-        int objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
+        objectPositionParam = GLES20.glGetAttribLocation(objectProgram, "a_Position");
+        objectUvParam = GLES20.glGetAttribLocation(objectProgram, "a_UV");
         objectModelViewProjectionParam = GLES20.glGetUniformLocation(objectProgram, "u_MVP");
 
         Util.checkGLError("onSurfaceCreated");

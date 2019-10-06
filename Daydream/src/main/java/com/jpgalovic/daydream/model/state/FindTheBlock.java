@@ -28,7 +28,7 @@ public class FindTheBlock extends State {
     }
 
     @Override
-    public void onDisplay() {
+    public void onDisplay(int positionAttribute, int uvAttribute) {
         sevenSegmentTimer.start(30);
         timer = new Timer();
 
@@ -55,7 +55,7 @@ public class FindTheBlock extends State {
     }
 
     @Override
-    public State update() {
+    public State update(int positionAttribute, int uvAttribute) {
         if(flagBlockFound == true && flagExit == false) {
             score += rand.nextInt((20 - 10) + 1) + 10;
             float[] position = Util.randomPosition();
@@ -66,12 +66,12 @@ public class FindTheBlock extends State {
         if(timer.zero()) { // Exit Timer has expired.
             ScoreManager scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
             if(scoreManager.isValidScore(score)) { // new high score, load new high score state.
-                connected.get(0).onDisplay();
+                connected.get(0).onDisplay(positionAttribute, uvAttribute);
                 connected.get(0).passData(score);
                 connected.get(0).passData(context.getResources().getString(R.string.file_find_the_block));
                 return connected.get(0);
             } else { // load high scores state.
-                connected.get(1).onDisplay();
+                connected.get(1).onDisplay(positionAttribute, uvAttribute);
                 return connected.get(1);
             }
         } else if(sevenSegmentTimer.zero() && flagExit == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
