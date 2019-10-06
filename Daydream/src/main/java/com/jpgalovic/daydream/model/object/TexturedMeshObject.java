@@ -23,7 +23,7 @@ public class TexturedMeshObject {
     private float[] modelView;
     private float[] modelViewProjection;
 
-    private static Boolean flagFine;
+    private Boolean flagFine;
 
     /**
      * Initialises Textured Mesh Object with given parameters
@@ -67,7 +67,7 @@ public class TexturedMeshObject {
      * @param   yaw                               Yaw rotation of object.
      * @param   roll                              Roll rotation of object.
      */
-    public void init(String name, boolean flagFine, float x, float y, float z, float pitch, float yaw, float roll) {
+    private void init(String name, boolean flagFine, float x, float y, float z, float pitch, float yaw, float roll) {
         TAG = name;
 
         this.flagFine = flagFine;
