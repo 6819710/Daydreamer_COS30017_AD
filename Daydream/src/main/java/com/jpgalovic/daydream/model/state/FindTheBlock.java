@@ -2,11 +2,13 @@ package com.jpgalovic.daydream.model.state;
 
 import android.content.Context;
 
+import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.TexturedMeshObject;
+import com.jpgalovic.daydream.model.object.Texture;
+import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 import com.jpgalovic.daydream.model.object.compound.SevenSegmentTimer;
-import com.jpgalovic.daydream.model.object.score.ScoreManager;
+import com.jpgalovic.daydream.model.score.ScoreManager;
 import com.jpgalovic.daydream.model.util.Timer;
 import com.jpgalovic.daydream.model.util.Util;
 
@@ -41,7 +43,7 @@ public class FindTheBlock extends State {
     @Override
     public void init(int objectPositionParam, int objectUVParam) {
         sevenSegmentTimer = new SevenSegmentTimer(context, objectPositionParam, objectUVParam, 0.0f, 0.0f, -10.0f);
-        block = new TexturedMeshObject(context, "OBJECT_BLOCK", false, context.getResources().getString(R.string.obj_block), context.getResources().getStringArray(R.array.obj_block_tex), objectPositionParam, objectUVParam, 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
+        block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.blockMeshes.get(0), new Texture[]{Data.blockTextures.get(0), Data.blockTextures.get(1)}, 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
         float[] position = Util.randomPosition();
         block.setPosition(position[12], position[13], -position[14]);
