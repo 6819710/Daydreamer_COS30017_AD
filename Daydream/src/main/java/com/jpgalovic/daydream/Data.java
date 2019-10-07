@@ -14,6 +14,7 @@ public class Data {
     public static final String TAG = "DATA";
 
     // Data elements
+    public static ArrayList<Texture> selectorTextures;
     public static ArrayList<Texture> alphaNumericTextures;
 
     public static ArrayList<Texture> blockTextures;
@@ -26,6 +27,7 @@ public class Data {
 
 
 
+    public static ArrayList<Mesh> selectorMeshes;
     public static ArrayList<Mesh> alphaNumericMeshes;
 
     public static ArrayList<Mesh> blockMeshes;
@@ -58,6 +60,19 @@ public class Data {
 
     private static void loadTextures(Context context) {
         String[] filePaths;
+
+        // Load Selector Textures.
+        selectorTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_selector_tex);
+        Log.i(TAG, "Loading AlphaNumeric Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                selectorTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
 
         // Load AlphaNumeric Textures.
         alphaNumericTextures = new ArrayList<>();
@@ -171,6 +186,21 @@ public class Data {
             ArrayList<ArrayList<Texture>> result = new ArrayList<>();
             String[] filePaths;
             int count = 0;
+
+            // Load Selector Textures.
+            selectorTextures = new ArrayList<>();
+            filePaths = context.getResources().getStringArray(R.array.obj_selector_tex);
+            Log.i(TAG, "Loading AlphaNumeric Textures.");
+
+            for(int i = 0; i < filePaths.length; i++) {
+                try {
+                    selectorTextures.add(new Texture(context, filePaths[i]));
+                    publishProgress(count++);
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+            result.add(selectorTextures);
 
             // Load AlphaNumeric Textures.
             ArrayList<Texture> alphaNumericTextures = new ArrayList<>();
@@ -290,13 +320,14 @@ public class Data {
             super.onPostExecute(arrayLists);
 
             Log.i(TAG, "Textures Loaded.");
-            alphaNumericTextures = arrayLists.get(0);
-            blockTextures = arrayLists.get(1);
-            sevenSegmentTimerTextures = arrayLists.get(2);
-            findTheBlockLabelTextures = arrayLists.get(3);
-            highScoresLabelTextures = arrayLists.get(4);
-            tableTextures = arrayLists.get(5);
-            crtMonitorTextures = arrayLists.get(6);
+            selectorTextures = arrayLists.get(0);
+            alphaNumericTextures = arrayLists.get(1);
+            blockTextures = arrayLists.get(2);
+            sevenSegmentTimerTextures = arrayLists.get(3);
+            findTheBlockLabelTextures = arrayLists.get(4);
+            highScoresLabelTextures = arrayLists.get(5);
+            tableTextures = arrayLists.get(6);
+            crtMonitorTextures = arrayLists.get(7);
 
             flag_textures_loaded = true;
         }
@@ -319,6 +350,21 @@ public class Data {
             ArrayList<ArrayList<Mesh>> result = new ArrayList<>();
             String[] filePaths;
             int count = 0;
+
+            // Load Selector Meshes.
+            ArrayList<Mesh> selectorMeshes = new ArrayList<>();
+            filePaths = context.getResources().getStringArray(R.array.obj_selector_obj);
+            Log.i(TAG, "Loading Selector Meshes.");
+
+            for(String path : filePaths) {
+                try {
+                    selectorMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
+                    publishProgress(count++);
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+            result.add(selectorMeshes);
 
             // Load AlphaNumeric Meshes.
             ArrayList<Mesh> alphaNumericMeshes = new ArrayList<>();
@@ -438,13 +484,14 @@ public class Data {
             super.onPostExecute(arrayLists);
 
             Log.i(TAG, "Meshes Loaded.");
-            alphaNumericMeshes = arrayLists.get(0);
-            blockMeshes = arrayLists.get(1);
-            sevenSegmentTimerMeshes = arrayLists.get(2);
-            findTheBlockLabelMeshes = arrayLists.get(3);
-            highScoresLabelMeshes = arrayLists.get(4);
-            tableMeshes = arrayLists.get(5);
-            crtMonitorMeshes = arrayLists.get(6);
+            selectorMeshes = arrayLists.get(0);
+            alphaNumericMeshes = arrayLists.get(1);
+            blockMeshes = arrayLists.get(2);
+            sevenSegmentTimerMeshes = arrayLists.get(3);
+            findTheBlockLabelMeshes = arrayLists.get(4);
+            highScoresLabelMeshes = arrayLists.get(5);
+            tableMeshes = arrayLists.get(6);
+            crtMonitorMeshes = arrayLists.get(7);
 
             flag_meshes_loaded = true;
         }

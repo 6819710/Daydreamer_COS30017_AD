@@ -23,7 +23,7 @@ public class ScoreDisplay {
         // Add letters of name.
         for(int i = 0; i < score.getName().length(); i++) {
             float xPos = x - Values.SCORE_DISPLAY_CENTER_OFFSET - ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H);
-            alphaNumerals.add(new AlphaNumeric(score.getName().charAt(i), xPos, y, z, pitch, yaw, roll));
+            alphaNumerals.add(new AlphaNumeric(false, false, score.getName().charAt(i), xPos, y, z, pitch, yaw, roll));
         }
 
         // Add numbers of score.
@@ -37,7 +37,7 @@ public class ScoreDisplay {
 
         for(int i = 0; i < values.size(); i++) {
             float xPos = x + Values.SCORE_DISPLAY_CENTER_OFFSET + ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H);
-            alphaNumerals.add(new AlphaNumeric(numbers[values.get(i)], xPos, y, z, pitch, yaw, roll));
+            alphaNumerals.add(new AlphaNumeric(false, false, numbers[values.get(i)], xPos, y, z, pitch, yaw, roll));
         }
     }
 

@@ -139,5 +139,13 @@
         <item>obj/char/Y.png</item>
         <item>obj/char/Z.png</item>
     </string-array>
+    
+    <string-array name="obj_selector_obj">
+        <item>obj/arrow.obj</item>
+    </string-array>
+    <string-array name="obj_selector_tex">
+        <item>obj/arrow.png</item>
+        <item>obj/arrow_selected.png</item>
+    </string-array>
 
 </resources>
