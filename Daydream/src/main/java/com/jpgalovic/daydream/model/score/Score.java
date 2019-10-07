@@ -1,4 +1,4 @@
-package com.jpgalovic.daydream.model.object.score;
+package com.jpgalovic.daydream.model.score;
 
 import androidx.annotation.Nullable;
 

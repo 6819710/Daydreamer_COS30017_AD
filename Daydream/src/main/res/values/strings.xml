@@ -6,31 +6,40 @@
 
     <!-- Object Locations -->
     <!-- Navigation Objects -->
-    <string name="obj_crt_moniter_obj">obj/crt_monitor.obj</string>
+    <string-array name="obj_crt_moniter_obj">
+        <item>obj/crt_monitor.obj</item>
+    </string-array>
     <string-array name="obj_crt_monitor_tex">
         <item>obj/crt_monitor.png</item>
         <item>obj/crt_monitor_selected.png</item>
     </string-array>
 
-    <string name="obj_high_scores">obj/high_scores.obj</string>
-    <string-array name="obj_high_scores_tex">
-        <item>obj/high_scores.png</item>
+    <string-array name="obj_table_obj">
+        <item>obj/table.obj</item>
     </string-array>
-
-    <string name="obj_table_obj">obj/table.obj</string>
     <string-array name="obj_table_tex">
         <item>obj/table.png</item>
     </string-array>
 
-    <string name="obj_find_the_block_obj">obj/find_the_block.obj</string>
+    <string-array name="obj_high_scores">
+        <item>obj/high_scores.obj</item>
+    </string-array>
+    <string-array name="obj_high_scores_tex">
+        <item>obj/high_scores.png</item>
+    </string-array>
 
+    <string-array name="obj_find_the_block_obj">
+        <item>obj/find_the_block.obj</item>
+    </string-array>
     <string-array name="obj_find_the_block_tex">
         <item>obj/find_the_block.png</item>
         <item>obj/find_the_block_selected.png</item>
     </string-array>
 
     <!-- Find The Block Objects -->
-    <string name="obj_seven_segment_obj">obj/find_the_block/seven_segment_disp.obj</string>
+    <string-array name="obj_seven_segment_obj">
+        <item>obj/find_the_block/seven_segment_disp.obj</item>
+    </string-array>
     <string-array name="obj_seven_segment_tex">
         <item>obj/find_the_block/seven_segment_disp_0.png</item>
         <item>obj/find_the_block/seven_segment_disp_1.png</item>
@@ -45,12 +54,15 @@
         <item>obj/find_the_block/seven_segment_disp_off.png</item>
     </string-array>
 
-    <string name="obj_block">obj/find_the_block/block.obj</string>
+    <string-array name="obj_block_obj">
+        <item>obj/find_the_block/block.obj</item>
+    </string-array>
     <string-array name="obj_block_tex">
         <item>obj/find_the_block/block.png</item>
         <item>obj/find_the_block/block_selected.png</item>
     </string-array>
 
+    <!-- Alapha Numeric Objects -->
     <string-array name="obj_char_obj">
         <item>obj/char/0.obj</item>
         <item>obj/char/1.obj</item>
@@ -127,4 +139,5 @@
         <item>obj/char/Y.png</item>
         <item>obj/char/Z.png</item>
     </string-array>
+
 </resources>

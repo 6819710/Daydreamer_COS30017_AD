@@ -29,7 +29,7 @@ public class Loading extends State {
     @Override
     public State update(int positionAttribute, int uvAttribute) {
         // Load init other states, then load navigation state.
-        if(Data.flag_textures_loaded) {
+        if(Data.flag_textures_loaded && Data.flag_meshes_loaded) {
             for(int i = 0; i < connected.size(); i++) {
                 connected.get(i).init(positionAttribute, uvAttribute);
             }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import com.jpgalovic.daydream.model.object.score.Score;
+import com.jpgalovic.daydream.model.score.Score;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 

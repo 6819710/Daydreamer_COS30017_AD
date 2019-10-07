@@ -3,8 +3,7 @@ package com.jpgalovic.daydream.model.state;
 import android.content.Context;
 
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.score.Score;
-import com.jpgalovic.daydream.model.object.score.ScoreManager;
+import com.jpgalovic.daydream.model.score.ScoreManager;
 
 public class NewHighScore extends State {
     // Object Data

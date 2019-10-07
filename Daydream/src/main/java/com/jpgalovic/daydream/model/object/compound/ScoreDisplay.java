@@ -2,8 +2,7 @@ package com.jpgalovic.daydream.model.object.compound;
 
 import android.content.Context;
 
-import com.jpgalovic.daydream.model.object.score.Score;
-import com.jpgalovic.daydream.model.util.Util;
+import com.jpgalovic.daydream.model.score.Score;
 import com.jpgalovic.daydream.model.util.Values;
 
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ public class ScoreDisplay {
 
         // Add letters of name.
         for(int i = 0; i < score.getName().length(); i++) {
-            float[] pos = Util.calculatePosition(Values.SCORE_DISPLAY_CENTER_OFFSET + ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H), yaw - 90.0f, pitch);
-            alphaNumerals.add(new AlphaNumeric(context, score.getName().charAt(i), false, positionAttribute, uvAttribute, x + pos[12], y + pos[13], z + pos[14], pitch, yaw, roll));
+            float xPos = x - Values.SCORE_DISPLAY_CENTER_OFFSET - ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H);
+            alphaNumerals.add(new AlphaNumeric(score.getName().charAt(i), xPos, y, z, pitch, yaw, roll));
         }
 
         // Add numbers of score.
@@ -37,8 +36,8 @@ public class ScoreDisplay {
         }
 
         for(int i = 0; i < values.size(); i++) {
-            float[] pos = Util.calculatePosition(- Values.SCORE_DISPLAY_CENTER_OFFSET - ((values.size() - i - 1) * Values.ALPHANUMERIC_OFFSET_H), yaw - 90.0f, pitch);
-            alphaNumerals.add(new AlphaNumeric(context, numbers[values.get(i)], false, positionAttribute, uvAttribute, x + pos[12], y + pos[13], z + pos[14], pitch, yaw, roll));
+            float xPos = x + Values.SCORE_DISPLAY_CENTER_OFFSET + ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H);
+            alphaNumerals.add(new AlphaNumeric(numbers[values.get(i)], xPos, y, z, pitch, yaw, roll));
         }
     }
 
@@ -46,9 +45,5 @@ public class ScoreDisplay {
         for(AlphaNumeric alphaNumeric : alphaNumerals) {
             alphaNumeric.render(perspective, view, objectProgram, objectModelViewProjectionParam);
         }
-    }
-
-    public Score getScore() {
-        return score;
     }
 }

@@ -4,12 +4,9 @@ import android.content.Context;
 
 import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.compound.AlphaNumeric;
 import com.jpgalovic.daydream.model.object.compound.ScoreDisplay;
-import com.jpgalovic.daydream.model.object.score.Score;
-import com.jpgalovic.daydream.model.object.score.ScoreManager;
+import com.jpgalovic.daydream.model.score.ScoreManager;
 import com.jpgalovic.daydream.model.util.Timer;
-import com.jpgalovic.daydream.model.util.Values;
 
 import java.util.ArrayList;
 
@@ -28,67 +25,17 @@ public class HighScores extends State {
 
     @Override
     public void onDisplay(int positionAttribute, int uvAttribute) {
-        // Find the Block.
         scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
         for(int i = 0; i < 12; i++) {
-            if(!scoreDisplay.get(i).getScore().equals(scoreManager.getScore(i))) {
-                scoreDisplay.set(i, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), -8.0f, 0.0f, 45.0f, 0.0f));
-            }
+            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 0.0f, -6.4f + (i * 1.4f), - 15.0f, 0.0f, 0.0f, 0.0f));
         }
 
-        /*// TODO: DEMO
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            if(!(scoreDisplay.get(i + 12).getScore().equals(scoreManager.getScore(i)))) {
-                scoreDisplay.set(i + 12, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 45.0f, 0.0f));
-            }
-        }
-
-        // TODO: DEMO
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            if(!(scoreDisplay.get(i + 24).getScore().equals(scoreManager.getScore(i)))) {
-                scoreDisplay.set(i + 24, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 45.0f, 0.0f));
-            }
-        }
-
-        // TODO: DEMO
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            if(!(scoreDisplay.get(i + 36).getScore().equals(scoreManager.getScore(i)))) {
-                scoreDisplay.set(i + 36, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 8.0f, -8.4f + (i * 1.4f), -8.0f, 0.0f, 45.0f, 0.0f));
-            }
-        }*/
-
-        exitTimer = new Timer(10);
+        exitTimer = new Timer(20);
         exitTimer.start();
     }
 
     @Override
     public void init(int positionAttribute, int uvAttribute) {
-        // Find the Block.
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), - 8.0f, 0.0f, 45.0f, 0.0f));
-        }
-
-        /*// TODO: DEMO
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 135.0f, 0.0f));
-        }
-
-        // TODO: DEMO
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 225.0f, 0.0f));
-        }
-
-        // TODO: DEMO
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
-        for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 8.0f, -8.4f + (i * 1.4f), - 8.0f, 0.0f, 315.0f, 0.0f));
-        }*/
     }
 
     @Override

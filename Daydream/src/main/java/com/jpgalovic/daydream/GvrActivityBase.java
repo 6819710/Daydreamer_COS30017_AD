@@ -183,7 +183,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Util.checkGLError("onSurfaceCreated");
 
         // Load Data
-        Data.initialise(this);
+        Data.initialise(this, objectPositionParam, objectUvParam);
 
         loading.init(objectPositionParam, objectUvParam);
         state = loading;

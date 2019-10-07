@@ -1,6 +1,6 @@
 package com.jpgalovic.daydream;
 
-import com.jpgalovic.daydream.model.object.score.Score;
+import com.jpgalovic.daydream.model.score.Score;
 
 import org.junit.Test;
 
