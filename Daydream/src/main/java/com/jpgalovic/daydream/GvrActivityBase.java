@@ -14,8 +14,10 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
+import com.jpgalovic.daydream.model.StateTemplate;
 import com.jpgalovic.daydream.model.state.FindTheBlock;
 import com.jpgalovic.daydream.model.state.HighScores;
+import com.jpgalovic.daydream.model.state.Loading;
 import com.jpgalovic.daydream.model.state.Navigation;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.state.NewHighScore;
@@ -47,6 +49,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private NewHighScore newHighScore;
     private FindTheBlock findTheBlock;
 
+    private Loading loading;
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -60,12 +64,18 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headRotation = new float[16];
 
         // Construct State Engine Components.
+        loading = new Loading(this);
         navigation = new Navigation(this);
         highScores = new HighScores(this);
         newHighScore = new NewHighScore(this);
         findTheBlock = new FindTheBlock(this);
 
         // Link States.
+        loading.addConnection(navigation);
+        loading.addConnection(highScores);
+        loading.addConnection(newHighScore);
+        loading.addConnection(findTheBlock);
+
         navigation.addConnection(highScores);
         navigation.addConnection(findTheBlock);
 
@@ -172,13 +182,11 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         Util.checkGLError("onSurfaceCreated");
 
-        // Load Objects
-        navigation.init(objectPositionParam, objectUvParam);
-        highScores.init(objectPositionParam, objectUvParam);
-        newHighScore.init(objectPositionParam, objectUvParam);
-        findTheBlock.init(objectPositionParam, objectUvParam);
+        // Load Data
+        Data.initialise(this);
 
-        state = navigation;
+        loading.init(objectPositionParam, objectUvParam);
+        state = loading;
     }
 
     @Override

@@ -2,7 +2,9 @@ package com.jpgalovic.daydream.model.object.compound;
 
 import android.content.Context;
 
+import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
+import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.TexturedMeshObject;
 
 public class AlphaNumeric {
@@ -18,11 +20,11 @@ public class AlphaNumeric {
     private TexturedMeshObject object;
 
     public AlphaNumeric(Context context, int index, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
-        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric[index]), true, context.getResources().getStringArray(R.array.obj_char_obj)[index], new String[]{context.getResources().getStringArray(R.array.obj_char_tex)[index]}, positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
+        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric[index]), true, context.getResources().getStringArray(R.array.obj_char_obj)[index], new Texture[]{ Data.alphaNumericTextures.get(index)}, positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
     }
 
     public AlphaNumeric(Context context, char alphaNumeric, boolean flagFine, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
-        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric), flagFine, context.getResources().getStringArray(R.array.obj_char_obj)[getIndex(alphaNumeric)], new String[]{context.getResources().getStringArray(R.array.obj_char_tex)[getIndex(alphaNumeric)]}, positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
+        object = new TexturedMeshObject(context, String.valueOf(alphaNumeric), flagFine, context.getResources().getStringArray(R.array.obj_char_obj)[getIndex(alphaNumeric)], new Texture[]{ Data.alphaNumericTextures.get(getIndex(alphaNumeric))}, positionAttribute, uvAttribute, x, y, z, pitch, yaw, roll);
     }
 
     private int getIndex(char alphaNumeric) throws RuntimeException {

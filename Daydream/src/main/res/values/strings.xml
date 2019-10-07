@@ -22,11 +22,11 @@
         <item>obj/table.png</item>
     </string-array>
 
-    <string name="obj_find_the_block_obj">obj/find_the_block_reduced.obj</string>
+    <string name="obj_find_the_block_obj">obj/find_the_block.obj</string>
 
     <string-array name="obj_find_the_block_tex">
-        <item>obj/find_the_block_reduced.png</item>
-        <item>obj/find_the_block_selected_reduced.png</item>
+        <item>obj/find_the_block.png</item>
+        <item>obj/find_the_block_selected.png</item>
     </string-array>
 
     <!-- Find The Block Objects -->

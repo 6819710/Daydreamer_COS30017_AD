@@ -25,6 +25,20 @@ public class TexturedMeshObject {
 
     private Boolean flagFine;
 
+    public TexturedMeshObject(Context context, String name, boolean flagFine, String objPath, Texture[] textures, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
+        init(name, flagFine, x, y, z, yaw, pitch, roll);
+
+        try {
+            objectMesh = new Mesh(context, objPath, positionAttribute, uvAttribute);
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to initialise objects", e);
+        }
+
+        for(int i = 0; i < textures.length; i++) {
+            objectTex.add(textures[i]);
+        }
+    }
+
     /**
      * Initialises Textured Mesh Object with given parameters
      * @param   context                           Application Context.
@@ -52,8 +66,6 @@ public class TexturedMeshObject {
         } catch (IOException e) {
             Log.e(TAG, "Unable to initialise objects", e);
         }
-
-        int i = 0;
     }
 
     /**
