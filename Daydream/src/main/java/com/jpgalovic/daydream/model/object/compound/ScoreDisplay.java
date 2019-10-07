@@ -10,9 +10,12 @@ import java.util.ArrayList;
 
 public class ScoreDisplay {
     private ArrayList<AlphaNumeric> alphaNumerals;
+    private Score score;
 
     public ScoreDisplay(Context context, Score score, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
         alphaNumerals = new ArrayList<>();
+
+        this.score = score;
 
         char[] numbers = new char[]{
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -20,7 +23,8 @@ public class ScoreDisplay {
 
         // Add letters of name.
         for(int i = 0; i < score.getName().length(); i++) {
-            alphaNumerals.add(new AlphaNumeric(context, score.getName().charAt(i), false, positionAttribute, uvAttribute, x - Values.SCORE_DISPLAY_CENTER_OFFSET - ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H), y, z, pitch, yaw, roll));
+            float[] pos = Util.calculatePosition(Values.SCORE_DISPLAY_CENTER_OFFSET + ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H), yaw - 90.0f, pitch);
+            alphaNumerals.add(new AlphaNumeric(context, score.getName().charAt(i), false, positionAttribute, uvAttribute, x + pos[12], y + pos[13], z + pos[14], pitch, yaw, roll));
         }
 
         // Add numbers of score.
@@ -33,7 +37,8 @@ public class ScoreDisplay {
         }
 
         for(int i = 0; i < values.size(); i++) {
-            alphaNumerals.add(new AlphaNumeric(context, numbers[values.get(i)], false, positionAttribute, uvAttribute, x + Values.SCORE_DISPLAY_CENTER_OFFSET + ((values.size() - i - 1) * Values.ALPHANUMERIC_OFFSET_H), y, z, pitch, yaw, roll));
+            float[] pos = Util.calculatePosition(- Values.SCORE_DISPLAY_CENTER_OFFSET - ((values.size() - i - 1) * Values.ALPHANUMERIC_OFFSET_H), yaw - 90.0f, pitch);
+            alphaNumerals.add(new AlphaNumeric(context, numbers[values.get(i)], false, positionAttribute, uvAttribute, x + pos[12], y + pos[13], z + pos[14], pitch, yaw, roll));
         }
     }
 
@@ -41,5 +46,9 @@ public class ScoreDisplay {
         for(AlphaNumeric alphaNumeric : alphaNumerals) {
             alphaNumeric.render(perspective, view, objectProgram, objectModelViewProjectionParam);
         }
+    }
+
+    public Score getScore() {
+        return score;
     }
 }

@@ -96,6 +96,9 @@ public class FileManager {
                 }
             }
 
+            reader.close();
+            in.close();
+
             return result;
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());

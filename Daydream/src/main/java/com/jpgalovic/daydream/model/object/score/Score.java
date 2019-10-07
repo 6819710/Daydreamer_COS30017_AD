@@ -1,5 +1,7 @@
 package com.jpgalovic.daydream.model.object.score;
 
+import androidx.annotation.Nullable;
+
 public class Score {
     private static final String TAG = "SCORE";
 
@@ -34,5 +36,19 @@ public class Score {
 
     public boolean lessThan(Score other) {
         return this.score < other.score;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof Score)) {
+            return false;
+        }
+
+        if(obj == this) {
+            return true;
+        }
+
+        Score other = (Score) obj;
+        return this.name == other.name && this.score == other.score;
     }
 }

@@ -23,16 +23,42 @@ public class HighScores extends State {
 
     public HighScores(Context context) {
         super("STATE_HIGH_SCORES", context);
-        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
         scoreDisplay = new ArrayList<>();
     }
 
     @Override
     public void onDisplay(int positionAttribute, int uvAttribute) {
-        scoreDisplay.clear();
+        // Find the Block.
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
         for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 0.0f, -8.4f + (i * 1.4f), - 15.0f, 0.0f, 0.0f, 0.0f));
+            if(!scoreDisplay.get(i).getScore().equals(scoreManager.getScore(i))) {
+                scoreDisplay.set(i, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), -8.0f, 0.0f, 45.0f, 0.0f));
+            }
         }
+
+        /*// TODO: DEMO
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            if(!(scoreDisplay.get(i + 12).getScore().equals(scoreManager.getScore(i)))) {
+                scoreDisplay.set(i + 12, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 45.0f, 0.0f));
+            }
+        }
+
+        // TODO: DEMO
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            if(!(scoreDisplay.get(i + 24).getScore().equals(scoreManager.getScore(i)))) {
+                scoreDisplay.set(i + 24, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 45.0f, 0.0f));
+            }
+        }
+
+        // TODO: DEMO
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            if(!(scoreDisplay.get(i + 36).getScore().equals(scoreManager.getScore(i)))) {
+                scoreDisplay.set(i + 36, new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 8.0f, -8.4f + (i * 1.4f), -8.0f, 0.0f, 45.0f, 0.0f));
+            }
+        }*/
 
         exitTimer = new Timer(10);
         exitTimer.start();
@@ -40,7 +66,29 @@ public class HighScores extends State {
 
     @Override
     public void init(int positionAttribute, int uvAttribute) {
+        // Find the Block.
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), - 8.0f, 0.0f, 45.0f, 0.0f));
+        }
 
+        /*// TODO: DEMO
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, -8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 135.0f, 0.0f));
+        }
+
+        // TODO: DEMO
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 8.0f, -8.4f + (i * 1.4f), 8.0f, 0.0f, 225.0f, 0.0f));
+        }
+
+        // TODO: DEMO
+        scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+        for(int i = 0; i < 12; i++) {
+            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 8.0f, -8.4f + (i * 1.4f), - 8.0f, 0.0f, 315.0f, 0.0f));
+        }*/
     }
 
     @Override
