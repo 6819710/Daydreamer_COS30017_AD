@@ -3,7 +3,6 @@ package com.jpgalovic.daydream.model.object.compound;
 import android.content.Context;
 
 import com.jpgalovic.daydream.Data;
-import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 import com.jpgalovic.daydream.model.util.Timer;
@@ -19,14 +18,11 @@ public class SevenSegmentTimer {
 
     /**
      * Constructs Three Digit Seven Segment Timer
-     * @param context                   Application Context
-     * @param objectPositionParam       Object Position Parameter.
-     * @param objectUVParam             Object UV Parameter.
      * @param x                         X Coordinate.
      * @param y                         Y Coordinate.
      * @param z                         Z Coordinate.
      */
-    public SevenSegmentTimer(Context context, int objectPositionParam, int objectUVParam, float x, float y, float z) {
+    public SevenSegmentTimer(float x, float y, float z) {
         float offset = 1.9f;
 
         Texture[] Textures = new Texture[]{

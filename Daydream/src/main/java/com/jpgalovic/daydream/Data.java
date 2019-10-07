@@ -41,11 +41,7 @@ public class Data {
     public static boolean flag_meshes_loaded;
 
     // Async References.
-    private static LoadTextures loadTextures;
     private static LoadMeshes loadMeshes;
-
-    private static int positionAttribute;
-    private static int uvAttribute;
 
     /**
      * Runs initialisation process.
@@ -54,31 +50,136 @@ public class Data {
         flag_textures_loaded = false;
         flag_meshes_loaded = false;
 
-        positionAttribute = positionAttrib;
-        uvAttribute = uvAttrib;
+        loadTextures(context);
 
-        loadTextures = new LoadTextures();
-        loadMeshes = new LoadMeshes();
-
-        loadTextures.execute(context);
-        loadMeshes.execute(context);
+        loadMeshes = new LoadMeshes(context, positionAttrib, uvAttrib);
+        loadMeshes.execute();
     }
 
-    private static class LoadTextures extends AsyncTask<Context, Integer, ArrayList<ArrayList<Texture>>> {
+    private static void loadTextures(Context context) {
+        String[] filePaths;
+
+        // Load AlphaNumeric Textures.
+        alphaNumericTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_char_tex);
+        Log.i(TAG, "Loading AlphaNumeric Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                alphaNumericTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        // Load Block Textures.
+        blockTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_block_tex);
+        Log.i(TAG, "Loading Block Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                blockTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        // Load Seven Segment Display Textures.
+        sevenSegmentTimerTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_seven_segment_tex);
+        Log.i(TAG, "Loading Seven Segment Display Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                sevenSegmentTimerTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        // Load Find The Block Label Textures.
+        findTheBlockLabelTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_find_the_block_tex);
+        Log.i(TAG, "Loading Find The Block Label Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                findTheBlockLabelTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        // Load High Scores Label Textures.
+        highScoresLabelTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_high_scores_tex);
+        Log.i(TAG, "Loading High Scores Label Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                highScoresLabelTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        // Load Table Textures.
+        tableTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_table_tex);
+        Log.i(TAG, "Loading Table Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                tableTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        // Load CRT Monitor Textures.
+        crtMonitorTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_crt_monitor_tex);
+        Log.i(TAG, "Loading CRT Monitor Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                crtMonitorTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        flag_textures_loaded = true;
+    }
+
+    //TODO: Work out how to get Async Loading of Textures.
+    private static class LoadTextures extends AsyncTask<Void, Integer, ArrayList<ArrayList<Texture>>> {
+
+        private Context context;
+        private int positionAttribute;
+        private int uvAttribute;
+
+        LoadTextures(Context context, int positionAttrib, int uvAttrib) {
+            this.context = context;
+            this.positionAttribute = positionAttrib;
+            this.uvAttribute = uvAttrib;
+        }
+
         @Override
-        protected ArrayList<ArrayList<Texture>> doInBackground(Context... contexts) {
+        protected ArrayList<ArrayList<Texture>> doInBackground(Void... voids) {
             ArrayList<ArrayList<Texture>> result = new ArrayList<>();
             String[] filePaths;
             int count = 0;
 
             // Load AlphaNumeric Textures.
             ArrayList<Texture> alphaNumericTextures = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_char_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_char_tex);
             Log.i(TAG, "Loading AlphaNumeric Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    alphaNumericTextures.add(new Texture(contexts[0], path));
+                    alphaNumericTextures.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -88,12 +189,12 @@ public class Data {
 
             // Load Block Textures.
             ArrayList<Texture> blockTextures = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_char_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_block_tex);
             Log.i(TAG, "Loading Block Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    blockTextures.add(new Texture(contexts[0], path));
+                    blockTextures.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -103,12 +204,12 @@ public class Data {
 
             // Load Seven Segment Display Textures.
             ArrayList<Texture> sevenSegmentDisplayTextures = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_seven_segment_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_seven_segment_tex);
             Log.i(TAG, "Loading Seven Segment Display Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    sevenSegmentDisplayTextures.add(new Texture(contexts[0], path));
+                    sevenSegmentDisplayTextures.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -118,12 +219,12 @@ public class Data {
 
             // Load Find The Block Label Textures.
             ArrayList<Texture> findTheblockLabelTextures = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_find_the_block_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_find_the_block_tex);
             Log.i(TAG, "Loading Find The Block Label Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    findTheblockLabelTextures.add(new Texture(contexts[0], path));
+                    findTheblockLabelTextures.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -133,12 +234,12 @@ public class Data {
 
             // Load High Scores Label Textures.
             ArrayList<Texture> highScoresLabelTextures = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_high_scores_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_high_scores_tex);
             Log.i(TAG, "Loading High Scores Label Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    highScoresLabelTextures.add(new Texture(contexts[0], path));
+                    highScoresLabelTextures.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -148,12 +249,12 @@ public class Data {
 
             // Load Table Textures.
             ArrayList<Texture> tableTextures = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_table_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_table_tex);
             Log.i(TAG, "Loading Table Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    tableTextures.add(new Texture(contexts[0], path));
+                    tableTextures.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -163,12 +264,12 @@ public class Data {
 
             // Load CRT Monitor Textures.
             ArrayList<Texture> crtMonitorTextrues = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_crt_monitor_tex);
+            filePaths = context.getResources().getStringArray(R.array.obj_crt_monitor_tex);
             Log.i(TAG, "Loading CRT Monitor Textures.");
 
-            for(String path : filePaths) {
+            for(int i = 0; i < filePaths.length; i++) {
                 try {
-                    crtMonitorTextrues.add(new Texture(contexts[0], path));
+                    crtMonitorTextrues.add(new Texture(context, filePaths[i]));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -201,21 +302,32 @@ public class Data {
         }
     }
 
-    private static class LoadMeshes extends AsyncTask<Context, Integer, ArrayList<ArrayList<Mesh>>> {
+    private static class LoadMeshes extends AsyncTask<Void, Integer, ArrayList<ArrayList<Mesh>>> {
+
+        private Context context;
+        private int positionAttribute;
+        private int uvAttribute;
+
+        LoadMeshes(Context context, int positionAttrib, int uvAttrib) {
+            this.context = context;
+            this.positionAttribute = positionAttrib;
+            this.uvAttribute = uvAttrib;
+        }
+
         @Override
-        protected ArrayList<ArrayList<Mesh>> doInBackground(Context... contexts) {
+        protected ArrayList<ArrayList<Mesh>> doInBackground(Void... voids) {
             ArrayList<ArrayList<Mesh>> result = new ArrayList<>();
             String[] filePaths;
             int count = 0;
 
             // Load AlphaNumeric Meshes.
             ArrayList<Mesh> alphaNumericMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_char_obj);
+            filePaths = context.getResources().getStringArray(R.array.obj_char_obj);
             Log.i(TAG, "Loading AlphaNumeric Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    alphaNumericMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    alphaNumericMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -225,12 +337,12 @@ public class Data {
 
             // Load Block Meshes.
             ArrayList<Mesh> blcokMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_block_obj);
+            filePaths = context.getResources().getStringArray(R.array.obj_block_obj);
             Log.i(TAG, "Loading Block Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    blcokMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    blcokMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -240,12 +352,12 @@ public class Data {
 
             // Load Seven Segment Display Meshes.
             ArrayList<Mesh> sevenSegmentDisplayMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_seven_segment_obj);
+            filePaths = context.getResources().getStringArray(R.array.obj_seven_segment_obj);
             Log.i(TAG, "Loading Seven Segment Display Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    sevenSegmentDisplayMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    sevenSegmentDisplayMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -255,12 +367,12 @@ public class Data {
 
             // Load Find The Block Label Meshes.
             ArrayList<Mesh> findTheBlockLabelMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_find_the_block_obj);
+            filePaths = context.getResources().getStringArray(R.array.obj_find_the_block_obj);
             Log.i(TAG, "Loading Find The Block Label Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    findTheBlockLabelMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    findTheBlockLabelMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -270,12 +382,12 @@ public class Data {
 
             // Load High Scores Label Meshes.
             ArrayList<Mesh> highScoresLabelMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_high_scores);
+            filePaths = context.getResources().getStringArray(R.array.obj_high_scores);
             Log.i(TAG, "Loading High Scores Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    highScoresLabelMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    highScoresLabelMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -285,12 +397,12 @@ public class Data {
 
             // Load Table Meshes.
             ArrayList<Mesh> tableMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_table_obj);
+            filePaths = context.getResources().getStringArray(R.array.obj_table_obj);
             Log.i(TAG, "Loading Table Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    tableMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    tableMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -300,12 +412,12 @@ public class Data {
 
             // Load CRT Monitor Meshes.
             ArrayList<Mesh> crtMonitorMeshes = new ArrayList<>();
-            filePaths = contexts[0].getResources().getStringArray(R.array.obj_crt_moniter_obj);
+            filePaths = context.getResources().getStringArray(R.array.obj_crt_moniter_obj);
             Log.i(TAG, "Loading CRT Monitor Meshes.");
 
             for(String path : filePaths) {
                 try {
-                    crtMonitorMeshes.add(new Mesh(contexts[0], path, positionAttribute, uvAttribute));
+                    crtMonitorMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     publishProgress(count++);
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -325,9 +437,7 @@ public class Data {
         protected void onPostExecute(ArrayList<ArrayList<Mesh>> arrayLists) {
             super.onPostExecute(arrayLists);
 
-            Log.i(TAG, "Textures Loaded.");
-            alphaNumericMeshes = arrayLists.get(0);
-
+            Log.i(TAG, "Meshes Loaded.");
             alphaNumericMeshes = arrayLists.get(0);
             blockMeshes = arrayLists.get(1);
             sevenSegmentTimerMeshes = arrayLists.get(2);
