@@ -1,16 +1,13 @@
 package com.jpgalovic.daydream.model.object.drawable;
 
-import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.jpgalovic.daydream.model.object.Mesh;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class TexturedMeshObject {
@@ -147,7 +144,7 @@ public class TexturedMeshObject {
 
         objectTex.get(textureIndex).bind();
         objectMesh.render();
-        Util.checkGLError("Draw"+TAG);
+        Util.checkGLError("Draw "+TAG);
     }
 
     /**
