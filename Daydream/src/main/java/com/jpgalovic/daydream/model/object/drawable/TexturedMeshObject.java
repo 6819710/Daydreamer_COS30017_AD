@@ -54,7 +54,7 @@ public class TexturedMeshObject {
         Matrix.setIdentityM(modelPos, 0);
 
         translate(x, y, z);
-        rotate(yaw, pitch, roll);
+        rotate(pitch, yaw, roll);
 
         objectMesh = mesh;
         for(int i = 0; i < textures.length; i++) {

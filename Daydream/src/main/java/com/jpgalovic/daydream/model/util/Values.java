@@ -10,7 +10,7 @@ public class Values {
     public static final float MAX_YAW = 100.0f;
     public static final float MAX_PITCH = 25.0f;
 
-    public static final float MIN_TARGET_DISTANCE = 2.0f;
+    public static final float MIN_TARGET_DISTANCE = 8.0f;
     public static final float MAX_TARGET_DISTANCE = 10.0f;
 
     public static final float ALPHANUMERIC_OFFSET_H = 1.0f;
