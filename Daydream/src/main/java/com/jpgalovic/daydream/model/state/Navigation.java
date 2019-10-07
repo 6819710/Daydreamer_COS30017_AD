@@ -2,9 +2,10 @@ package com.jpgalovic.daydream.model.state;
 
 import android.content.Context;
 
-import com.jpgalovic.daydream.R;
+import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.TexturedMeshObject;
+import com.jpgalovic.daydream.model.object.Texture;
+import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 
 public class Navigation extends State {
     // Object Data
@@ -31,11 +32,11 @@ public class Navigation extends State {
 
     @Override
     public void init(int positionAttribute, int uvAttribute) {
-        objectCRT = new TexturedMeshObject(context, "OBJECT_CRT", false, context.getResources().getString(R.string.obj_crt_moniter_obj), context.getResources().getStringArray(R.array.obj_crt_monitor_tex), positionAttribute, uvAttribute, 0.0f, 0.0f, -4.0f, 0.0f, 0.0f, 0.0f);
-        objectTable = new TexturedMeshObject(context, "OBJECT_TABLE", false, context.getResources().getString(R.string.obj_table_obj), context.getResources().getStringArray(R.array.obj_table_tex), positionAttribute, uvAttribute, 0.0f, -3.5f, -4.0f, 0.0f, 0.0f, 0.0f);
-        objectHighScores = new TexturedMeshObject(context, "OBJECT_HIGH_SCORES", false, context.getResources().getString(R.string.obj_high_scores), context.getResources().getStringArray(R.array.obj_high_scores_tex), positionAttribute, uvAttribute, 0.0f, 1.4f, -4.0f, 0.0f, 0.0f, 0.0f);
-        objectFindTheBlock = new TexturedMeshObject(context, "OBJECT_FIND_THE_BLOCK", false, context.getResources().getString(R.string.obj_find_the_block_obj), context.getResources().getStringArray(R.array.obj_find_the_block_tex), positionAttribute, uvAttribute, 3.4641f,  0.0f, -2.0f, 0.0f, -60.0f, 0.0f);
-        objectBlock = new TexturedMeshObject(context, "OBJECT_BLOCK", false, context.getResources().getString(R.string.obj_block), context.getResources().getStringArray(R.array.obj_block_tex), positionAttribute, uvAttribute, 5.19615f, 0.0f, -3.0f, 0.0f, 0.0f, 0.0f);
+        objectCRT = new TexturedMeshObject("OBJECT_CRT", false, Data.crtMonitorMeshes.get(0), new Texture[]{Data.crtMonitorTextures.get(0), Data.crtMonitorTextures.get(1)}, 0.0f, 0.0f, -4.0f, 0.0f, 0.0f, 0.0f);
+        objectTable = new TexturedMeshObject("OBJECT_TABLE", false, Data.tableMeshes.get(0), new Texture[]{Data.tableTextures.get(0)}, 0.0f, -3.5f, -4.0f, 0.0f, 0.0f, 0.0f);
+        objectHighScores = new TexturedMeshObject("OBJECT_HIGH_SCORES_LABEL", false, Data.highScoresLabelMeshes.get(0), new Texture[]{Data.highScoresLabelTextures.get(0)}, 0.0f, 1.4f, -4.0f, 0.0f, 0.0f, 0.0f);
+        objectFindTheBlock = new TexturedMeshObject("OBJECT_FIND_THE_BLOCK_LABEL", false, Data.findTheBlockLabelMeshes.get(0), new Texture[]{Data.findTheBlockLabelTextures.get(0), Data.findTheBlockLabelTextures.get(1)}, 3.4641f,  0.0f, -2.0f, 0.0f, -60.0f, 0.0f);
+        objectBlock = new TexturedMeshObject("OBJECT_BLOCK", false, Data.blockMeshes.get(0), new Texture[]{Data.blockTextures.get(0), Data.blockTextures.get(1)}, 5.19615f, 0.0f, -3.0f, 0.0f, 0.0f, 0.0f);
     }
 
     @Override
