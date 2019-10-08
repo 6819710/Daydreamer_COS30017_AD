@@ -36,6 +36,15 @@
         <item>obj/find_the_block_selected.png</item>
     </string-array>
 
+    <string-array name="obj_save_obj">
+        <item>obj/save.obj</item>
+    </string-array>
+    <string-array name="obj_save_tex">
+        <item>obj/save.png</item>
+        <item>obj/save_selected.png</item>
+    </string-array>
+
+
     <!-- Find The Block Objects -->
     <string-array name="obj_seven_segment_obj">
         <item>obj/find_the_block/seven_segment_disp.obj</item>
