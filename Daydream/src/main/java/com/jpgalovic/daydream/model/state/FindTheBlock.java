@@ -82,8 +82,6 @@ public class FindTheBlock extends State {
             flagExit = true;
         }
 
-        block.rotate(0.2f, 0.5f, 0.2f);
-
         return this;
     }
 
