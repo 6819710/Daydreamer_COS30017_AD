@@ -1,11 +1,11 @@
-package com.jpgalovic.daydream.model.object.compound;
+package com.jpgalovic.daydream.model.object.drawable;
 
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 
 public class AlphaNumeric {
-    private static final String TAG = "AlphaNumeric";
+    private static final String TAG = "OBJ_ALPHA_NUMERIC";
 
     private static final char[] alphaNumeric = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -17,11 +17,11 @@ public class AlphaNumeric {
     private TexturedMeshObject object;
 
     public AlphaNumeric(int index, float x, float y, float z, float pitch, float yaw, float roll) {
-        object = new TexturedMeshObject(String.valueOf(alphaNumeric[index]), true, Data.alphaNumericMeshes.get(index), new Texture[]{ Data.alphaNumericTextures.get(index)}, x, y, z, pitch, yaw, roll);
+        object = new TexturedMeshObject("OBJ_"+String.valueOf(alphaNumeric[index]), true, Data.alphaNumericMeshes.get(index), new Texture[]{ Data.alphaNumericTextures.get(index)}, x, y, z, pitch, yaw, roll);
     }
 
     public AlphaNumeric(char alphaNumeric, float x, float y, float z, float pitch, float yaw, float roll) {
-        object = new TexturedMeshObject(String.valueOf(alphaNumeric), true, Data.alphaNumericMeshes.get(getIndex(alphaNumeric)), new Texture[]{ Data.alphaNumericTextures.get(getIndex(alphaNumeric))}, x, y, z, pitch, yaw, roll);
+        object = new TexturedMeshObject("OBJ_"+String.valueOf(alphaNumeric), true, Data.alphaNumericMeshes.get(getIndex(alphaNumeric)), new Texture[]{ Data.alphaNumericTextures.get(getIndex(alphaNumeric))}, x, y, z, pitch, yaw, roll);
     }
 
     private int getIndex(char alphaNumeric) throws RuntimeException {

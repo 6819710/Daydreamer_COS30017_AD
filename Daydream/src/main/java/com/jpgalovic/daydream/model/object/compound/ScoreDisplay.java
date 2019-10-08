@@ -2,6 +2,7 @@ package com.jpgalovic.daydream.model.object.compound;
 
 import android.content.Context;
 
+import com.jpgalovic.daydream.model.object.drawable.AlphaNumeric;
 import com.jpgalovic.daydream.model.score.Score;
 import com.jpgalovic.daydream.model.util.Values;
 
