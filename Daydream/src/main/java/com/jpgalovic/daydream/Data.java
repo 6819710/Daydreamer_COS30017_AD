@@ -74,6 +74,19 @@ public class Data {
             }
         }
 
+        // Load Selector Textures.
+        selectorTextures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.obj_selector_tex);
+        Log.i(TAG, "Loading AlphaNumeric Textures.");
+
+        for(int i = 0; i < filePaths.length; i++) {
+            try {
+                selectorTextures.add(new Texture(context, filePaths[i]));
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
         // Load AlphaNumeric Textures.
         alphaNumericTextures = new ArrayList<>();
         filePaths = context.getResources().getStringArray(R.array.obj_char_tex);
@@ -186,6 +199,21 @@ public class Data {
             ArrayList<ArrayList<Texture>> result = new ArrayList<>();
             String[] filePaths;
             int count = 0;
+
+            // Load Selector Textures.
+            ArrayList<Texture> selectorTextures = new ArrayList<>();
+            filePaths = context.getResources().getStringArray(R.array.obj_selector_tex);
+            Log.i(TAG, "Loading Selector Textures.");
+
+            for(int i = 0; i < filePaths.length; i++) {
+                try {
+                    selectorTextures.add(new Texture(context, filePaths[i]));
+                    publishProgress(count++);
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+            result.add(selectorTextures);
 
             // Load Selector Textures.
             selectorTextures = new ArrayList<>();
@@ -350,6 +378,21 @@ public class Data {
             ArrayList<ArrayList<Mesh>> result = new ArrayList<>();
             String[] filePaths;
             int count = 0;
+
+            // Load Selector Meshes.
+            ArrayList<Mesh> selectorMeshes = new ArrayList<>();
+            filePaths = context.getResources().getStringArray(R.array.obj_selector_obj);
+            Log.i(TAG, "Loading Selector Meshes.");
+
+            for(String path : filePaths) {
+                try {
+                    selectorMeshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
+                    publishProgress(count++);
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+            result.add(selectorMeshes);
 
             // Load Selector Meshes.
             ArrayList<Mesh> selectorMeshes = new ArrayList<>();
