@@ -26,6 +26,9 @@ public class HighScores extends State {
     @Override
     public void onDisplay(int positionAttribute, int uvAttribute) {
         scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
+
+        scoreDisplay.clear();
+
         for(int i = 0; i < 12; i++) {
             scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), 0.0f, -6.4f + (i * 1.4f), - 15.0f, 0.0f, 0.0f, 0.0f));
         }

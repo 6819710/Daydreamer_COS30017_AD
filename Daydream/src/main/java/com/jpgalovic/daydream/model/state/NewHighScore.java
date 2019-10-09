@@ -12,17 +12,24 @@ import com.jpgalovic.daydream.model.util.Values;
 
 public class NewHighScore extends State {
     // Object Data
-    AlphaSelector alphaSelectorA;
-    AlphaSelector alphaSelectorB;
-    AlphaSelector alphaSelectorC;
+    private AlphaSelector alphaSelectorA;
+    private AlphaSelector alphaSelectorB;
+    private AlphaSelector alphaSelectorC;
 
-    TexturedMeshObject save;
+    private TexturedMeshObject save;
 
     // State Data
     private ScoreManager scoreManager;
 
     private String pathString;
     private int score;
+
+    private boolean flag_save;
+
+    @Override
+    public void onDisplay(int positionAttribute, int uvAttribute) {
+        flag_save = false;
+    }
 
     public NewHighScore(Context context) {
         super("STATE_NEW_HIGH_SCORE", context);
@@ -49,11 +56,22 @@ public class NewHighScore extends State {
         alphaSelectorB.prev(headView);
         alphaSelectorC.next(headView);
         alphaSelectorC.prev(headView);
+
+        if(save.isLookedAt(headView)) {
+            flag_save = true;
+        }
     }
 
     @Override
     public State update(int positionAttribute, int uvAttribute) {
-        // TODO: Process State Updates.
+        if(flag_save) {
+            ScoreManager manager = new ScoreManager(context, pathString);
+            String name = String.valueOf(alphaSelectorA.getChar()) + String.valueOf(alphaSelectorB.getChar()) + String.valueOf(alphaSelectorC.getChar());
+            manager.setNewScore(name, score);
+            connected.get(0).onDisplay(positionAttribute, uvAttribute);
+            return connected.get(0);
+        }
+
         return this;
     }
 
