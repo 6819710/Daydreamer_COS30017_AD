@@ -24,7 +24,7 @@ public class HighScores extends State {
     }
 
     @Override
-    public void onDisplay(int positionAttribute, int uvAttribute) {
+    public void onDisplay() {
         scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
 
         scoreDisplay.clear();
@@ -38,7 +38,7 @@ public class HighScores extends State {
     }
 
     @Override
-    public void init(int positionAttribute, int uvAttribute) {
+    public void init() {
     }
 
     @Override
@@ -47,9 +47,9 @@ public class HighScores extends State {
     }
 
     @Override
-    public State update(int positionAttribute, int uvAttribute) {
+    public State update() {
         if(exitTimer.zero()) {
-            connected.get(0).onDisplay(positionAttribute, uvAttribute);
+            connected.get(0).onDisplay();
             return connected.get(0);
         }
 

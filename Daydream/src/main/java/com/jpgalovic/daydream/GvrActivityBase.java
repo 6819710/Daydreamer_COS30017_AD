@@ -159,7 +159,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
      */
     @Override
     public void onFinishFrame(Viewport viewport) {
-        state = state.update(objectPositionParam, objectUvParam);
+        state = state.update();
     }
 
     /**
@@ -185,7 +185,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         // Load Data
         Data.initialise(this, objectPositionParam, objectUvParam);
 
-        loading.init(objectPositionParam, objectUvParam);
+        loading.init();
         state = loading;
     }
 

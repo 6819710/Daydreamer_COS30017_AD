@@ -27,7 +27,7 @@ public class NewHighScore extends State {
     private boolean flag_save;
 
     @Override
-    public void onDisplay(int positionAttribute, int uvAttribute) {
+    public void onDisplay() {
         flag_save = false;
     }
 
@@ -38,7 +38,7 @@ public class NewHighScore extends State {
     }
 
     @Override
-    public void init(int positionAttribute, int uvAttribute) {
+    public void init() {
         scoreManager = new ScoreManager(context, pathString);
 
         alphaSelectorA = new AlphaSelector(context, -Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
@@ -63,12 +63,12 @@ public class NewHighScore extends State {
     }
 
     @Override
-    public State update(int positionAttribute, int uvAttribute) {
+    public State update() {
         if(flag_save) {
             ScoreManager manager = new ScoreManager(context, pathString);
             String name = String.valueOf(alphaSelectorA.getChar()) + String.valueOf(alphaSelectorB.getChar()) + String.valueOf(alphaSelectorC.getChar());
             manager.setNewScore(name, score);
-            connected.get(0).onDisplay(positionAttribute, uvAttribute);
+            connected.get(0).onDisplay();
             return connected.get(0);
         }
 

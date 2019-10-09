@@ -29,7 +29,7 @@ public class FindTheBlock extends State {
     }
 
     @Override
-    public void onDisplay(int positionAttribute, int uvAttribute) {
+    public void onDisplay() {
         sevenSegmentTimer.start(30);
         timer = new Timer();
 
@@ -42,7 +42,7 @@ public class FindTheBlock extends State {
     }
 
     @Override
-    public void init(int objectPositionParam, int objectUVParam) {
+    public void init() {
         sevenSegmentTimer = new SevenSegmentTimer(context, 0.0f, 0.0f, -10.0f);
         block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.getMesh(context, R.array.OBJ_FTB_BLOCK), Data.getTextures(context, R.array.OBJ_FTB_BLOCK), 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
@@ -58,7 +58,7 @@ public class FindTheBlock extends State {
     }
 
     @Override
-    public State update(int positionAttribute, int uvAttribute) {
+    public State update() {
         if(flagBlockFound == true && flag_exit == false) {
             score += rand.nextInt((20 - 10) + 1) + 10;
             float[] position = Util.randomPosition();
@@ -69,12 +69,12 @@ public class FindTheBlock extends State {
         if(timer.zero()) { // Exit Timer has expired.
             ScoreManager scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
             if(scoreManager.isValidScore(score)) { // new high score, load new high score state.
-                connected.get(0).onDisplay(positionAttribute, uvAttribute);
+                connected.get(0).onDisplay();
                 connected.get(0).passData(score);
                 connected.get(0).passData(context.getResources().getString(R.string.file_find_the_block));
                 return connected.get(0);
             } else { // load high scores state.
-                connected.get(1).onDisplay(positionAttribute, uvAttribute);
+                connected.get(1).onDisplay();
                 return connected.get(1);
             }
         } else if(sevenSegmentTimer.zero() && flag_exit == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.

@@ -46,12 +46,12 @@ public abstract class State {
      * connected.get().onDisplay();
      * return connected.get();
      */
-    public void onDisplay(int positionAttribute, int uvAttribute) {}
+    public void onDisplay() {}
 
     /**
      * Initialises state.
      */
-    public abstract void init(int positionAttribute, int uvAttribute);
+    public abstract void init();
 
     /**
      * Processees User Inputs. TODO: Determine types of input to expose to method.
@@ -61,7 +61,7 @@ public abstract class State {
     /**
      * Updates the state.
      */
-    public abstract State update(int positionAttribute, int uvAttribute);
+    public abstract State update();
 
     /**
      * Renders the view for a given perspective.

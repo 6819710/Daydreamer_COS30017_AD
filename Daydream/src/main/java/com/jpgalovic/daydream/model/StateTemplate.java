@@ -14,7 +14,7 @@ public class StateTemplate extends State {
     }
 
     @Override
-    public void init(int positionAttribute, int uvAttribute) {
+    public void init() {
         // TODO: Initialise each Object and StateData.
     }
 
@@ -24,7 +24,7 @@ public class StateTemplate extends State {
     }
 
     @Override
-    public State update(int positionAttribute, int uvAttribute) {
+    public State update() {
         // TODO: Process State Updates.
         return this;
     }

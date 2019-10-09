@@ -17,7 +17,7 @@ public class Loading extends State {
     }
 
     @Override
-    public void init(int positionAttribute, int uvAttribute) {
+    public void init() {
         // TODO: Initialise each Object and StateData.
     }
 
@@ -27,13 +27,13 @@ public class Loading extends State {
     }
 
     @Override
-    public State update(int positionAttribute, int uvAttribute) {
+    public State update() {
         // Load init other states, then load navigation state.
         if(Data.flag_textures_loaded && Data.flag_meshes_loaded) {
             for(int i = 0; i < connected.size(); i++) {
-                connected.get(i).init(positionAttribute, uvAttribute);
+                connected.get(i).init();
             }
-            connected.get(0).onDisplay(positionAttribute, uvAttribute);
+            connected.get(0).onDisplay();
             return connected.get(0);
         }
         return this;
