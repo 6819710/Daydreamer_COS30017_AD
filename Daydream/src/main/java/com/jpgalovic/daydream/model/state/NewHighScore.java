@@ -29,9 +29,9 @@ public class NewHighScore extends State {
     public void init(int positionAttribute, int uvAttribute) {
         scoreManager = new ScoreManager(context, pathString);
 
-        alphaSelectorA = new AlphaSelector(-Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
-        alphaSelectorB = new AlphaSelector(0.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
-        alphaSelectorC = new AlphaSelector(Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        alphaSelectorA = new AlphaSelector(context, -Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        alphaSelectorB = new AlphaSelector(context, 0.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        alphaSelectorC = new AlphaSelector(context, Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
     }
 
     @Override

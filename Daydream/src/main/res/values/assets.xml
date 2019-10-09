@@ -1,0 +1,369 @@
+<resources>
+    <!-- Index References -->
+        <!-- Alpha Numeric Objects -->
+        <integer-array name="OBJ_ALPHANUMERIC_0">
+            <item>0</item> <!-- Mesh Index -->
+            <item>0</item> <!-- Texture Start -->
+            <item>0</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_1">
+            <item>1</item> <!-- Mesh Index -->
+            <item>1</item> <!-- Texture Start -->
+            <item>1</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_2">
+            <item>2</item> <!-- Mesh Index -->
+            <item>2</item> <!-- Texture Start -->
+            <item>2</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_3">
+            <item>3</item> <!-- Mesh Index -->
+            <item>3</item> <!-- Texture Start -->
+            <item>3</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_4">
+            <item>4</item> <!-- Mesh Index -->
+            <item>4</item> <!-- Texture Start -->
+            <item>4</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_5">
+            <item>5</item> <!-- Mesh Index -->
+            <item>5</item> <!-- Texture Start -->
+            <item>5</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_6">
+            <item>6</item> <!-- Mesh Index -->
+            <item>6</item> <!-- Texture Start -->
+            <item>6</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_7">
+            <item>7</item> <!-- Mesh Index -->
+            <item>7</item> <!-- Texture Start -->
+            <item>7</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_8">
+            <item>8</item> <!-- Mesh Index -->
+            <item>8</item> <!-- Texture Start -->
+            <item>8</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_9">
+            <item>9</item> <!-- Mesh Index -->
+            <item>9</item> <!-- Texture Start -->
+            <item>9</item> <!-- Texture End -->
+        </integer-array>
+
+        <integer-array name="OBJ_ALPHANUMERIC_A">
+            <item>10</item> <!-- Mesh Index -->
+            <item>10</item> <!-- Texture Start -->
+            <item>10</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_B">
+            <item>11</item> <!-- Mesh Index -->
+            <item>11</item> <!-- Texture Start -->
+            <item>11</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_C">
+            <item>12</item> <!-- Mesh Index -->
+            <item>12</item> <!-- Texture Start -->
+            <item>12</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_D">
+            <item>13</item> <!-- Mesh Index -->
+            <item>13</item> <!-- Texture Start -->
+            <item>13</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_E">
+            <item>14</item> <!-- Mesh Index -->
+            <item>14</item> <!-- Texture Start -->
+            <item>14</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_F">
+            <item>15</item> <!-- Mesh Index -->
+            <item>15</item> <!-- Texture Start -->
+            <item>15</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_G">
+            <item>16</item> <!-- Mesh Index -->
+            <item>16</item> <!-- Texture Start -->
+            <item>16</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_H">
+            <item>17</item> <!-- Mesh Index -->
+            <item>17</item> <!-- Texture Start -->
+            <item>17</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_I">
+            <item>18</item> <!-- Mesh Index -->
+            <item>18</item> <!-- Texture Start -->
+            <item>18</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_J">
+            <item>19</item> <!-- Mesh Index -->
+            <item>19</item> <!-- Texture Start -->
+            <item>19</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_K">
+            <item>20</item> <!-- Mesh Index -->
+            <item>20</item> <!-- Texture Start -->
+            <item>20</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_L">
+            <item>21</item> <!-- Mesh Index -->
+            <item>21</item> <!-- Texture Start -->
+            <item>21</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_M">
+            <item>22</item> <!-- Mesh Index -->
+            <item>22</item> <!-- Texture Start -->
+            <item>22</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_N">
+            <item>23</item> <!-- Mesh Index -->
+            <item>23</item> <!-- Texture Start -->
+            <item>23</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_O">
+            <item>24</item> <!-- Mesh Index -->
+            <item>24</item> <!-- Texture Start -->
+            <item>24</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_P">
+            <item>25</item> <!-- Mesh Index -->
+            <item>25</item> <!-- Texture Start -->
+            <item>25</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_Q">
+            <item>26</item> <!-- Mesh Index -->
+            <item>26</item> <!-- Texture Start -->
+            <item>26</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_R">
+            <item>27</item> <!-- Mesh Index -->
+            <item>27</item> <!-- Texture Start -->
+            <item>27</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_S">
+            <item>28</item> <!-- Mesh Index -->
+            <item>28</item> <!-- Texture Start -->
+            <item>28</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_T">
+            <item>29</item> <!-- Mesh Index -->
+            <item>29</item> <!-- Texture Start -->
+            <item>29</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_U">
+            <item>30</item> <!-- Mesh Index -->
+            <item>30</item> <!-- Texture Start -->
+            <item>30</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_V">
+            <item>31</item> <!-- Mesh Index -->
+            <item>31</item> <!-- Texture Start -->
+            <item>31</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_W">
+            <item>32</item> <!-- Mesh Index -->
+            <item>32</item> <!-- Texture Start -->
+            <item>32</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_X">
+            <item>33</item> <!-- Mesh Index -->
+            <item>33</item> <!-- Texture Start -->
+            <item>33</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_Y">
+            <item>34</item> <!-- Mesh Index -->
+            <item>34</item> <!-- Texture Start -->
+            <item>34</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_ALPHANUMERIC_Z">
+            <item>35</item> <!-- Mesh Index -->
+            <item>35</item> <!-- Texture Start -->
+            <item>35</item> <!-- Texture End -->
+        </integer-array>
+
+        <!-- Label Objects -->
+        <integer-array name="OBJ_LABEL_ARROW">
+            <item>36</item> <!-- Mesh Index -->
+            <item>36</item> <!-- Texture Start -->
+            <item>37</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_LABEL_BACK">
+            <item>37</item> <!-- Mesh Index -->
+            <item>38</item> <!-- Texture Start -->
+            <item>39</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_LABEL_SAVE">
+            <item>38</item> <!-- Mesh Index -->
+            <item>40</item> <!-- Texture Start -->
+            <item>41</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_LABEL_FIND_THE_BLOCK">
+            <item>39</item> <!-- Mesh Index -->
+            <item>42</item> <!-- Texture Start -->
+            <item>43</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_LABEL_HIGH_SCORES">
+            <item>40</item> <!-- Mesh Index -->
+            <item>44</item> <!-- Texture Start -->
+            <item>44</item> <!-- Texture End -->
+        </integer-array>
+
+        <!-- Navigation Objects -->
+        <integer-array name="OBJ_NAV_CRT">
+            <item>41</item> <!-- Mesh Index -->
+            <item>45</item> <!-- Texture Start -->
+            <item>46</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_NAV_TABLE">
+            <item>42</item> <!-- Mesh Index -->
+            <item>47</item> <!-- Texture Start -->
+            <item>47</item> <!-- Texture End -->
+        </integer-array>
+
+        <!-- Find the Block Objects -->
+        <integer-array name="OBJ_FTB_BLOCK">
+            <item>43</item> <!-- Mesh Index -->
+            <item>48</item> <!-- Texture Start -->
+            <item>49</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_FTB_SEVEN_SEGMENT_DISPLAY">
+            <item>44</item> <!-- Mesh Index -->
+            <item>50</item> <!-- Texture Start -->
+            <item>60</item> <!-- Texture End -->
+        </integer-array>
+
+    <!-- Mesh Files -->
+    <string-array name="OBJ_MESH_FILES">
+        <!-- Alpha Numeric Objects -->
+        <item>obj/char/0.obj</item> <!-- 0 -->
+        <item>obj/char/1.obj</item>
+        <item>obj/char/2.obj</item>
+        <item>obj/char/3.obj</item>
+        <item>obj/char/4.obj</item>
+        <item>obj/char/5.obj</item>
+        <item>obj/char/6.obj</item>
+        <item>obj/char/7.obj</item>
+        <item>obj/char/8.obj</item>
+        <item>obj/char/9.obj</item>
+
+        <item>obj/char/A.obj</item> <!-- 10 -->
+        <item>obj/char/B.obj</item>
+        <item>obj/char/C.obj</item>
+        <item>obj/char/D.obj</item>
+        <item>obj/char/E.obj</item>
+        <item>obj/char/F.obj</item>
+        <item>obj/char/G.obj</item>
+        <item>obj/char/H.obj</item>
+        <item>obj/char/I.obj</item>
+        <item>obj/char/J.obj</item>
+        <item>obj/char/K.obj</item>
+        <item>obj/char/L.obj</item>
+        <item>obj/char/M.obj</item>
+        <item>obj/char/N.obj</item>
+        <item>obj/char/O.obj</item>
+        <item>obj/char/P.obj</item>
+        <item>obj/char/Q.obj</item>
+        <item>obj/char/R.obj</item>
+        <item>obj/char/S.obj</item>
+        <item>obj/char/T.obj</item>
+        <item>obj/char/U.obj</item>
+        <item>obj/char/V.obj</item>
+        <item>obj/char/W.obj</item>
+        <item>obj/char/X.obj</item>
+        <item>obj/char/Y.obj</item>
+        <item>obj/char/Z.obj</item>
+
+        <!-- Label Objects -->
+        <item>obj/label/arrow.obj</item> <!-- 36 -->
+        <item>obj/label/back.obj</item>
+        <item>obj/label/save.obj</item>
+        <item>obj/label/find_the_block.obj</item>
+        <item>obj/label/high_scores.obj</item>
+
+        <!-- Navigation Objects -->
+        <item>obj/nav/crt.obj</item> <!-- 41 -->
+        <item>obj/nav/table.obj</item>
+
+        <!-- Find the Block Objects -->
+        <item>obj/find_the_block/block.obj</item> <!-- 43 -->
+        <item>obj/find_the_block/seven_segment_disp.obj</item>
+
+    </string-array>
+
+    <!-- Texture Files -->
+    <string-array name="OBJ_TEXTURE_FILES">
+        <!-- Alpha Numeric Textures -->
+        <item>obj/char/0.png</item> <!-- 0 -->
+        <item>obj/char/1.png</item>
+        <item>obj/char/2.png</item>
+        <item>obj/char/3.png</item>
+        <item>obj/char/4.png</item>
+        <item>obj/char/5.png</item>
+        <item>obj/char/6.png</item>
+        <item>obj/char/7.png</item>
+        <item>obj/char/8.png</item>
+        <item>obj/char/9.png</item>
+
+        <item>obj/char/A.png</item> <!-- 10 -->
+        <item>obj/char/B.png</item>
+        <item>obj/char/C.png</item>
+        <item>obj/char/D.png</item>
+        <item>obj/char/E.png</item>
+        <item>obj/char/F.png</item>
+        <item>obj/char/G.png</item>
+        <item>obj/char/H.png</item>
+        <item>obj/char/I.png</item>
+        <item>obj/char/J.png</item>
+        <item>obj/char/K.png</item>
+        <item>obj/char/L.png</item>
+        <item>obj/char/M.png</item>
+        <item>obj/char/N.png</item>
+        <item>obj/char/O.png</item>
+        <item>obj/char/P.png</item>
+        <item>obj/char/Q.png</item>
+        <item>obj/char/R.png</item>
+        <item>obj/char/S.png</item>
+        <item>obj/char/T.png</item>
+        <item>obj/char/U.png</item>
+        <item>obj/char/V.png</item>
+        <item>obj/char/W.png</item>
+        <item>obj/char/X.png</item>
+        <item>obj/char/Y.png</item>
+        <item>obj/char/Z.png</item>
+
+        <!-- Label Objects -->
+        <item>obj/label/arrow.png</item> <!-- 36 -->
+        <item>obj/label/arrow_selected.png</item>
+        <item>obj/label/back.png</item> <!-- 38 -->
+        <item>obj/label/back_selected.png</item>
+        <item>obj/label/save.png</item> <!-- 40 -->
+        <item>obj/label/save_selected.png</item>
+        <item>obj/label/find_the_block.png</item> <!-- 42 -->
+        <item>obj/label/find_the_block_selected.png</item>
+        <item>obj/label/high_scores.png</item> <!-- 44 -->
+
+        <!-- Navigation Objects -->
+        <item>obj/nav/crt.png</item> <!-- 45 -->
+        <item>obj/nav/crt_selected.png</item>
+        <item>obj/nav/table.png</item> <!-- 47 -->
+
+        <!-- Find the Block Objects -->
+        <item>obj/find_the_block/block.png</item> <!-- 48 -->
+        <item>obj/find_the_block/block_selected.png</item>
+        <item>obj/find_the_block/seven_segment_disp_0.png</item> <!-- 50 -->
+        <item>obj/find_the_block/seven_segment_disp_1.png</item>
+        <item>obj/find_the_block/seven_segment_disp_2.png</item>
+        <item>obj/find_the_block/seven_segment_disp_3.png</item>
+        <item>obj/find_the_block/seven_segment_disp_4.png</item>
+        <item>obj/find_the_block/seven_segment_disp_5.png</item>
+        <item>obj/find_the_block/seven_segment_disp_6.png</item>
+        <item>obj/find_the_block/seven_segment_disp_7.png</item>
+        <item>obj/find_the_block/seven_segment_disp_8.png</item>
+        <item>obj/find_the_block/seven_segment_disp_9.png</item>
+        <item>obj/find_the_block/seven_segment_disp_off.png</item>
+
+    </string-array>
+
+</resources>

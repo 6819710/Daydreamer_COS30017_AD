@@ -27,7 +27,7 @@ public class HighScores extends State {
     public void onDisplay(int positionAttribute, int uvAttribute) {
         scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
         for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), positionAttribute, uvAttribute, 0.0f, -6.4f + (i * 1.4f), - 15.0f, 0.0f, 0.0f, 0.0f));
+            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), 0.0f, -6.4f + (i * 1.4f), - 15.0f, 0.0f, 0.0f, 0.0f));
         }
 
         exitTimer = new Timer(20);

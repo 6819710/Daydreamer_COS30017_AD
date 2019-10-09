@@ -12,7 +12,7 @@ public class ScoreDisplay {
     private ArrayList<AlphaNumeric> alphaNumerals;
     private Score score;
 
-    public ScoreDisplay(Context context, Score score, int positionAttribute, int uvAttribute, float x, float y, float z, float pitch, float yaw, float roll) {
+    public ScoreDisplay(Context context, Score score, float x, float y, float z, float pitch, float yaw, float roll) {
         alphaNumerals = new ArrayList<>();
 
         this.score = score;
@@ -24,7 +24,7 @@ public class ScoreDisplay {
         // Add letters of name.
         for(int i = 0; i < score.getName().length(); i++) {
             float xPos = x - Values.SCORE_DISPLAY_CENTER_OFFSET - ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H);
-            alphaNumerals.add(new AlphaNumeric(score.getName().charAt(i), xPos, y, z, pitch, yaw, roll));
+            alphaNumerals.add(new AlphaNumeric(context, score.getName().charAt(i), xPos, y, z, pitch, yaw, roll));
         }
 
         // Add numbers of score.
@@ -38,7 +38,7 @@ public class ScoreDisplay {
 
         for(int i = 0; i < values.size(); i++) {
             float xPos = x + Values.SCORE_DISPLAY_CENTER_OFFSET + ((score.getName().length() - i - 1) * Values.ALPHANUMERIC_OFFSET_H);
-            alphaNumerals.add(new AlphaNumeric(numbers[values.get(i)], xPos, y, z, pitch, yaw, roll));
+            alphaNumerals.add(new AlphaNumeric(context, numbers[values.get(i)], xPos, y, z, pitch, yaw, roll));
         }
     }
 

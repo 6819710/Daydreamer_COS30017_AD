@@ -42,8 +42,8 @@ public class FindTheBlock extends State {
 
     @Override
     public void init(int objectPositionParam, int objectUVParam) {
-        sevenSegmentTimer = new SevenSegmentTimer(0.0f, 0.0f, -10.0f);
-        block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.blockMeshes.get(0), new Texture[]{Data.blockTextures.get(0), Data.blockTextures.get(1)}, 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
+        sevenSegmentTimer = new SevenSegmentTimer(context, 0.0f, 0.0f, -10.0f);
+        block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.getMesh(context, R.array.OBJ_FTB_BLOCK), Data.getTextures(context, R.array.OBJ_FTB_BLOCK), 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
         float[] position = Util.randomPosition();
         block.setPosition(position[12], position[13], -position[14]);

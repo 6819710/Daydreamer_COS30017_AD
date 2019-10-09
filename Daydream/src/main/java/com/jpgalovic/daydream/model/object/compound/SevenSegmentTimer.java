@@ -3,6 +3,7 @@ package com.jpgalovic.daydream.model.object.compound;
 import android.content.Context;
 
 import com.jpgalovic.daydream.Data;
+import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 import com.jpgalovic.daydream.model.util.Timer;
@@ -22,26 +23,12 @@ public class SevenSegmentTimer {
      * @param y                         Y Coordinate.
      * @param z                         Z Coordinate.
      */
-    public SevenSegmentTimer(float x, float y, float z) {
+    public SevenSegmentTimer(Context context, float x, float y, float z) {
         float offset = 1.9f;
 
-        Texture[] Textures = new Texture[]{
-                Data.sevenSegmentTimerTextures.get(0),
-                Data.sevenSegmentTimerTextures.get(1),
-                Data.sevenSegmentTimerTextures.get(2),
-                Data.sevenSegmentTimerTextures.get(3),
-                Data.sevenSegmentTimerTextures.get(4),
-                Data.sevenSegmentTimerTextures.get(5),
-                Data.sevenSegmentTimerTextures.get(6),
-                Data.sevenSegmentTimerTextures.get(7),
-                Data.sevenSegmentTimerTextures.get(8),
-                Data.sevenSegmentTimerTextures.get(9),
-                Data.sevenSegmentTimerTextures.get(10),
-        };
-
-        units = new TexturedMeshObject("OBJECT_UNITS", false, Data.sevenSegmentTimerMeshes.get(0), Textures, x + offset, y, z, 0.0f, 0.0f, 0.0f);
-        tens = new TexturedMeshObject("OBJECT_TENS", false, Data.sevenSegmentTimerMeshes.get(0), Textures, x, y, z, 0.0f, 0.0f, 0.0f);
-        hundreds = new TexturedMeshObject("OBJECT_HUNDREDS", false, Data.sevenSegmentTimerMeshes.get(0), Textures, x - offset, y, z, 0.0f, 0.0f, 0.0f);
+        units = new TexturedMeshObject("OBJECT_UNITS", false, Data.getMesh(context, R.array.OBJ_FTB_SEVEN_SEGMENT_DISPLAY), Data.getTextures(context, R.array.OBJ_FTB_SEVEN_SEGMENT_DISPLAY), x + offset, y, z, 0.0f, 0.0f, 0.0f);
+        tens = new TexturedMeshObject("OBJECT_TENS", false, Data.getMesh(context, R.array.OBJ_FTB_SEVEN_SEGMENT_DISPLAY), Data.getTextures(context, R.array.OBJ_FTB_SEVEN_SEGMENT_DISPLAY), x, y, z, 0.0f, 0.0f, 0.0f);
+        hundreds = new TexturedMeshObject("OBJECT_HUNDREDS", false, Data.getMesh(context, R.array.OBJ_FTB_SEVEN_SEGMENT_DISPLAY), Data.getTextures(context, R.array.OBJ_FTB_SEVEN_SEGMENT_DISPLAY), x - offset, y, z, 0.0f, 0.0f, 0.0f);
     }
 
     /**

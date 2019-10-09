@@ -1,6 +1,9 @@
 package com.jpgalovic.daydream.model.object.compound;
 
+import android.content.Context;
+
 import com.jpgalovic.daydream.Data;
+import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.AlphaNumeric;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
@@ -22,13 +25,13 @@ public class AlphaSelector {
     private TexturedMeshObject nextObject;
     private TexturedMeshObject prevObejct;
 
-    public AlphaSelector(float x, float y, float z, float pitch, float yaw, float roll) {
+    public AlphaSelector(Context context, float x, float y, float z, float pitch, float yaw, float roll) {
         alphaObjects = new ArrayList<>();
         for(int i = 0; i < 26; i++) {
-            alphaObjects.add(new AlphaNumeric(alpha[i], x, y, z, pitch, yaw, roll));
+            alphaObjects.add(new AlphaNumeric(context, alpha[i], x, y, z, pitch, yaw, roll));
         }
-        nextObject = new TexturedMeshObject("OBJ_NEXT", true, Data.selectorMeshes.get(0), new Texture[]{Data.selectorTextures.get(0), Data.selectorTextures.get(1)}, x, y + 1.0f, z, pitch, yaw, roll);
-        prevObejct = new TexturedMeshObject("OBJ_NEXT", true, Data.selectorMeshes.get(0), new Texture[]{Data.selectorTextures.get(0), Data.selectorTextures.get(1)}, x, y - 1.0f, z, pitch + 180.0f, yaw, roll);
+        nextObject = new TexturedMeshObject("OBJ_NEXT", true, Data.getMesh(context, R.array.OBJ_LABEL_ARROW), Data.getTextures(context, R.array.OBJ_LABEL_ARROW), x, y + 1.0f, z, pitch, yaw, roll);
+        prevObejct = new TexturedMeshObject("OBJ_NEXT", true, Data.getMesh(context, R.array.OBJ_LABEL_ARROW), Data.getTextures(context, R.array.OBJ_LABEL_ARROW), x, y - 1.0f, z, pitch + 180.0f, yaw, roll);
 
         index = 0;
     }
