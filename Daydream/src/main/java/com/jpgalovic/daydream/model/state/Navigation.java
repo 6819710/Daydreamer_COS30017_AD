@@ -5,8 +5,6 @@ import android.content.Context;
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.Mesh;
-import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 
 public class Navigation extends State {
@@ -18,18 +16,19 @@ public class Navigation extends State {
     private TexturedMeshObject objectBlock;
 
     // State Data
-    boolean loadCRT;
-    boolean loadFindTheBlock;
+    boolean flag_load_scores;
+    boolean flag_load_find_the_block;
 
     public Navigation(Context context) {
         super("STATE_NAVIGATION", context);
-        loadCRT = false;
-        loadFindTheBlock = false;
+        flag_load_scores = false;
+        flag_load_find_the_block = false;
     }
 
     @Override
     public void onDisplay(int positionAttribute, int uvAttribute) {
-        loadCRT = false;
+        flag_load_scores = false;
+        flag_load_find_the_block = false;
     }
 
     @Override
@@ -44,18 +43,18 @@ public class Navigation extends State {
     @Override
     public void input(float[] headView) {
         if(objectCRT.isLookedAt(headView)) {
-            loadCRT = true;
+            flag_load_scores = true;
         } else if (objectFindTheBlock.isLookedAt(headView)){
-            loadFindTheBlock = true;
+            flag_load_find_the_block = true;
         }
     }
 
     @Override
     public State update(int positionAttribute, int uvAttribute) {
-        if(loadCRT) { // Load High Scores.
+        if(flag_load_scores) { // Load High Scores.
             connected.get(0).onDisplay(positionAttribute, uvAttribute);
             return connected.get(0);
-        } else if (loadFindTheBlock) { // Load Find The Block.
+        } else if (flag_load_find_the_block) { // Load Find The Block.
             connected.get(1).onDisplay(positionAttribute, uvAttribute);
             return connected.get(1);
         }

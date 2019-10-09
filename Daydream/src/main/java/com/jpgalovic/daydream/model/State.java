@@ -50,8 +50,6 @@ public abstract class State {
 
     /**
      * Initialises state.
-     * @param   objectPositionParam             Object Position Parameter.
-     * @param   objectUVParam                   Object UV Parameter.
      */
     public abstract void init(int positionAttribute, int uvAttribute);
 
