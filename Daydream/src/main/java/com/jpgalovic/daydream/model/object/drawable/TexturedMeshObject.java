@@ -22,12 +22,13 @@ public class TexturedMeshObject {
     private float[] modelView;
     private float[] modelViewProjection;
 
-    private Boolean flagFine;
+    private Boolean flat_fine;
+    private Boolean flag_display;
 
     /**
      * Initialises Textured Mesh Object.
      * @param   name                    object name, used for error logging.
-     * @param   flagFine                flag to determine weather to use fine look at checking.
+     * @param   flat_fine                flag to determine weather to use fine look at checking.
      * @param   mesh                    reference to object mesh.
      * @param   textures                reference to object textures array.
      * @param   x                       x position to render object.
@@ -37,10 +38,11 @@ public class TexturedMeshObject {
      * @param   yaw                     yaw angle to render object. (angle in degrees).
      * @param   roll                    roll angle to render object. (angle in degrees).
      */
-    public TexturedMeshObject(String name, boolean flagFine, Mesh mesh, Texture[] textures, float x, float y, float z, float pitch, float yaw, float roll) {
+    public TexturedMeshObject(String name, boolean flat_fine, Mesh mesh, Texture[] textures, float x, float y, float z, float pitch, float yaw, float roll) {
         TAG = name;
 
-        this.flagFine = flagFine;
+        this.flat_fine = flat_fine;
+        flag_display = true;
 
         modelPos = new float[16];
         modelRot = new float[16];
@@ -121,6 +123,14 @@ public class TexturedMeshObject {
         }
     }
 
+    public void enableDisplay() {
+        flag_display = true;
+    }
+
+    public void disableDisplay() {
+        flag_display = false;
+    }
+
     /**
      * Renders the object.
      * @param   perspective             Perspective matrix.
@@ -130,21 +140,23 @@ public class TexturedMeshObject {
      * @param   modelViewProjParam      Object model view projection parameter.
      */
     public void render(float[] perspective, float[] view, int textureIndex, int programId, int modelViewProjParam) {
-        float[] matrix = new float[16];
+        if(flag_display) {
+            float[] matrix = new float[16];
 
-        // Build modelView and modelViewProjection.
-        // This calculates the position to draw the object.
-        Matrix.multiplyMM(modelView, 0, view, 0, modelPos, 0);
-        Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
-        Matrix.multiplyMM(matrix, 0, modelViewProjection, 0, modelRot, 0);
+            // Build modelView and modelViewProjection.
+            // This calculates the position to draw the object.
+            Matrix.multiplyMM(modelView, 0, view, 0, modelPos, 0);
+            Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
+            Matrix.multiplyMM(matrix, 0, modelViewProjection, 0, modelRot, 0);
 
-        // Draw the object.
-        GLES20.glUseProgram(programId);
-        GLES20.glUniformMatrix4fv(modelViewProjParam, 1, false, matrix, 0);
+            // Draw the object.
+            GLES20.glUseProgram(programId);
+            GLES20.glUniformMatrix4fv(modelViewProjParam, 1, false, matrix, 0);
 
-        objectTex.get(textureIndex).bind();
-        objectMesh.render();
-        Util.checkGLError("Draw "+TAG);
+            objectTex.get(textureIndex).bind();
+            objectMesh.render();
+            Util.checkGLError("DRAW_" + TAG);
+        }
     }
 
     /**
@@ -158,7 +170,7 @@ public class TexturedMeshObject {
         Matrix.multiplyMV(tempPosition, 0, modelView, 0, Values.POS_MATRIX_MULTIPLY_VEC, 0);
 
         float angle = Util.angleBetweenVectors(tempPosition, Values.FORWARD_VEC);
-        if(flagFine) {
+        if(flat_fine) {
             return angle < Values.ANGLE_THRESHOLD_FINE;
         } else {
             return angle < Values.ANGLE_THRESHOLD;

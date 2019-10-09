@@ -19,7 +19,7 @@ public class FindTheBlock extends State {
     // State Data
     private Timer timer;
 
-    private boolean flagExit;
+    private boolean flag_exit;
     private boolean flagBlockFound;
 
     private int score;
@@ -33,8 +33,10 @@ public class FindTheBlock extends State {
         sevenSegmentTimer.start(30);
         timer = new Timer();
 
-        flagExit = false;
+        flag_exit = false;
         flagBlockFound = false;
+
+        block.enableDisplay();
 
         score = 0;
     }
@@ -57,7 +59,7 @@ public class FindTheBlock extends State {
 
     @Override
     public State update(int positionAttribute, int uvAttribute) {
-        if(flagBlockFound == true && flagExit == false) {
+        if(flagBlockFound == true && flag_exit == false) {
             score += rand.nextInt((20 - 10) + 1) + 10;
             float[] position = Util.randomPosition();
             block.setPosition(position[12], position[13], -position[14]);
@@ -75,10 +77,13 @@ public class FindTheBlock extends State {
                 connected.get(1).onDisplay(positionAttribute, uvAttribute);
                 return connected.get(1);
             }
-        } else if(sevenSegmentTimer.zero() && flagExit == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
+        } else if(sevenSegmentTimer.zero() && flag_exit == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
+            block.disableDisplay(); // stop showing block at end of game.
+
             timer = new Timer(3);
             timer.start();
-            flagExit = true;
+            
+            flag_exit = true;
         }
 
         block.rotate(0.1f, 0.5f, 0.1f);
