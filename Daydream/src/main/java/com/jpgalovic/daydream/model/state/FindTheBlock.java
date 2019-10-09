@@ -5,7 +5,6 @@ import android.content.Context;
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
-import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 import com.jpgalovic.daydream.model.object.compound.SevenSegmentTimer;
 import com.jpgalovic.daydream.model.score.ScoreManager;
@@ -81,6 +80,8 @@ public class FindTheBlock extends State {
             timer.start();
             flagExit = true;
         }
+
+        block.rotate(0.1f, 0.5f, 0.1f);
 
         return this;
     }
