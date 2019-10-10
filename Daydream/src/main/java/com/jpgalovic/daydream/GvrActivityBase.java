@@ -25,6 +25,10 @@ import com.jpgalovic.daydream.model.util.FileManager;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
 
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+
 public class GvrActivityBase extends GvrActivity implements GvrView.StereoRenderer{
     private static final String TAG="ACTIVITY_BASE";
 
@@ -91,6 +95,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         // Initialise Assets
         FileManager.copyAssets(this);
+
+        AppCenter.start(getApplication(), "b60f34e4-55a7-4713-8871-241447afa7fb", Analytics.class, Crashes.class);
     }
 
     /**

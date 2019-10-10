@@ -33,4 +33,8 @@ dependencies {
     implementation 'com.google.vr:sdk-base:1.190.0'
     implementation 'de.javagl:obj:0.2.1'
     implementation 'com.opencsv:opencsv:4.6'
+
+    def appCenterSdkVersion = '2.3.0'
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 }
