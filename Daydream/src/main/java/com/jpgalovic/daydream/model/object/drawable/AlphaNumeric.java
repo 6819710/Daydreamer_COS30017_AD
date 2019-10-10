@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
+import com.jpgalovic.daydream.model.object.compound.AlphaSelector;
+
+import java.util.ArrayList;
 
 public class AlphaNumeric {
     private static final String TAG = "OBJ_ALPHA_NUMERIC";
@@ -34,11 +37,7 @@ public class AlphaNumeric {
 
     private TexturedMeshObject object;
 
-    public AlphaNumeric(Context context, int index, float x, float y, float z, float pitch, float yaw, float roll) {
-        object = new TexturedMeshObject("OBJ_"+String.valueOf(ALPHA_NUMERIC_CHAR[index]), true, Data.getMesh(context, ID[index]), Data.getTextures(context, ID[index]), x, y, z, pitch, yaw, roll);
-    }
-
-    public AlphaNumeric(Context context,char alphaNumericChar, float x, float y, float z, float pitch, float yaw, float roll) {
+    public AlphaNumeric(Context context, char alphaNumericChar, float x, float y, float z, float pitch, float yaw, float roll) {
         object = new TexturedMeshObject("OBJ_"+String.valueOf(alphaNumericChar), true, Data.getMesh(context, ID[getIndex(alphaNumericChar)]), Data.getTextures(context, ID[getIndex(alphaNumericChar)]), x, y, z, pitch, yaw, roll);
     }
 

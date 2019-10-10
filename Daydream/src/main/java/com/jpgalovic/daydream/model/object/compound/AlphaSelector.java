@@ -4,10 +4,8 @@ import android.content.Context;
 
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
-import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.AlphaNumeric;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
-import com.jpgalovic.daydream.model.util.Values;
 
 import java.util.ArrayList;
 

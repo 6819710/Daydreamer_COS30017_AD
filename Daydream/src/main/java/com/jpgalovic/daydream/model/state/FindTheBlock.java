@@ -5,6 +5,7 @@ import android.content.Context;
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
+import com.jpgalovic.daydream.model.object.compound.ScoreTicker;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 import com.jpgalovic.daydream.model.object.compound.SevenSegmentTimer;
 import com.jpgalovic.daydream.model.score.ScoreManager;
@@ -18,6 +19,7 @@ public class FindTheBlock extends State {
 
     // State Data
     private Timer timer;
+    private ScoreTicker ticker;
 
     private boolean flag_exit;
     private boolean flagBlockFound;
@@ -33,6 +35,8 @@ public class FindTheBlock extends State {
         sevenSegmentTimer.start(30);
         timer = new Timer();
 
+        ticker = new ScoreTicker(context, 0.0f, 2.0f, -10.0f, 0.0f, 0.0f, 0.0f);
+
         flag_exit = false;
         flagBlockFound = false;
 
@@ -44,6 +48,7 @@ public class FindTheBlock extends State {
     @Override
     public void init() {
         sevenSegmentTimer = new SevenSegmentTimer(context, 0.0f, 0.0f, -10.0f);
+        ticker = new ScoreTicker(context, 0.0f, 2.0f, -10.0f, 0.0f, 0.0f, 0.0f);
         block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.getMesh(context, R.array.OBJ_FTB_BLOCK), Data.getTextures(context, R.array.OBJ_FTB_BLOCK), 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
         float[] position = Util.randomPosition();
@@ -61,6 +66,7 @@ public class FindTheBlock extends State {
     public State update() {
         if(flagBlockFound == true && flag_exit == false) {
             score += rand.nextInt((20 - 10) + 1) + 10;
+            ticker.setScore(score);
             float[] position = Util.randomPosition();
             block.setPosition(position[12], position[13], -position[14]);
             flagBlockFound = false;
@@ -94,6 +100,7 @@ public class FindTheBlock extends State {
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
         sevenSegmentTimer.render(perspective, view, objectProgram, objectModelViewProjectionParam);
+        ticker.render(perspective, view, objectProgram, objectModelViewProjectionParam);
         block.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 }
