@@ -50,8 +50,8 @@ public class AlphaNumeric {
         throw new RuntimeException("Unknown Character:" + alphaNumeric + ",  please use [0-9][A-Z]");
     }
 
-    public void setPosition(float x, float y, float z) {
-        object.setPosition(x, y, z);
+    public void setTranslation(float x, float y, float z) {
+        object.setTranslation(x, y, z);
     }
 
     public void translate(float x, float y, float z) {

@@ -46,6 +46,7 @@ public class NewHighScore extends State {
         alphaSelectorC = new AlphaSelector(context, Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
 
         save = new TexturedMeshObject("OBJ_SAVE", true, Data.getMesh(context, R.array.OBJ_LABEL_SAVE), Data.getTextures(context, R.array.OBJ_LABEL_SAVE), 0.0f, -2.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        save.setScale(0.5f, 0.5f, 0.5f);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 
 import com.jpgalovic.daydream.model.object.Mesh;
+import com.jpgalovic.daydream.model.object.ModelMatrix;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
@@ -16,8 +17,11 @@ public class TexturedMeshObject {
     private Mesh objectMesh;
     private ArrayList<Texture> objectTex;
 
+    private ModelMatrix model;
+
     private float[] modelPos;
     private float[] modelRot;
+    private float[] modelSca;
 
     private float[] modelView;
     private float[] modelViewProjection;
@@ -46,17 +50,14 @@ public class TexturedMeshObject {
 
         modelPos = new float[16];
         modelRot = new float[16];
+        modelSca = new float[16];
 
         modelView = new float[16];
         modelViewProjection = new float[16];
 
         objectTex = new ArrayList<>();
 
-        Matrix.setRotateEulerM(modelRot, 0, 0, 0, 0);
-        Matrix.setIdentityM(modelPos, 0);
-
-        translate(x, y, z);
-        rotate(pitch, yaw, roll);
+        model = new ModelMatrix(x, y, z, pitch, yaw, roll, 1.0f, 1.0f, 1.0f);
 
         objectMesh = mesh;
         for(int i = 0; i < textures.length; i++) {
@@ -65,14 +66,13 @@ public class TexturedMeshObject {
     }
 
     /**
-     * Sets position of object (Absolute Coordinates)
+     * Sets the translation of the object.
      * @param   x                       X coordinate of object.
      * @param   y                       Y coordinate of object.
      * @param   z                       Z coordinate of object.
      */
-    public void setPosition(float x, float y, float z) {
-        Matrix.setIdentityM(modelPos, 0);
-        translate(x, y, z);
+    public void setTranslation(float x, float y, float z) {
+        model.setTranslation(x, y, z);
     }
 
     /**
@@ -82,7 +82,7 @@ public class TexturedMeshObject {
      * @param   z                       Z coordinate of object.
      */
     public void translate(float x, float y, float z) {
-        Matrix.translateM(modelPos, 0, x, y, z);
+        model.translate(x, y, z);
     }
 
     /**
@@ -92,7 +92,7 @@ public class TexturedMeshObject {
      * @param   roll                    Roll rotation of object.
      */
     public void setRotation(float pitch, float yaw, float roll) {
-        Matrix.setRotateEulerM(modelRot, 0, pitch, yaw, roll);
+        model.setRotation(pitch, yaw, roll);
     }
 
     /**
@@ -102,9 +102,21 @@ public class TexturedMeshObject {
      * @param   roll                    Roll rotation of object.
      */
     public void rotate(float pitch, float yaw, float roll) {
-        Matrix.rotateM(modelRot, 0, pitch, 1,  0, 0);
-        Matrix.rotateM(modelRot, 0, yaw, 0,  1, 0);
-        Matrix.rotateM(modelRot, 0, roll, 0,  0, 1);
+        model.rotate(pitch, yaw, roll);
+    }
+
+    public void setScale(float x, float y, float z) {
+        model.setScale(x, y, z);
+    }
+
+    /**
+     * Scales the object.
+     * @param   x                       X Component.
+     * @param   y                       Y Component.
+     * @param   z                       Z Component.
+     */
+    public void scale(float x, float y, float z) {
+        model.scale(x, y, z);
     }
 
     /**
@@ -145,13 +157,12 @@ public class TexturedMeshObject {
 
             // Build modelView and modelViewProjection.
             // This calculates the position to draw the object.
-            Matrix.multiplyMM(modelView, 0, view, 0, modelPos, 0);
+            Matrix.multiplyMM(modelView, 0, view, 0, model.matrix(), 0);
             Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
-            Matrix.multiplyMM(matrix, 0, modelViewProjection, 0, modelRot, 0);
 
             // Draw the object.
             GLES20.glUseProgram(programId);
-            GLES20.glUniformMatrix4fv(modelViewProjParam, 1, false, matrix, 0);
+            GLES20.glUniformMatrix4fv(modelViewProjParam, 1, false, modelViewProjection, 0);
 
             objectTex.get(textureIndex).bind();
             objectMesh.render();
@@ -166,7 +177,7 @@ public class TexturedMeshObject {
      */
     public boolean isLookedAt(float[] headView) {
         float[] tempPosition = new float[16];
-        Matrix.multiplyMM(modelView, 0, headView, 0, modelPos, 0);
+        Matrix.multiplyMM(modelView, 0, headView, 0, model.getPosition(), 0);
         Matrix.multiplyMV(tempPosition, 0, modelView, 0, Values.POS_MATRIX_MULTIPLY_VEC, 0);
 
         float angle = Util.angleBetweenVectors(tempPosition, Values.FORWARD_VEC);

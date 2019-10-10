@@ -52,7 +52,7 @@ public class FindTheBlock extends State {
         block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.getMesh(context, R.array.OBJ_FTB_BLOCK), Data.getTextures(context, R.array.OBJ_FTB_BLOCK), 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
         float[] position = Util.randomPosition();
-        block.setPosition(position[12], position[13], -position[14]);
+        block.setTranslation(position[12], position[13], -position[14]);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class FindTheBlock extends State {
             score += rand.nextInt((20 - 10) + 1) + 10;
             ticker.setScore(score);
             float[] position = Util.randomPosition();
-            block.setPosition(position[12], position[13], -position[14]);
+            block.setTranslation(position[12], position[13], -position[14]);
             flagBlockFound = false;
         }
 
