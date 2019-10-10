@@ -19,10 +19,6 @@ public class TexturedMeshObject {
 
     private ModelMatrix model;
 
-    private float[] modelPos;
-    private float[] modelRot;
-    private float[] modelSca;
-
     private float[] modelView;
     private float[] modelViewProjection;
 
@@ -47,10 +43,6 @@ public class TexturedMeshObject {
 
         this.flat_fine = flat_fine;
         flag_display = true;
-
-        modelPos = new float[16];
-        modelRot = new float[16];
-        modelSca = new float[16];
 
         modelView = new float[16];
         modelViewProjection = new float[16];
