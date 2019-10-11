@@ -21,7 +21,17 @@ public class Compound {
         this.offsets = offsets;
     }
 
-    
+    public void setTranslation(float x, float y, float z) {
+        for(int i = 0; i < objects.size(); i++) {
+            objects.get(i).setTranslation(x + offsets.get(i)[12], y + offsets.get(i)[13], z + offsets.get(i)[14]);
+        }
+    }
+
+    public void translate(float x, float y, float z) {
+        for(int i = 0; i < objects.size(); i++) {
+            objects.get(i).translate(x, y, z);
+        }
+    }
 
 
 }
