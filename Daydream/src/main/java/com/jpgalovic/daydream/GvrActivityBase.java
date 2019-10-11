@@ -190,8 +190,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         // Load Data
         Data.initialise(this, objectPositionParam, objectUvParam);
-
         loading.init();
+        Data.loadAssets(this, objectPositionParam, objectUvParam);
         state = loading;
     }
 

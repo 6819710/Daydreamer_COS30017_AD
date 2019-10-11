@@ -17,12 +17,16 @@ public class Data {
     public static ArrayList<Texture> textures;
     public static ArrayList<Mesh> meshes;
 
+    public static ArrayList<Texture> loading_textures;
+    public static ArrayList<Mesh> loading_meshes;
+
     // Data Flags
     public static boolean flag_textures_loaded;
     public static boolean flag_meshes_loaded;
 
     // Async References.
     private static LoadMeshes loadMeshes;
+    public static int loadIndex;
 
     public static Texture[] getTextures(Context context, int id) {
         int[] data = context.getResources().getIntArray(id);
@@ -50,13 +54,46 @@ public class Data {
     /**
      * Runs initialisation process.
      */
-    public static void initialise(Context context, int positionAttrib, int uvAttrib) {
+    public static void initialise(Context context, int positionAttribute, int uvAttribute) {
         flag_textures_loaded = false;
         flag_meshes_loaded = false;
+        String[] filePaths;
+        loadIndex = 0;
 
+        // Pre-Load Textures.
+        loading_textures = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.OBJ_LOADING_TEXTURE_FILES);
+        Log.i(TAG, "Pre-Loading Textures.");
+
+        try {
+            for(int i = 0; i < filePaths.length; i++) {
+                loading_textures.add(new Texture(context, filePaths[i]));
+            }
+            Log.i(TAG, "Pre-Loaded Textures Loaded");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        // Pre-load Meshes
+        loading_meshes = new ArrayList<>();
+        filePaths = context.getResources().getStringArray(R.array.OBJ_LOADING_MESH_FILES);
+        Log.i(TAG, "Pre-Loading Meshes.");
+
+        try {
+            for(String path : filePaths) {
+                loading_meshes.add(new Mesh(context, path, positionAttribute, uvAttribute));
+            }
+            Log.i(TAG, "Pre-Loaded Textures Loaded");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    public static void loadAssets(Context context, int positionAttribute, int uvAttribute) {
+        // Load Textures.
         loadTextures(context);
 
-        loadMeshes = new LoadMeshes(context, positionAttrib, uvAttrib);
+        loadMeshes = new LoadMeshes(context, positionAttribute, uvAttribute);
         loadMeshes.execute();
     }
 
@@ -104,7 +141,8 @@ public class Data {
             for(String path : filePaths) {
                 try {
                     result.add(new Mesh(context, path, positionAttribute, uvAttribute));
-                    publishProgress(count++);
+                    count++;
+                    publishProgress(new Integer[]{count});
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
                 }
@@ -115,7 +153,30 @@ public class Data {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
+            // Total Meshes = 44, threshold = 4
+            if(values[0] <= 4) {
+                loadIndex = 0;
+            } else if(values[0] <= 8) {
+                loadIndex = 1;
+            } else if(values[0] <= 12) {
+                loadIndex = 2;
+            } else if(values[0] <= 16) {
+                loadIndex = 3;
+            } else if(values[0] <= 20) {
+                loadIndex = 4;
+            } else if(values[0] <= 24) {
+                loadIndex = 5;
+            } else if(values[0] <= 28) {
+                loadIndex = 6;
+            } else if(values[0] <= 32) {
+                loadIndex = 7;
+            } else if(values[0] <= 36) {
+                loadIndex = 8;
+            } else if(values[0] <= 40) {
+                loadIndex = 9;
+            } else{
+                loadIndex = 10;
+            }
         }
 
         @Override

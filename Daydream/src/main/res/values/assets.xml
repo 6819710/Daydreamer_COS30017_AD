@@ -234,6 +234,26 @@
             <item>60</item> <!-- Texture End -->
         </integer-array>
 
+    <!-- Loading Mesh Files -->
+    <string-array name="OBJ_LOADING_MESH_FILES">
+        <item>obj/loading_bar.obj</item>
+    </string-array>
+
+    <!-- Loading Texture Files -->
+    <string-array name="OBJ_LOADING_TEXTURE_FILES">
+        <item>obj/loading_bar_empty.png</item>
+        <item>obj/loading_bar_a.png</item>
+        <item>obj/loading_bar_b.png</item>
+        <item>obj/loading_bar_c.png</item>
+        <item>obj/loading_bar_d.png</item>
+        <item>obj/loading_bar_e.png</item>
+        <item>obj/loading_bar_f.png</item>
+        <item>obj/loading_bar_g.png</item>
+        <item>obj/loading_bar_h.png</item>
+        <item>obj/loading_bar_i.png</item>
+        <item>obj/loading_bar_j.png</item>
+    </string-array>
+
     <!-- Mesh Files -->
     <string-array name="OBJ_MESH_FILES">
         <!-- Alpha Numeric Objects -->
