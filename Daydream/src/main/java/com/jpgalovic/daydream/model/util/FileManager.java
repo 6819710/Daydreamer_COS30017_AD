@@ -38,21 +38,25 @@ public class FileManager {
         }
 
         for(String fileName : files) {
+            Log.i(TAG, "Copying File: " + fileName);
+            InputStream in = null;
+            OutputStream out = null;
+
             try {
                 File file = new File(context.getFilesDir().toString() + "/" + fileName);
                 if (file.exists()) {
                     Log.i(TAG, "File: " + fileName + " already exists");
                 } else {
-                    Log.i(TAG, "Copying File: " + fileName);
-                    InputStream in;
-                    OutputStream out;
-
                     in = assetManager.open("files/" + fileName);
-                    out = new FileOutputStream(context.getFilesDir().toString() + '/' + fileName);
+                    out = new FileOutputStream(file);
                     copyFiles(in, out);
+
                     in.close();
+                    in = null;
+
                     out.flush();
                     out.close();
+                    out = null;
                 }
             }
             catch (IOException e) {
@@ -67,10 +71,10 @@ public class FileManager {
      * @param   out             Output stream.
      * @throws  IOException     if I/O exception occurs.
      */
-    private static void copyFiles(InputStream in, OutputStream out) throws IOException {
+    private static void copyFiles(InputStream in, OutputStream out) throws IOException{
         byte[] buffer = new byte[1024];
         int read;
-        while ((read = in.read(buffer)) != 1) {
+        while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
     }
