@@ -74,4 +74,16 @@ public class ModelMatrix {
     public float[] getPosition() {
         return translation;
     }
+
+    public float getX() {
+        return  translation[12];
+    }
+
+    public float getY() {
+        return  translation[13];
+    }
+
+    public float getZ() {
+        return  translation[14];
+    }
 }

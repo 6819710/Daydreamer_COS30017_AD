@@ -208,10 +208,15 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
         float z = (float) (radius * Math.cos(theta));
 
         /*
-         * Get theta, phi, dist from (x,y,z)
+         * Get x, y, z from yaw, pitch, and dist
+         * x = radius * cos (yaw) * cos(pitch)
+         * y = radius * sin (yaw) * cos(pitch)
+         * z = radius * sin (pitch)
+         *
+         * Get yaw, pitch, dist from (x,y,z)
          * radius = sqrt(x*x + y*y + z*z);
-         * theta = acos(z / radius);
-         * phi = atan2 (y, x);
+         * yaw = acos(z / radius);
+         * pitch = atan2 (y, x);
          */
 
         // Set position of block

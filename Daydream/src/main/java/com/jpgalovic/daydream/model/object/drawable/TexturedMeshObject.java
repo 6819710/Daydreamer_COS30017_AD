@@ -179,4 +179,8 @@ public class TexturedMeshObject {
             return angle < Values.ANGLE_THRESHOLD;
         }
     }
+
+    public ModelMatrix getModel() {
+        return model;
+    }
 }

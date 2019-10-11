@@ -109,30 +109,62 @@ public class Util {
      */
     public static float[] randomPosition() {
         // Calculate random yaw, pitch and distance values.
-        float theta = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW);
-        float phi = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH);
+        float pitch = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW);
+        float yaw = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH);
         float magnitude = rand.nextFloat() * (Values.MAX_TARGET_DISTANCE - Values.MIN_TARGET_DISTANCE) + Values.MIN_TARGET_DISTANCE;
 
-        return calculatePosition(magnitude, theta, phi);
+        return calculatePosition(magnitude, pitch, yaw);
     }
 
     /**
      * Calculates vector components from angles theta and phi, and magnitude.
      * @param   magnitude       Magnitude of Vector
-     * @param   theta           Angle Theta of Vector
-     * @param   phi             Angle Phi of Vector
+     * @param   pitch           Pitch of Vector
+     * @param   yaw             Yaw of Vector
      * @return                  Matrix with calculated position.
      */
-    public static float[] calculatePosition(float magnitude, float theta, float phi) {
+    public static float[] calculatePosition(float magnitude, float pitch, float yaw) {
         float[] result = new float[16];
 
-        float x = (float) (magnitude * Math.sin(theta) * Math.cos(phi));
-        float y = (float) (magnitude * Math.sin(theta) * Math.sin(phi));
-        float z = (float) (magnitude * Math.cos(theta));
+        float x = (float) (magnitude * Math.cos(yaw) * Math.cos(pitch));
+        float y = (float) (magnitude * Math.sin(yaw) * Math.cos(pitch));
+        float z = (float) (magnitude * Math.cos(pitch));
 
         Matrix.setIdentityM(result, 0);
         Matrix.translateM(result, 0, x, y, z);
 
         return result;
+    }
+
+    /**
+     * Calulates the magnitude of a vector in terms of i, j & k.
+     * @param   i               i component of Vector.
+     * @param   j               j component of Vector.
+     * @param   k               k component of Vector.
+     * @return                  magnitude of vector sqrt(i*i + j*j + k*k)
+     */
+    public static float calulateMagnitude(float i, float j, float k) {
+        return (float) Math.sqrt((double)((i * i) + (j * j) + (k * k)));
+    }
+
+    /**
+     * Calculates the pitch of a vector in terms of i, j & k.
+     * @param   i               i component of Vector.
+     * @param   j               j component of Vector.
+     * @param   k               k component of Vector.
+     * @return                  pitch of vector acos(k + magnitude)
+     */
+    public static float calulatePitch(float i, float j, float k) {
+        return (float) Math.acos((double) k + calulateMagnitude(i, j, k));
+    }
+
+    /**
+     * Calculates the yaw of a vector in terms of i, j & k.
+     * @param   i               i component of Vector.
+     * @param   j               j component of Vector.
+     * @return                  yaw of vector atan2(j, i)
+     */
+    public static float calulateYaw(float i, float j) {
+        return (float) Math.atan2((double) j, (double) i);
     }
 }
