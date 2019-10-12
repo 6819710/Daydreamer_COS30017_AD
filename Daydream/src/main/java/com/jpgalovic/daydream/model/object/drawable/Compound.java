@@ -84,6 +84,14 @@ public class Compound {
         }
     }
 
+    public void setAudio(int index, String audioFile) {
+        objects.get(index).setAudio(audioFile);
+    }
+
+    public void playAudio(int index, boolean loop) {
+        objects.get(index).playAudio(loop);
+    }
+
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int modelViewProjParam) {
         for(int i = 0; i < objects.size(); i++) {
             objects.get(i).render(perspective, view, headView, objectProgram, modelViewProjParam);
@@ -94,5 +102,9 @@ public class Compound {
         for(int i = 0; i < objects.size(); i++) {
             objects.get(i).render(perspective, view, textureIndex, objectProgram, modelViewProjParam);
         }
+    }
+
+    public boolean isLookedAt(int index, float[] headView) {
+        return objects.get(index).isLookedAt(headView);
     }
 }

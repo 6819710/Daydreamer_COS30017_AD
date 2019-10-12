@@ -14,7 +14,6 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
-import com.jpgalovic.daydream.model.StateTemplate;
 import com.jpgalovic.daydream.model.state.FindTheBlock;
 import com.jpgalovic.daydream.model.state.HighScores;
 import com.jpgalovic.daydream.model.state.Loading;
@@ -137,6 +136,10 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headTransform.getHeadView(headView, 0);
 
         // Update Audio Engine
+        headTransform.getQuaternion(headRotation, 0);
+        Data.audio_engine.setHeadRotation(headRotation[0], headRotation[1], headRotation[2], headRotation[3]);
+        Data.audio_engine.update();
+
         Util.checkGLError("onNewFrame");
     }
 
@@ -178,7 +181,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Log.i(TAG, "onSurfaceCreated");
 
         // Set OpenGL Parameters
-        GLES20.glClearColor(128.0f, 0.0f, 0.0f, 128.0f);
+        GLES20.glClearColor(0.0f, 64.0f, 64.0f, 128.0f);
 
         objectProgram = Util.compileProgram(Values.OBJECT_VERTEX_SHADER, Values.OBJECT_FRAGMENT_SHADER);
 

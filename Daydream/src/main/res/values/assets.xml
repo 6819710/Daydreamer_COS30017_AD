@@ -418,13 +418,28 @@
         <!-- Sound Bytes -->
         <item>obj/sound_bytes/left_key.png</item> <!-- 61 -->
         <item>obj/sound_bytes/left_key_selected.png</item>
-        <item>obj/sound_bytes/left_key.png</item> <!-- 63 -->
-        <item>obj/sound_bytes/left_key_selected.png</item>
+        <item>obj/sound_bytes/middle_key.png</item> <!-- 63 -->
+        <item>obj/sound_bytes/middle_key_selected.png</item>
         <item>obj/sound_bytes/right_key.png</item> <!-- 65 -->
         <item>obj/sound_bytes/right_key_selected.png</item>
         <item>obj/sound_bytes/sharp_key.png</item> <!-- 67 -->
         <item>obj/sound_bytes/sharp_key_selected.png</item>
 
+    </string-array>
+
+    <string-array name="ADO_FILES">
+        <item>audio/key_c.ogg</item>
+        <item>audio/key_cs.ogg</item>
+        <item>audio/key_d.ogg</item>
+        <item>audio/key_ds.ogg</item>
+        <item>audio/key_e.ogg</item>
+        <item>audio/key_f.ogg</item>
+        <item>audio/key_fs.ogg</item>
+        <item>audio/key_g.ogg</item>
+        <item>audio/key_gs.ogg</item>
+        <item>audio/key_a.ogg</item>
+        <item>audio/key_as.ogg</item>
+        <item>audio/key_b.ogg</item>
     </string-array>
 
 </resources>

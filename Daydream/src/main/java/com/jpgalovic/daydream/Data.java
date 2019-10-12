@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.vr.sdk.audio.GvrAudioEngine;
 import com.jpgalovic.daydream.model.object.Mesh;
 import com.jpgalovic.daydream.model.object.Texture;
 
@@ -19,6 +20,8 @@ public class Data {
 
     public static ArrayList<Texture> loading_textures;
     public static ArrayList<Mesh> loading_meshes;
+
+    public static GvrAudioEngine audio_engine;
 
     // Data Flags
     public static boolean flag_textures_loaded;
@@ -87,14 +90,31 @@ public class Data {
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }
+
+        // Initialise Audio Engine.
+        audio_engine = new GvrAudioEngine(context, GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
     }
 
-    public static void loadAssets(Context context, int positionAttribute, int uvAttribute) {
+    public static void loadAssets(final Context context, int positionAttribute, int uvAttribute) {
         // Load Textures.
         loadTextures(context);
 
         loadMeshes = new LoadMeshes(context, positionAttribute, uvAttribute);
         loadMeshes.execute();
+
+        // Load Audio. Avoid delays by running in a thread. TODO: check if this is the best practice vs ASYNC task.
+        new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    String[] adoFiles = context.getResources().getStringArray(R.array.ADO_FILES);
+                    for(String file : adoFiles) {
+                        // Load each audio file.
+                        audio_engine.preloadSoundFile(file);
+                    }
+                }
+            }
+        ).start();
     }
 
     private static void loadTextures(Context context) {

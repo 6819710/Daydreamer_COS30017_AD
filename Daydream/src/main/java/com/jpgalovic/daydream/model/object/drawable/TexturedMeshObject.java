@@ -3,6 +3,8 @@ package com.jpgalovic.daydream.model.object.drawable;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+import com.google.vr.sdk.audio.GvrAudioEngine;
+import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.model.object.Mesh;
 import com.jpgalovic.daydream.model.object.ModelMatrix;
 import com.jpgalovic.daydream.model.object.Texture;
@@ -21,6 +23,9 @@ public class TexturedMeshObject {
 
     private float[] modelView;
     private float[] modelViewProjection;
+
+    private volatile int sourceId = GvrAudioEngine.INVALID_ID;
+    private String audioFile;
 
     private Boolean flat_fine;
     private Boolean flag_display;
@@ -58,6 +63,24 @@ public class TexturedMeshObject {
     }
 
     /**
+     * Sets object audio file.
+     * @param   file                    File location of audio file.
+     */
+    public void setAudio(String file) {
+        audioFile = file;
+    }
+
+    /**
+     * Starts playback of audio.
+     * @param   loop                audio will loop if true.
+     */
+    public void playAudio(boolean loop) {
+        sourceId = Data.audio_engine.createSoundObject(audioFile);
+        Data.audio_engine.setSoundObjectPosition(sourceId, model.getX(), model.getY(), model.getZ());
+        Data.audio_engine.playSound(sourceId, loop);
+    }
+
+    /**
      * Sets the translation of the object.
      * @param   x                       X coordinate of object.
      * @param   y                       Y coordinate of object.
@@ -65,6 +88,7 @@ public class TexturedMeshObject {
      */
     public void setTranslation(float x, float y, float z) {
         model.setTranslation(x, y, z);
+        Data.audio_engine.setSoundObjectPosition(sourceId, model.getX(), model.getY(), model.getZ());
     }
 
     /**
@@ -75,6 +99,7 @@ public class TexturedMeshObject {
      */
     public void translate(float x, float y, float z) {
         model.translate(x, y, z);
+        Data.audio_engine.setSoundObjectPosition(sourceId, model.getX(), model.getY(), model.getZ());
     }
 
     /**
