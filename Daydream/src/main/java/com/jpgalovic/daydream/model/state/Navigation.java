@@ -54,79 +54,79 @@ public class Navigation extends State {
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, -0.81f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("C", true, Data.getMesh(context, R.array.OBJ_LEFT_KEY), Data.getTextures(context, R.array.OBJ_LEFT_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("C", true, Data.getMesh(context, R.array.OBJ_LEFT_KEY), Data.getTextures(context, R.array.OBJ_LEFT_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(0).setAudio(audioFiles[0]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, -0.675f, 0.0f, -0.25f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("C#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("C#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(1).setAudio(audioFiles[1]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, -0.54f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("D", true, Data.getMesh(context, R.array.OBJ_MIDDLE_KEY), Data.getTextures(context, R.array.OBJ_MIDDLE_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("D", true, Data.getMesh(context, R.array.OBJ_MIDDLE_KEY), Data.getTextures(context, R.array.OBJ_MIDDLE_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(2).setAudio(audioFiles[2]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, -0.405f, 0.0f, -0.25f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("D#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("D#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(3).setAudio(audioFiles[3]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, -0.27f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("E", true, Data.getMesh(context, R.array.OBJ_RIGHT_KEY), Data.getTextures(context, R.array.OBJ_RIGHT_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("E", true, Data.getMesh(context, R.array.OBJ_RIGHT_KEY), Data.getTextures(context, R.array.OBJ_RIGHT_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(4).setAudio(audioFiles[4]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.0f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("F", true, Data.getMesh(context, R.array.OBJ_LEFT_KEY), Data.getTextures(context, R.array.OBJ_LEFT_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("F", true, Data.getMesh(context, R.array.OBJ_LEFT_KEY), Data.getTextures(context, R.array.OBJ_LEFT_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(5).setAudio(audioFiles[5]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.135f, 0.0f, -0.25f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("F#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("F#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(6).setAudio(audioFiles[6]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.27f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("G", true, Data.getMesh(context, R.array.OBJ_MIDDLE_KEY), Data.getTextures(context, R.array.OBJ_MIDDLE_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("G", true, Data.getMesh(context, R.array.OBJ_MIDDLE_KEY), Data.getTextures(context, R.array.OBJ_MIDDLE_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(7).setAudio(audioFiles[7]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.405f, 0.0f, -0.25f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("G#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("G#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(8).setAudio(audioFiles[8]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.54f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("A", true, Data.getMesh(context, R.array.OBJ_MIDDLE_KEY), Data.getTextures(context, R.array.OBJ_MIDDLE_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("A", true, Data.getMesh(context, R.array.OBJ_MIDDLE_KEY), Data.getTextures(context, R.array.OBJ_MIDDLE_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(9).setAudio(audioFiles[9]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.675f, 0.0f, -0.25f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("A#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("A#", true, Data.getMesh(context, R.array.OBJ_SHARP_KEY), Data.getTextures(context, R.array.OBJ_SHARP_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(10).setAudio(audioFiles[10]);
 
         Matrix.setIdentityM(data, 0);
         Matrix.translateM(data, 0, 0.81f, 0.0f, 0.0f);
         offsets.add(data.clone());
-        keyboard.add(new TexturedMeshObject("B", true, Data.getMesh(context, R.array.OBJ_RIGHT_KEY), Data.getTextures(context, R.array.OBJ_RIGHT_KEY), data[12], data[13], data[14] - 2.0f, 0.0f, 0.0f, 0.0f));
+        keyboard.add(new TexturedMeshObject("B", true, Data.getMesh(context, R.array.OBJ_RIGHT_KEY), Data.getTextures(context, R.array.OBJ_RIGHT_KEY), data[12], data[13], data[14], 0.0f, 0.0f, 0.0f));
         keyboard.get(11).setAudio(audioFiles[11]);
 
-        piano = new Compound(keyboard, offsets, 0.0f, 0.0f, -2.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+        piano = new Compound(keyboard, offsets, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
         piano.setRotation(30.0f, 0.0f, 0.0f);
-        piano.translate(0.0f, -0.5f, 0.0f);
+        piano.translate(0.0f, -0.5f, -1.5f);
     }
 
     @Override
