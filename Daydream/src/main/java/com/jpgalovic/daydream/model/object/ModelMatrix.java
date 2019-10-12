@@ -75,6 +75,10 @@ public class ModelMatrix {
         return translation;
     }
 
+    public float[] getRotation(){
+        return rotation;
+    }
+
     public float getX() {
         return  translation[12];
     }

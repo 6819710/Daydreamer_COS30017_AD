@@ -211,7 +211,7 @@ public class FindTheBlock extends GvrActivity implements GvrView.StereoRenderer 
          * Get x, y, z from yaw, pitch, and dist
          * x = radius * cos (yaw) * cos(pitch)
          * y = radius * sin (yaw) * cos(pitch)
-         * z = radius * sin (pitch)
+         * z = radius * sin (yaw)
          *
          * Get yaw, pitch, dist from (x,y,z)
          * radius = sqrt(x*x + y*y + z*z);

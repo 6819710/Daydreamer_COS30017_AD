@@ -178,7 +178,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Log.i(TAG, "onSurfaceCreated");
 
         // Set OpenGL Parameters
-        GLES20.glClearColor(128.0f, 128.0f, 128.0f, 128.0f);
+        GLES20.glClearColor(128.0f, 0.0f, 0.0f, 128.0f);
 
         objectProgram = Util.compileProgram(Values.OBJECT_VERTEX_SHADER, Values.OBJECT_FRAGMENT_SHADER);
 

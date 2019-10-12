@@ -153,7 +153,7 @@ public class Data {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            // Total Meshes = 44, threshold = 4
+            // Total Meshes = 48, threshold = 4
             if(values[0] <= 4) {
                 loadIndex = 0;
             } else if(values[0] <= 8) {

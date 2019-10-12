@@ -111,22 +111,6 @@ public class TexturedMeshObject {
         model.scale(x, y, z);
     }
 
-    /**
-     * Renders the object. taking into account the headview to determine if the object is currently been looked at.
-     * @param   perspective             Perspective matrix.
-     * @param   view                    View matrix.
-     * @param   headView                Head view matrix.
-     * @param   objectProgram           Object program.
-     * @param   modelViewProjParam      Object model view projection parameter.
-     */
-    public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int modelViewProjParam) {
-        if(isLookedAt(headView)) {
-            render(perspective, view, 1, objectProgram, modelViewProjParam);
-        } else {
-            render(perspective, view, 0, objectProgram, modelViewProjParam);
-        }
-    }
-
     public void enableDisplay() {
         flag_display = true;
     }
@@ -136,14 +120,32 @@ public class TexturedMeshObject {
     }
 
     /**
+     * Renders the object. taking into account the headview to determine if the object is currently been looked at.
+     * @param   perspective             Perspective matrix.
+     * @param   view                    View matrix.
+     * @param   headView                Head view matrix.
+     * @param   objectProgram           Object program.
+     * @param   modelViewProjParam      Object model view projection parameter.
+     */
+    public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int modelViewProjParam) {
+        if(flag_display) {
+            if (isLookedAt(headView)) {
+                render(perspective, view, 1, objectProgram, modelViewProjParam);
+            } else {
+                render(perspective, view, 0, objectProgram, modelViewProjParam);
+            }
+        }
+    }
+
+    /**
      * Renders the object.
      * @param   perspective             Perspective matrix.
      * @param   view                    View matrix.
      * @param   textureIndex            Texture index.
-     * @param   programId               Object program.
+     * @param   objectProgram           Object program.
      * @param   modelViewProjParam      Object model view projection parameter.
      */
-    public void render(float[] perspective, float[] view, int textureIndex, int programId, int modelViewProjParam) {
+    public void render(float[] perspective, float[] view, int textureIndex, int objectProgram, int modelViewProjParam) {
         if(flag_display) {
             float[] matrix = new float[16];
 
@@ -153,7 +155,7 @@ public class TexturedMeshObject {
             Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
 
             // Draw the object.
-            GLES20.glUseProgram(programId);
+            GLES20.glUseProgram(objectProgram);
             GLES20.glUniformMatrix4fv(modelViewProjParam, 1, false, modelViewProjection, 0);
 
             objectTex.get(textureIndex).bind();

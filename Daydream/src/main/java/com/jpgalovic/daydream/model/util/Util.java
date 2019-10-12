@@ -109,8 +109,8 @@ public class Util {
      */
     public static float[] randomPosition() {
         // Calculate random yaw, pitch and distance values.
-        float pitch = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW);
-        float yaw = (float) Math.toRadians((rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH);
+        float pitch = (rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW;
+        float yaw = (rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH;
         float magnitude = rand.nextFloat() * (Values.MAX_TARGET_DISTANCE - Values.MIN_TARGET_DISTANCE) + Values.MIN_TARGET_DISTANCE;
 
         return calculatePosition(magnitude, pitch, yaw);
@@ -126,9 +126,12 @@ public class Util {
     public static float[] calculatePosition(float magnitude, float pitch, float yaw) {
         float[] result = new float[16];
 
-        float x = (float) (magnitude * Math.cos(yaw) * Math.cos(pitch));
-        float y = (float) (magnitude * Math.sin(yaw) * Math.cos(pitch));
-        float z = (float) (magnitude * Math.cos(pitch));
+        pitch = (float) Math.toRadians(pitch);
+        yaw = (float) Math.toRadians(yaw);
+
+        float x = (float) (magnitude * Math.sin(yaw) * Math.cos(pitch));
+        float y = (float) (magnitude * Math.sin(yaw) * Math.sin(pitch));
+        float z = (float) (magnitude * Math.cos(yaw));
 
         Matrix.setIdentityM(result, 0);
         Matrix.translateM(result, 0, x, y, z);

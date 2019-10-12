@@ -234,6 +234,31 @@
             <item>60</item> <!-- Texture End -->
         </integer-array>
 
+        <!-- Sound Bytes Objects -->
+        <integer-array name="OBJ_LEFT_KEY">
+            <item>45</item> <!-- Mesh Index -->
+            <item>61</item> <!-- Texture Start -->
+            <item>62</item> <!-- Texture End -->
+        </integer-array>
+
+        <integer-array name="OBJ_MIDDLE_KEY">
+            <item>46</item> <!-- Mesh Index -->
+            <item>63</item> <!-- Texture Start -->
+            <item>64</item> <!-- Texture End -->
+        </integer-array>
+
+        <integer-array name="OBJ_RIGHT_KEY">
+            <item>47</item> <!-- Mesh Index -->
+            <item>65</item> <!-- Texture Start -->
+            <item>66</item> <!-- Texture End -->
+        </integer-array>
+
+        <integer-array name="OBJ_SHARP_KEY">
+            <item>48</item> <!-- Mesh Index -->
+            <item>67</item> <!-- Texture Start -->
+            <item>68</item> <!-- Texture End -->
+        </integer-array>
+
     <!-- Loading Mesh Files -->
     <string-array name="OBJ_LOADING_MESH_FILES">
         <item>obj/loading_bar.obj</item>
@@ -310,6 +335,12 @@
         <item>obj/find_the_block/block.obj</item> <!-- 43 -->
         <item>obj/find_the_block/seven_segment_disp.obj</item>
 
+        <!-- Sound Bytes -->
+        <item>obj/sound_bytes/left_key.obj</item> <!-- 45 -->
+        <item>obj/sound_bytes/middle_key.obj</item>
+        <item>obj/sound_bytes/right_key.obj</item>
+        <item>obj/sound_bytes/sharp_key.obj</item>
+
     </string-array>
 
     <!-- Texture Files -->
@@ -383,6 +414,16 @@
         <item>obj/find_the_block/seven_segment_disp_8.png</item>
         <item>obj/find_the_block/seven_segment_disp_9.png</item>
         <item>obj/find_the_block/seven_segment_disp_off.png</item>
+
+        <!-- Sound Bytes -->
+        <item>obj/sound_bytes/left_key.png</item> <!-- 61 -->
+        <item>obj/sound_bytes/left_key_selected.png</item>
+        <item>obj/sound_bytes/left_key.png</item> <!-- 63 -->
+        <item>obj/sound_bytes/left_key_selected.png</item>
+        <item>obj/sound_bytes/right_key.png</item> <!-- 65 -->
+        <item>obj/sound_bytes/right_key_selected.png</item>
+        <item>obj/sound_bytes/sharp_key.png</item> <!-- 67 -->
+        <item>obj/sound_bytes/sharp_key_selected.png</item>
 
     </string-array>
 

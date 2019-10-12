@@ -1,5 +1,7 @@
 package com.jpgalovic.daydream.model.object.drawable;
 
+import android.opengl.Matrix;
+
 import com.jpgalovic.daydream.model.object.ModelMatrix;
 import com.jpgalovic.daydream.model.util.Util;
 
@@ -37,50 +39,60 @@ public class Compound {
     }
 
     public void rotate(float pitch, float yaw, float roll) {
-        for(int i = 0; i < objects.size(); i++) {
-            // Calculate new Offset Position based on Current Offsets to determine new vector.
-            float offX = offsets.get(i)[12];
-            float offY = offsets.get(i)[13];
-            float offZ = offsets.get(i)[14];
 
-            float magnitude = Util.calulateMagnitude(offX, offY, offZ);
-            float setYaw = Util.calulateYaw(offX, offY);
-            float setPitch = Util.calulatePitch(offX, offY, offZ);
-
-            setYaw = setYaw + yaw;
-            setPitch = setPitch + pitch;
-
-            float[] offset = Util.calculatePosition(magnitude, setPitch, setYaw);
-
-            offsets.set(i, offset);
-
-            // Set new position and rotation of object.
-            objects.get(i).setTranslation(offset[12] + modelMatrix.getX(), offset[13] + modelMatrix.getY(), offset[14] + modelMatrix.getZ());
-            objects.get(i).rotate(pitch, yaw, roll);
-        }
     }
 
     public void setRotation(float pitch, float yaw, float roll) {
+        float[] modelPos = modelMatrix.getPosition();
+
+        // pitching rules:
+        float cosPitch = (float) Math.cos(Math.toRadians(pitch));
+        float sinPitch = (float) Math.sin(Math.toRadians(pitch));
+
+        // yawing rules:
+        float cosYaw = (float) Math.cos(Math.toRadians(yaw));
+        float sinYaw = (float) Math.sin(Math.toRadians(yaw));
+
+        // rolling rules:
+        float cosRoll = (float) Math.cos(Math.toRadians(roll));
+        float sinRoll = (float) Math.sin(Math.toRadians(roll));
+
         for(int i = 0; i < objects.size(); i++) {
-            // Calculate new Offset Position based on Current Offsets to determine new vector.
-            float offX = offsets.get(i)[12];
-            float offY = offsets.get(i)[13];
-            float offZ = offsets.get(i)[14];
+            float[] pos = offsets.get(i);
 
-            float magnitude = Util.calulateMagnitude(offX, offY, offZ);
-            float setYaw = Util.calulateYaw(offX, offY);
-            float setPitch = Util.calulatePitch(offX, offY, offZ);
+            float x0 = pos[12];
+            float y0 = pos[13];
+            float z0 = pos[14];
 
-            setYaw = setYaw + yaw;
-            setPitch = setPitch + pitch;
+            // pitch (about x)
+            float x1 = x0;
+            float y1 = y0 * cosPitch - z0 * sinPitch;
+            float z1 = y0 * sinPitch + z0 * cosPitch;
 
-            float[] offset = Util.calculatePosition(magnitude, setPitch, setYaw);
+            // yaw (about y)
+            float x2 = x1 * cosYaw + z1 * sinYaw;
+            float y2 = y1;
+            float z2 = -x1 * sinYaw + z1 * cosYaw;
 
-            offsets.set(i, offset);
+            // roll (about z)
+            float x3 = x2 * cosRoll - y2 * sinRoll;
+            float y3 = x2 * sinRoll + y2 * cosRoll;
+            float z3 = z2;
 
-            // Set new position and rotation of object.
-            objects.get(i).setTranslation(offset[12] + modelMatrix.getX(), offset[13] + modelMatrix.getY(), offset[14] + modelMatrix.getZ());
+            objects.get(i).setTranslation(x3 + modelPos[12], y3 + modelPos[13], z3 + modelPos[14]);
             objects.get(i).setRotation(pitch, yaw, roll);
+        }
+    }
+
+    public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int modelViewProjParam) {
+        for(int i = 0; i < objects.size(); i++) {
+            objects.get(i).render(perspective, view, headView, objectProgram, modelViewProjParam);
+        }
+    }
+
+    public void render(float[] perspective, float[] view, int textureIndex, int objectProgram, int modelViewProjParam) {
+        for(int i = 0; i < objects.size(); i++) {
+            objects.get(i).render(perspective, view, textureIndex, objectProgram, modelViewProjParam);
         }
     }
 }
