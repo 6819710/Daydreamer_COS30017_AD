@@ -261,6 +261,12 @@
             <item>70</item> <!-- Texture End -->
         </integer-array>
 
+        <integer-array name="OBJ_SPEAKER">
+            <item>50</item> <!-- Mesh Index -->
+            <item>71</item> <!-- Texture Start -->
+            <item>71</item> <!-- Texture End -->
+        </integer-array>
+
     <!-- Loading Mesh Files -->
     <string-array name="OBJ_LOADING_MESH_FILES">
         <item>obj/loading_bar.obj</item>
@@ -343,6 +349,8 @@
         <item>obj/sound_bytes/middle_key.obj</item>
         <item>obj/sound_bytes/right_key.obj</item>
         <item>obj/sound_bytes/sharp_key.obj</item>
+
+        <item>obj/sound_bytes/speaker.obj</item>
 
     </string-array>
 
@@ -429,6 +437,8 @@
         <item>obj/sound_bytes/right_key_selected.png</item>
         <item>obj/sound_bytes/sharp_key.png</item> <!-- 69 -->
         <item>obj/sound_bytes/sharp_key_selected.png</item>
+
+        <item>obj/sound_bytes/speaker.png</item> <!-- 71 -->
 
     </string-array>
 

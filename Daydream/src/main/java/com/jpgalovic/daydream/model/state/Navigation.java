@@ -19,17 +19,20 @@ public class Navigation extends State {
     // State Data
     boolean flag_load_scores;
     boolean flag_load_find_the_block;
+    boolean flag_load_sound_bytes;
 
     public Navigation(Context context) {
         super("STATE_NAVIGATION", context);
         flag_load_scores = false;
         flag_load_find_the_block = false;
+        flag_load_sound_bytes = false;
     }
 
     @Override
     public void onDisplay() {
         flag_load_scores = false;
         flag_load_find_the_block = false;
+        flag_load_sound_bytes = false;
     }
 
     @Override
@@ -46,8 +49,10 @@ public class Navigation extends State {
     public void input(float[] headView) {
         if(objectCRT.isLookedAt(headView)) {
             flag_load_scores = true;
-        } else if (objectFindTheBlock.isLookedAt(headView)){
+        } else if (objectFindTheBlock.isLookedAt(headView)) {
             flag_load_find_the_block = true;
+        } else if (objectSoundBytes.isLookedAt(headView)) {
+            flag_load_sound_bytes = true;
         }
     }
 
@@ -59,6 +64,9 @@ public class Navigation extends State {
         } else if (flag_load_find_the_block) { // Load Find The Block.
             connected.get(1).onDisplay();
             return connected.get(1);
+        } else if (flag_load_sound_bytes) {
+            connected.get(2).onDisplay();
+            return connected.get(2);
         }
 
         objectCRT.rotate(0.0f, 0.5f, 0.0f);

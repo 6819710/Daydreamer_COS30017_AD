@@ -20,6 +20,7 @@ import com.jpgalovic.daydream.model.state.Loading;
 import com.jpgalovic.daydream.model.state.Navigation;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.state.NewHighScore;
+import com.jpgalovic.daydream.model.state.SoundBytes;
 import com.jpgalovic.daydream.model.util.FileManager;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
@@ -51,6 +52,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private HighScores highScores;
     private NewHighScore newHighScore;
     private FindTheBlock findTheBlock;
+    private SoundBytes soundBytes;
 
     private Loading loading;
 
@@ -72,15 +74,18 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         highScores = new HighScores(this);
         newHighScore = new NewHighScore(this);
         findTheBlock = new FindTheBlock(this);
+        soundBytes = new SoundBytes(this);
 
         // Link States.
         loading.addConnection(navigation);
         loading.addConnection(highScores);
         loading.addConnection(newHighScore);
         loading.addConnection(findTheBlock);
+        loading.addConnection(soundBytes);
 
         navigation.addConnection(highScores);
         navigation.addConnection(findTheBlock);
+        navigation.addConnection(soundBytes);
 
         findTheBlock.addConnection(newHighScore);
         findTheBlock.addConnection(highScores);
