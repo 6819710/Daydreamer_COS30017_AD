@@ -17,11 +17,8 @@ public class Compound {
 
     protected ArrayList<TexturedMeshObject> objects;
 
-    public Compound(ArrayList<TexturedMeshObject> objects, ArrayList<float[]> offsets, float x, float y, float z, float pitch, float yaw, float roll, float sX, float sY, float sZ) {
+    public Compound(float x, float y, float z, float pitch, float yaw, float roll, float sX, float sY, float sZ) {
         modelMatrix = new ModelMatrix(x, y, z, pitch, yaw, roll, sX, sY, sZ);
-
-        this.objects = objects;
-        this.offsets = offsets;
     }
 
     public void setTranslation(float x, float y, float z) {
