@@ -398,7 +398,7 @@
         <item>obj/label/find_the_block_selected.png</item>
         <item>obj/label/high_scores.png</item> <!-- 44 -->
         <item>obj/label/sound_bytes.png</item> <!-- 45 -->
-        <item>obj/label/sound_bytes.png</item>
+        <item>obj/label/sound_bytes_selected.png</item>
 
         <!-- Navigation Objects -->
         <item>obj/nav/crt.png</item> <!-- 47 -->
