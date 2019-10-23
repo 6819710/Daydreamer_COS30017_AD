@@ -443,18 +443,8 @@
     </string-array>
 
     <string-array name="ADO_FILES">
-        <item>audio/key_c.ogg</item>
-        <item>audio/key_cs.ogg</item>
-        <item>audio/key_d.ogg</item>
-        <item>audio/key_ds.ogg</item>
-        <item>audio/key_e.ogg</item>
-        <item>audio/key_f.ogg</item>
-        <item>audio/key_fs.ogg</item>
-        <item>audio/key_g.ogg</item>
-        <item>audio/key_gs.ogg</item>
-        <item>audio/key_a.ogg</item>
-        <item>audio/key_as.ogg</item>
-        <item>audio/key_b.ogg</item>
+        <item>audio/left_sample_audio.ogg</item>
+        <item>audio/right_sample_audio.ogg</item>
     </string-array>
 
 </resources>

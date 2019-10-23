@@ -6,33 +6,33 @@ import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
+import com.jpgalovic.daydream.model.util.Timer;
 
 public class SoundBytes extends State {
     // Object Data
     private TexturedMeshObject speakerFrontLeft;
     private TexturedMeshObject speakerFrontRight;
-    private TexturedMeshObject speakerBackLeft;
-    private TexturedMeshObject speakerBackRight;
 
     // State Data
-    int count;
+    Timer timer;
 
     public SoundBytes(Context context) {
         super("STATE_SOUND_BYTES", context);
-        count = 0;
+    }
+
+    @Override
+    public void onDisplay() {
+        timer = new Timer(5);
+        timer.start();
     }
 
     @Override
     public void init() {
-        speakerFrontLeft = new TexturedMeshObject("OBJ_SPEAKER_FRONT_LEFT", false, Data.getMesh(context, R.array.OBJ_SPEAKER), Data.getTextures(context, R.array.OBJ_SPEAKER), -5.0f, 0.0f, -5.0f, 0.0f, 45.0f, 0.0f);
-        speakerFrontRight = new TexturedMeshObject("OBJ_SPEAKER_FRONT_LEFT", false, Data.getMesh(context, R.array.OBJ_SPEAKER), Data.getTextures(context, R.array.OBJ_SPEAKER), 5.0f, 0.0f, -5.0f, 0.0f, -45.0f, 0.0f);
-        speakerBackLeft = new TexturedMeshObject("OBJ_SPEAKER_FRONT_LEFT", false, Data.getMesh(context, R.array.OBJ_SPEAKER), Data.getTextures(context, R.array.OBJ_SPEAKER), -5.0f, 0.0f, 5.0f, 0.0f, 135.0f, 0.0f);
-        speakerBackRight = new TexturedMeshObject("OBJ_SPEAKER_FRONT_LEFT", false, Data.getMesh(context, R.array.OBJ_SPEAKER), Data.getTextures(context, R.array.OBJ_SPEAKER), 5.0f, 0.0f, 5.0f, 0.0f, -135.0f, 0.0f);
+        speakerFrontLeft = new TexturedMeshObject("OBJ_SPEAKER_FRONT_LEFT", false, Data.getMesh(context, R.array.OBJ_SPEAKER), Data.getTextures(context, R.array.OBJ_SPEAKER), -5.0f, 0.0f, -5.0f, 0.0f, 30.0f, 0.0f);
+        speakerFrontRight = new TexturedMeshObject("OBJ_SPEAKER_FRONT_LEFT", false, Data.getMesh(context, R.array.OBJ_SPEAKER), Data.getTextures(context, R.array.OBJ_SPEAKER), 5.0f, 0.0f, -5.0f, 0.0f, -30.0f, 0.0f);
 
-        speakerFrontLeft.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[0]); // C
-        speakerFrontRight.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[2]); // D
-        speakerBackLeft.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[4]); // E
-        speakerBackRight.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[5]); // F
+        speakerFrontLeft.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[0]); // Left Sample File
+        speakerFrontRight.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[1]); // Right Audio Sample File
 
     }
 
@@ -43,18 +43,11 @@ public class SoundBytes extends State {
 
     @Override
     public State update() {
-        count++;
-
-        if (count == 0) {
+        if(timer.zero()) {
+            timer = new Timer(10); // 10 second timer (length of audio track)
+            timer.start();
             speakerFrontLeft.playAudio(false);
-        } else if (count == 100) {
             speakerFrontRight.playAudio(false);
-        } else if (count == 200) {
-            speakerBackLeft.playAudio(false);
-        } else if (count == 300) {
-            speakerBackRight.playAudio(false);
-        } else if (count == 400) {
-            count = -1;
         }
         return this;
     }
@@ -63,7 +56,5 @@ public class SoundBytes extends State {
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
         speakerFrontLeft.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
         speakerFrontRight.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
-        speakerBackLeft.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
-        speakerBackRight.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
     }
 }
