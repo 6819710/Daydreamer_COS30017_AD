@@ -57,7 +57,7 @@ public class SoundBytes extends State {
             timer = new Timer(10); // 10 second timer (rough length of audio track)
             timer.start();
             speakerFrontLeft.playAudio(false);
-            speakerFrontRight.playAudio(false); // TODO: Determine if it is better to restart audio based on timer, or just loop audio track? Determining Factors, Performance & Expected Operation.
+            speakerFrontRight.playAudio(false);
         }
 
         if(FLAG_EXIT == true) {

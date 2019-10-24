@@ -26,10 +26,14 @@ public class Data {
     // Data Flags
     public static boolean flag_textures_loaded;
     public static boolean flag_meshes_loaded;
+    public static boolean flag_audio_files_loaded;
 
     // Async References.
     private static LoadMeshes loadMeshes;
-    public static int loadIndex;
+    private static LoadAudioFiles loadAudioFiles;
+
+    public static int loadMeshesProgress;
+    public static int loadAudioFilesProgress;
 
     public static Texture[] getTextures(Context context, int id) {
         int[] data = context.getResources().getIntArray(id);
@@ -60,8 +64,12 @@ public class Data {
     public static void initialise(Context context, int positionAttribute, int uvAttribute) {
         flag_textures_loaded = false;
         flag_meshes_loaded = false;
+        flag_audio_files_loaded = false;
+
         String[] filePaths;
-        loadIndex = 0;
+
+        loadMeshesProgress = 0;
+        loadAudioFilesProgress = 0;
 
         // Pre-Load Textures.
         loading_textures = new ArrayList<>();
@@ -90,9 +98,6 @@ public class Data {
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }
-
-        // Initialise Audio Engine.
-        audio_engine = new GvrAudioEngine(context, GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
     }
 
     public static void loadAssets(final Context context, int positionAttribute, int uvAttribute) {
@@ -102,19 +107,8 @@ public class Data {
         loadMeshes = new LoadMeshes(context, positionAttribute, uvAttribute);
         loadMeshes.execute();
 
-        // Load Audio. Avoid delays by running in a thread. TODO: check if this is the best practice vs ASYNC task.
-        new Thread(
-            new Runnable() {
-                @Override
-                public void run() {
-                    String[] adoFiles = context.getResources().getStringArray(R.array.ADO_FILES);
-                    for(String file : adoFiles) {
-                        // Load each audio file.
-                        audio_engine.preloadSoundFile(file);
-                    }
-                }
-            }
-        ).start();
+        loadAudioFiles = new LoadAudioFiles(context);
+        loadAudioFiles.execute();
     }
 
     private static void loadTextures(Context context) {
@@ -160,6 +154,7 @@ public class Data {
 
             for(String path : filePaths) {
                 try {
+                    Log.i(TAG, "Loading Mesh File: " + path);
                     result.add(new Mesh(context, path, positionAttribute, uvAttribute));
                     count++;
                     publishProgress(new Integer[]{count});
@@ -173,30 +168,7 @@ public class Data {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            // Total Meshes = 48, threshold = 4
-            if(values[0] <= 4) {
-                loadIndex = 0;
-            } else if(values[0] <= 8) {
-                loadIndex = 1;
-            } else if(values[0] <= 12) {
-                loadIndex = 2;
-            } else if(values[0] <= 16) {
-                loadIndex = 3;
-            } else if(values[0] <= 20) {
-                loadIndex = 4;
-            } else if(values[0] <= 24) {
-                loadIndex = 5;
-            } else if(values[0] <= 28) {
-                loadIndex = 6;
-            } else if(values[0] <= 32) {
-                loadIndex = 7;
-            } else if(values[0] <= 36) {
-                loadIndex = 8;
-            } else if(values[0] <= 40) {
-                loadIndex = 9;
-            } else{
-                loadIndex = 10;
-            }
+            loadMeshesProgress = values[0];
         }
 
         @Override
@@ -207,6 +179,48 @@ public class Data {
             Log.i(TAG, "Meshes Loaded.");
 
             meshes = arrayLists;
+        }
+    }
+
+    private static class LoadAudioFiles extends AsyncTask<Void, Integer, GvrAudioEngine> {
+
+        Context context;
+
+        LoadAudioFiles(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected GvrAudioEngine doInBackground(Void... voids) {
+            GvrAudioEngine result = new GvrAudioEngine(context, GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY);
+            int count = 0;
+
+            Log.i(TAG, "Loading Audio Files.");
+
+            String[] adoFiles = context.getResources().getStringArray(R.array.ADO_FILES);
+            for(String file : adoFiles) {
+                Log.i(TAG, "Loading Audio File: " + file);
+                result.preloadSoundFile(file);
+                count++;
+                publishProgress(new Integer[]{count});
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            loadAudioFilesProgress = values[0];
+        }
+
+        @Override
+        protected void onPostExecute(GvrAudioEngine gvrAudioEngine) {
+            super.onPostExecute(gvrAudioEngine);
+
+            flag_audio_files_loaded = true;
+            Log.i(TAG, "Audio Files Loaded.");
+
+            audio_engine = gvrAudioEngine;
         }
     }
 }

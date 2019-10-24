@@ -3,6 +3,7 @@ package com.jpgalovic.daydream.model.state;
 import android.content.Context;
 
 import com.jpgalovic.daydream.Data;
+import com.jpgalovic.daydream.R;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.object.Texture;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
@@ -12,6 +13,12 @@ public class Loading extends State {
     TexturedMeshObject loadingBar;
 
     // State Data
+    int audioFileProgress;
+    int objectFileProgress;
+
+    int loadCount;
+    int loadDivisor;
+
     int index;
 
     public Loading(Context context) {
@@ -21,6 +28,8 @@ public class Loading extends State {
     @Override
     public void init() {
         index = 0;
+        loadCount = 0;
+        loadDivisor = context.getResources().getStringArray(R.array.OBJ_MESH_FILES).length + context.getResources().getStringArray(R.array.ADO_FILES).length;
 
         Texture[] tex = new Texture[]{
                 Data.loading_textures.get(0), Data.loading_textures.get(1),
@@ -42,7 +51,7 @@ public class Loading extends State {
     @Override
     public State update() {
         // Load init other states, then load navigation state.
-        if(Data.flag_textures_loaded && Data.flag_meshes_loaded) {
+        if(Data.flag_textures_loaded && Data.flag_meshes_loaded && Data.flag_audio_files_loaded) {
             for(int i = 0; i < connected.size(); i++) {
                 connected.get(i).init();
             }
@@ -50,7 +59,41 @@ public class Loading extends State {
             return connected.get(0);
         }
 
-        index = Data.loadIndex;
+        objectFileProgress = Data.loadMeshesProgress;
+        audioFileProgress = Data.loadAudioFilesProgress;
+
+        if(loadCount != audioFileProgress + objectFileProgress) {
+            loadCount = audioFileProgress + objectFileProgress;
+
+            if(loadCount <= (loadDivisor / 10)) {
+                index = 0;
+            } else if(loadCount <= (loadDivisor / 10) * 2) {
+                index = 1;
+            } else if(loadCount <= (loadDivisor / 10) * 3) {
+                index = 2;
+            } else if(loadCount <= (loadDivisor / 10) * 4) {
+                index = 3;
+            } else if(loadCount <= (loadDivisor / 10) * 5) {
+                index = 4;
+            } else if(loadCount <= (loadDivisor / 10) * 6) {
+                index = 5;
+            } else if(loadCount <= (loadDivisor / 10) * 7) {
+                index = 6;
+            } else if(loadCount <= (loadDivisor / 10) * 8) {
+                index = 7;
+            } else if(loadCount <= (loadDivisor / 10) * 9) {
+                index = 8;
+            } else if(loadCount <= loadDivisor) {
+                index = 9;
+            } else{
+                index = 10;
+            }
+        }
+
+        objectFileProgress = Data.loadMeshesProgress;
+        audioFileProgress = Data.loadAudioFilesProgress;
+
+
 
         return this;
     }
