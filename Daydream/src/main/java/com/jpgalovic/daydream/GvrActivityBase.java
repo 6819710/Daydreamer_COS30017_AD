@@ -14,13 +14,13 @@ import com.google.vr.sdk.base.Viewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
-import com.jpgalovic.daydream.model.StateTemplate;
 import com.jpgalovic.daydream.model.state.FindTheBlock;
 import com.jpgalovic.daydream.model.state.HighScores;
 import com.jpgalovic.daydream.model.state.Loading;
 import com.jpgalovic.daydream.model.state.Navigation;
 import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.state.NewHighScore;
+import com.jpgalovic.daydream.model.state.SoundBytes;
 import com.jpgalovic.daydream.model.util.FileManager;
 import com.jpgalovic.daydream.model.util.Util;
 import com.jpgalovic.daydream.model.util.Values;
@@ -52,6 +52,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private HighScores highScores;
     private NewHighScore newHighScore;
     private FindTheBlock findTheBlock;
+    private SoundBytes soundBytes;
 
     private Loading loading;
 
@@ -73,15 +74,18 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         highScores = new HighScores(this);
         newHighScore = new NewHighScore(this);
         findTheBlock = new FindTheBlock(this);
+        soundBytes = new SoundBytes(this);
 
         // Link States.
         loading.addConnection(navigation);
         loading.addConnection(highScores);
         loading.addConnection(newHighScore);
         loading.addConnection(findTheBlock);
+        loading.addConnection(soundBytes);
 
         navigation.addConnection(highScores);
         navigation.addConnection(findTheBlock);
+        navigation.addConnection(soundBytes);
 
         findTheBlock.addConnection(newHighScore);
         findTheBlock.addConnection(highScores);
@@ -89,6 +93,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         highScores.addConnection(navigation);
 
         newHighScore.addConnection(highScores);
+
+        soundBytes.addConnection(navigation);
 
         // Initialise GVR View.
         initialiseGvrView();
@@ -137,6 +143,10 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headTransform.getHeadView(headView, 0);
 
         // Update Audio Engine
+        headTransform.getQuaternion(headRotation, 0);
+        Data.audio_engine.setHeadRotation(headRotation[0], headRotation[1], headRotation[2], headRotation[3]);
+        Data.audio_engine.update();
+
         Util.checkGLError("onNewFrame");
     }
 
@@ -178,7 +188,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Log.i(TAG, "onSurfaceCreated");
 
         // Set OpenGL Parameters
-        GLES20.glClearColor(128.0f, 128.0f, 128.0f, 128.0f);
+        GLES20.glClearColor(32.0f, 64.0f, 64.0f, 128.0f);
 
         objectProgram = Util.compileProgram(Values.OBJECT_VERTEX_SHADER, Values.OBJECT_FRAGMENT_SHADER);
 

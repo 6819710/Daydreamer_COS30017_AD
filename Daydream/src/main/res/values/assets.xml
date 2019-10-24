@@ -209,29 +209,62 @@
             <item>44</item> <!-- Texture Start -->
             <item>44</item> <!-- Texture End -->
         </integer-array>
-
-        <!-- Navigation Objects -->
-        <integer-array name="OBJ_NAV_CRT">
+        <integer-array name="OBJ_LABEL_SOUND_BYTES">
             <item>41</item> <!-- Mesh Index -->
             <item>45</item> <!-- Texture Start -->
             <item>46</item> <!-- Texture End -->
         </integer-array>
-        <integer-array name="OBJ_NAV_TABLE">
+
+        <!-- Navigation Objects -->
+        <integer-array name="OBJ_NAV_CRT">
             <item>42</item> <!-- Mesh Index -->
             <item>47</item> <!-- Texture Start -->
-            <item>47</item> <!-- Texture End -->
+            <item>48</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_NAV_TABLE">
+            <item>43</item> <!-- Mesh Index -->
+            <item>49</item> <!-- Texture Start -->
+            <item>49</item> <!-- Texture End -->
         </integer-array>
 
         <!-- Find the Block Objects -->
         <integer-array name="OBJ_FTB_BLOCK">
-            <item>43</item> <!-- Mesh Index -->
-            <item>48</item> <!-- Texture Start -->
-            <item>49</item> <!-- Texture End -->
-        </integer-array>
-        <integer-array name="OBJ_FTB_SEVEN_SEGMENT_DISPLAY">
             <item>44</item> <!-- Mesh Index -->
             <item>50</item> <!-- Texture Start -->
-            <item>60</item> <!-- Texture End -->
+            <item>51</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_FTB_SEVEN_SEGMENT_DISPLAY">
+            <item>45</item> <!-- Mesh Index -->
+            <item>52</item> <!-- Texture Start -->
+            <item>62</item> <!-- Texture End -->
+        </integer-array>
+
+        <!-- Sound Bytes Objects -->
+        <integer-array name="OBJ_LEFT_KEY">
+            <item>46</item> <!-- Mesh Index -->
+            <item>63</item> <!-- Texture Start -->
+            <item>64</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_MIDDLE_KEY">
+            <item>47</item> <!-- Mesh Index -->
+            <item>65</item> <!-- Texture Start -->
+            <item>66</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_RIGHT_KEY">
+            <item>48</item> <!-- Mesh Index -->
+            <item>67</item> <!-- Texture Start -->
+            <item>68</item> <!-- Texture End -->
+        </integer-array>
+        <integer-array name="OBJ_SHARP_KEY">
+            <item>49</item> <!-- Mesh Index -->
+            <item>69</item> <!-- Texture Start -->
+            <item>70</item> <!-- Texture End -->
+        </integer-array>
+
+        <integer-array name="OBJ_SPEAKER">
+            <item>50</item> <!-- Mesh Index -->
+            <item>71</item> <!-- Texture Start -->
+            <item>71</item> <!-- Texture End -->
         </integer-array>
 
     <!-- Loading Mesh Files -->
@@ -301,14 +334,23 @@
         <item>obj/label/save.obj</item>
         <item>obj/label/find_the_block.obj</item>
         <item>obj/label/high_scores.obj</item>
+        <item>obj/label/sound_bytes.obj</item>
 
         <!-- Navigation Objects -->
-        <item>obj/nav/crt.obj</item> <!-- 41 -->
+        <item>obj/nav/crt.obj</item> <!-- 42 -->
         <item>obj/nav/table.obj</item>
 
         <!-- Find the Block Objects -->
-        <item>obj/find_the_block/block.obj</item> <!-- 43 -->
+        <item>obj/find_the_block/block.obj</item> <!-- 44 -->
         <item>obj/find_the_block/seven_segment_disp.obj</item>
+
+        <!-- Sound Bytes -->
+        <item>obj/sound_bytes/left_key.obj</item> <!-- 46 -->
+        <item>obj/sound_bytes/middle_key.obj</item>
+        <item>obj/sound_bytes/right_key.obj</item>
+        <item>obj/sound_bytes/sharp_key.obj</item>
+
+        <item>obj/sound_bytes/speaker.obj</item>
 
     </string-array>
 
@@ -363,16 +405,18 @@
         <item>obj/label/find_the_block.png</item> <!-- 42 -->
         <item>obj/label/find_the_block_selected.png</item>
         <item>obj/label/high_scores.png</item> <!-- 44 -->
+        <item>obj/label/sound_bytes.png</item> <!-- 45 -->
+        <item>obj/label/sound_bytes_selected.png</item>
 
         <!-- Navigation Objects -->
-        <item>obj/nav/crt.png</item> <!-- 45 -->
+        <item>obj/nav/crt.png</item> <!-- 47 -->
         <item>obj/nav/crt_selected.png</item>
-        <item>obj/nav/table.png</item> <!-- 47 -->
+        <item>obj/nav/table.png</item> <!-- 49 -->
 
         <!-- Find the Block Objects -->
-        <item>obj/find_the_block/block.png</item> <!-- 48 -->
+        <item>obj/find_the_block/block.png</item> <!-- 50 -->
         <item>obj/find_the_block/block_selected.png</item>
-        <item>obj/find_the_block/seven_segment_disp_0.png</item> <!-- 50 -->
+        <item>obj/find_the_block/seven_segment_disp_0.png</item> <!-- 52 -->
         <item>obj/find_the_block/seven_segment_disp_1.png</item>
         <item>obj/find_the_block/seven_segment_disp_2.png</item>
         <item>obj/find_the_block/seven_segment_disp_3.png</item>
@@ -384,6 +428,23 @@
         <item>obj/find_the_block/seven_segment_disp_9.png</item>
         <item>obj/find_the_block/seven_segment_disp_off.png</item>
 
+        <!-- Sound Bytes -->
+        <item>obj/sound_bytes/left_key.png</item> <!-- 63 -->
+        <item>obj/sound_bytes/left_key_selected.png</item>
+        <item>obj/sound_bytes/middle_key.png</item> <!-- 65 -->
+        <item>obj/sound_bytes/middle_key_selected.png</item>
+        <item>obj/sound_bytes/right_key.png</item> <!-- 67 -->
+        <item>obj/sound_bytes/right_key_selected.png</item>
+        <item>obj/sound_bytes/sharp_key.png</item> <!-- 69 -->
+        <item>obj/sound_bytes/sharp_key_selected.png</item>
+
+        <item>obj/sound_bytes/speaker.png</item> <!-- 71 -->
+
+    </string-array>
+
+    <string-array name="ADO_FILES">
+        <item>audio/left_sample_audio.ogg</item>
+        <item>audio/right_sample_audio.ogg</item>
     </string-array>
 
 </resources>

@@ -3,6 +3,8 @@ package com.jpgalovic.daydream.model.object.drawable;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+import com.google.vr.sdk.audio.GvrAudioEngine;
+import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.model.object.Mesh;
 import com.jpgalovic.daydream.model.object.ModelMatrix;
 import com.jpgalovic.daydream.model.object.Texture;
@@ -21,6 +23,9 @@ public class TexturedMeshObject {
 
     private float[] modelView;
     private float[] modelViewProjection;
+
+    private volatile int sourceId = GvrAudioEngine.INVALID_ID;
+    private String audioFile;
 
     private Boolean flat_fine;
     private Boolean flag_display;
@@ -58,6 +63,28 @@ public class TexturedMeshObject {
     }
 
     /**
+     * Sets object audio file.
+     * @param   file                    File location of audio file.
+     */
+    public void setAudio(String file) {
+        audioFile = file;
+    }
+
+    /**
+     * Starts playback of audio.
+     * @param   loop                audio will loop if true.
+     */
+    public void playAudio(boolean loop) {
+        sourceId = Data.audio_engine.createSoundObject(audioFile);
+        Data.audio_engine.setSoundObjectPosition(sourceId, model.getX(), model.getY(), model.getZ());
+        Data.audio_engine.playSound(sourceId, loop);
+    }
+
+    public void stopAudio() {
+        Data.audio_engine.stopSound(sourceId);
+    }
+
+    /**
      * Sets the translation of the object.
      * @param   x                       X coordinate of object.
      * @param   y                       Y coordinate of object.
@@ -65,6 +92,7 @@ public class TexturedMeshObject {
      */
     public void setTranslation(float x, float y, float z) {
         model.setTranslation(x, y, z);
+        Data.audio_engine.setSoundObjectPosition(sourceId, model.getX(), model.getY(), model.getZ());
     }
 
     /**
@@ -75,6 +103,7 @@ public class TexturedMeshObject {
      */
     public void translate(float x, float y, float z) {
         model.translate(x, y, z);
+        Data.audio_engine.setSoundObjectPosition(sourceId, model.getX(), model.getY(), model.getZ());
     }
 
     /**
@@ -111,22 +140,6 @@ public class TexturedMeshObject {
         model.scale(x, y, z);
     }
 
-    /**
-     * Renders the object. taking into account the headview to determine if the object is currently been looked at.
-     * @param   perspective             Perspective matrix.
-     * @param   view                    View matrix.
-     * @param   headView                Head view matrix.
-     * @param   objectProgram           Object program.
-     * @param   modelViewProjParam      Object model view projection parameter.
-     */
-    public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int modelViewProjParam) {
-        if(isLookedAt(headView)) {
-            render(perspective, view, 1, objectProgram, modelViewProjParam);
-        } else {
-            render(perspective, view, 0, objectProgram, modelViewProjParam);
-        }
-    }
-
     public void enableDisplay() {
         flag_display = true;
     }
@@ -136,14 +149,32 @@ public class TexturedMeshObject {
     }
 
     /**
+     * Renders the object. taking into account the headview to determine if the object is currently been looked at.
+     * @param   perspective             Perspective matrix.
+     * @param   view                    View matrix.
+     * @param   headView                Head view matrix.
+     * @param   objectProgram           Object program.
+     * @param   modelViewProjParam      Object model view projection parameter.
+     */
+    public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int modelViewProjParam) {
+        if(flag_display) {
+            if (isLookedAt(headView)) {
+                render(perspective, view, 1, objectProgram, modelViewProjParam);
+            } else {
+                render(perspective, view, 0, objectProgram, modelViewProjParam);
+            }
+        }
+    }
+
+    /**
      * Renders the object.
      * @param   perspective             Perspective matrix.
      * @param   view                    View matrix.
      * @param   textureIndex            Texture index.
-     * @param   programId               Object program.
+     * @param   objectProgram           Object program.
      * @param   modelViewProjParam      Object model view projection parameter.
      */
-    public void render(float[] perspective, float[] view, int textureIndex, int programId, int modelViewProjParam) {
+    public void render(float[] perspective, float[] view, int textureIndex, int objectProgram, int modelViewProjParam) {
         if(flag_display) {
             float[] matrix = new float[16];
 
@@ -153,7 +184,7 @@ public class TexturedMeshObject {
             Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
 
             // Draw the object.
-            GLES20.glUseProgram(programId);
+            GLES20.glUseProgram(objectProgram);
             GLES20.glUniformMatrix4fv(modelViewProjParam, 1, false, modelViewProjection, 0);
 
             objectTex.get(textureIndex).bind();
@@ -178,5 +209,9 @@ public class TexturedMeshObject {
         } else {
             return angle < Values.ANGLE_THRESHOLD;
         }
+    }
+
+    public ModelMatrix getModel() {
+        return model;
     }
 }
