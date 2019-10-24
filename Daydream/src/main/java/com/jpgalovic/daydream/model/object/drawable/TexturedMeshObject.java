@@ -80,6 +80,10 @@ public class TexturedMeshObject {
         Data.audio_engine.playSound(sourceId, loop);
     }
 
+    public void stopAudio() {
+        Data.audio_engine.stopSound(sourceId);
+    }
+
     /**
      * Sets the translation of the object.
      * @param   x                       X coordinate of object.

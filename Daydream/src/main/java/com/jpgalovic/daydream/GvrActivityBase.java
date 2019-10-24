@@ -94,6 +94,8 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         newHighScore.addConnection(highScores);
 
+        soundBytes.addConnection(navigation);
+
         // Initialise GVR View.
         initialiseGvrView();
 

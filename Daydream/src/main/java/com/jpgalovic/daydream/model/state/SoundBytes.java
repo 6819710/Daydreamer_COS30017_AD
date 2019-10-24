@@ -13,8 +13,12 @@ public class SoundBytes extends State {
     private TexturedMeshObject speakerFrontLeft;
     private TexturedMeshObject speakerFrontRight;
 
+    private TexturedMeshObject backButton;
+
     // State Data
-    Timer timer;
+    private Timer timer;
+
+    private boolean FLAG_EXIT;
 
     public SoundBytes(Context context) {
         super("STATE_SOUND_BYTES", context);
@@ -22,8 +26,10 @@ public class SoundBytes extends State {
 
     @Override
     public void onDisplay() {
-        timer = new Timer(5);
+        timer = new Timer(3);
         timer.start();
+
+        FLAG_EXIT = false;
     }
 
     @Override
@@ -34,21 +40,34 @@ public class SoundBytes extends State {
         speakerFrontLeft.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[0]); // Left Sample File
         speakerFrontRight.setAudio(context.getResources().getStringArray(R.array.ADO_FILES)[1]); // Right Audio Sample File
 
+        backButton = new TexturedMeshObject("OBJ_BACK", false, Data.getMesh(context, R.array.OBJ_LABEL_BACK), Data.getTextures(context, R.array.OBJ_LABEL_BACK), 0.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        backButton.setScale(0.5f, 0.5f, 0.5f);
     }
 
     @Override
     public void input(float[] headView) {
-        // TODO: Process User Inputs.
+        if(backButton.isLookedAt(headView)) {
+            FLAG_EXIT = true;
+        }
     }
 
     @Override
     public State update() {
         if(timer.zero()) {
-            timer = new Timer(10); // 10 second timer (length of audio track)
+            timer = new Timer(10); // 10 second timer (rough length of audio track)
             timer.start();
             speakerFrontLeft.playAudio(false);
-            speakerFrontRight.playAudio(false);
+            speakerFrontRight.playAudio(false); // TODO: Determine if it is better to restart audio based on timer, or just loop audio track? Determining Factors, Performance & Expected Operation.
         }
+
+        if(FLAG_EXIT == true) {
+            speakerFrontLeft.stopAudio();
+            speakerFrontRight.stopAudio();
+
+            connected.get(0).onDisplay();
+            return connected.get(0);
+        }
+
         return this;
     }
 
@@ -56,5 +75,6 @@ public class SoundBytes extends State {
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
         speakerFrontLeft.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
         speakerFrontRight.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
+        backButton.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 }
