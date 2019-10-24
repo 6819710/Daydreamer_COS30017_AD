@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "com.jpgalovic.daydream"
         minSdkVersion 25
-        targetSdkVersion 29
-        versionCode 103
-        versionName '1.0.3'
+        targetSdkVersion 27
+        versionCode 104
+        versionName '1.0.4'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
