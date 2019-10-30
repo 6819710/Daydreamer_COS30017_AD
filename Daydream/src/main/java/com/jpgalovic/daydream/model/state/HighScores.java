@@ -1,7 +1,6 @@
 package com.jpgalovic.daydream.model.state;
 
 import android.content.Context;
-import android.view.ViewDebug;
 
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
@@ -9,14 +8,13 @@ import com.jpgalovic.daydream.model.State;
 import com.jpgalovic.daydream.model.object.compound.ScoreDisplay;
 import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 import com.jpgalovic.daydream.model.score.ScoreManager;
-import com.jpgalovic.daydream.model.util.Timer;
 
 import java.util.ArrayList;
 
 public class HighScores extends State {
     // Object Data
-    private ArrayList<ScoreDisplay> scoreDisplay;
-    private TexturedMeshObject backButton;
+    private ArrayList<ScoreDisplay> objectScoreDisplay;
+    private TexturedMeshObject objectBackButton;
     private TexturedMeshObject objectFindTheBlock;
     private TexturedMeshObject objectBlock;
 
@@ -27,17 +25,17 @@ public class HighScores extends State {
 
     public HighScores(Context context) {
         super("STATE_HIGH_SCORES", context);
-        scoreDisplay = new ArrayList<>();
+        objectScoreDisplay = new ArrayList<>();
     }
 
     @Override
     public void onDisplay() {
         scoreManager = new ScoreManager(context, context.getResources().getString(R.string.file_find_the_block));
 
-        scoreDisplay.clear();
+        objectScoreDisplay.clear();
 
         for(int i = 0; i < 12; i++) {
-            scoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), 0.0f, -6.4f + (i * 1.4f), - 17.0f, 0.0f, 0.0f, 0.0f));
+            objectScoreDisplay.add(new ScoreDisplay(context, scoreManager.getScore(i), 0.0f, -6.4f + (i * 1.4f), - 17.0f, 0.0f, 0.0f, 0.0f));
         }
 
         FLAG_EXIT = false;
@@ -45,8 +43,8 @@ public class HighScores extends State {
 
     @Override
     public void init() {
-        backButton = new TexturedMeshObject("OBJ_BACK", false, Data.getMesh(context, R.array.OBJ_LABEL_BACK), Data.getTextures(context, R.array.OBJ_LABEL_BACK), 0.0f, -3.4f, -5.0f, 0.0f, 0.0f, 0.0f);
-        backButton.setScale(0.5f, 0.5f, 0.5f);
+        objectBackButton = new TexturedMeshObject("OBJ_BACK", false, Data.getMesh(context, R.array.OBJ_LABEL_BACK), Data.getTextures(context, R.array.OBJ_LABEL_BACK), 0.0f, -3.4f, -5.0f, 0.0f, 0.0f, 0.0f);
+        objectBackButton.setScale(0.5f, 0.5f, 0.5f);
 
         objectFindTheBlock = new TexturedMeshObject("OBJECT_FIND_THE_BLOCK_LABEL", false, Data.getMesh(context, R.array.OBJ_LABEL_FIND_THE_BLOCK), Data.getTextures(context, R.array.OBJ_LABEL_FIND_THE_BLOCK), 0.0f,  4.4f, -5.0f, 0.0f, 0.0f, 0.0f);
 
@@ -56,7 +54,7 @@ public class HighScores extends State {
 
     @Override
     public void input(float[] headView) {
-        if(backButton.isLookedAt(headView)) {
+        if(objectBackButton.isLookedAt(headView)) {
             FLAG_EXIT = true;
         }
     }
@@ -75,10 +73,10 @@ public class HighScores extends State {
 
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
-        for(int i = 0; i < scoreDisplay.size(); i++) {
-            scoreDisplay.get(i).render(perspective, view, objectProgram, objectModelViewProjectionParam);
+        for(int i = 0; i < objectScoreDisplay.size(); i++) {
+            objectScoreDisplay.get(i).render(perspective, view, objectProgram, objectModelViewProjectionParam);
         }
-        backButton.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectBackButton.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
 
         objectBlock.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);
         objectFindTheBlock.render(perspective, view, 0, objectProgram, objectModelViewProjectionParam);

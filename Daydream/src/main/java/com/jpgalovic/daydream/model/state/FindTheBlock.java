@@ -14,15 +14,15 @@ import com.jpgalovic.daydream.model.util.Util;
 
 public class FindTheBlock extends State {
     // Object Data
-    private SevenSegmentTimer sevenSegmentTimer;
+    private SevenSegmentTimer objectSevenSegmentTimer;
     private TexturedMeshObject block;
 
     // State Data
     private Timer timer;
     private ScoreTicker ticker;
 
-    private boolean flag_exit;
-    private boolean flagBlockFound;
+    private boolean FLAG_EXIT;
+    private boolean FLAG_BLOCK_FOUND;
 
     private int score;
 
@@ -32,13 +32,13 @@ public class FindTheBlock extends State {
 
     @Override
     public void onDisplay() {
-        sevenSegmentTimer.start(30);
+        objectSevenSegmentTimer.start(30);
         timer = new Timer();
 
         ticker = new ScoreTicker(context, 0.0f, 2.0f, -10.0f, 0.0f, 0.0f, 0.0f);
 
-        flag_exit = false;
-        flagBlockFound = false;
+        FLAG_EXIT = false;
+        FLAG_BLOCK_FOUND = false;
 
         block.enableDisplay();
 
@@ -47,7 +47,7 @@ public class FindTheBlock extends State {
 
     @Override
     public void init() {
-        sevenSegmentTimer = new SevenSegmentTimer(context, 0.0f, 0.0f, -10.0f);
+        objectSevenSegmentTimer = new SevenSegmentTimer(context, 0.0f, 0.0f, -10.0f);
         ticker = new ScoreTicker(context, 0.0f, 2.0f, -10.0f, 0.0f, 0.0f, 0.0f);
         block = new TexturedMeshObject("OBJECT_BLOCK", false, Data.getMesh(context, R.array.OBJ_FTB_BLOCK), Data.getTextures(context, R.array.OBJ_FTB_BLOCK), 0.0f, 0.0f, -8.0f, 0.0f, 0.0f, 0.0f);
 
@@ -58,18 +58,18 @@ public class FindTheBlock extends State {
     @Override
     public void input(float[] headView) {
         if(block.isLookedAt(headView)) {
-            flagBlockFound = true;
+            FLAG_BLOCK_FOUND = true;
         }
     }
 
     @Override
     public State update() {
-        if(flagBlockFound == true && flag_exit == false) {
+        if(FLAG_BLOCK_FOUND == true && FLAG_EXIT == false) {
             score += rand.nextInt((20 - 10) + 1) + 10;
             ticker.setScore(score);
             float[] position = Util.randomPosition();
             block.setTranslation(position[12], position[13], -position[14]);
-            flagBlockFound = false;
+            FLAG_BLOCK_FOUND = false;
         }
 
         if(timer.zero()) { // Exit Timer has expired.
@@ -83,13 +83,13 @@ public class FindTheBlock extends State {
                 connected.get(1).onDisplay();
                 return connected.get(1);
             }
-        } else if(sevenSegmentTimer.zero() && flag_exit == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
+        } else if(objectSevenSegmentTimer.zero() && FLAG_EXIT == false) { // Game timer expired, set exit timer. TODO: Enable Display of Game Over.
             block.disableDisplay(); // stop showing block at end of game.
 
             timer = new Timer(3);
             timer.start();
             
-            flag_exit = true;
+            FLAG_EXIT = true;
         }
 
         block.rotate(0.1f, 0.5f, 0.1f);
@@ -99,7 +99,7 @@ public class FindTheBlock extends State {
 
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
-        sevenSegmentTimer.render(perspective, view, objectProgram, objectModelViewProjectionParam);
+        objectSevenSegmentTimer.render(perspective, view, objectProgram, objectModelViewProjectionParam);
         ticker.render(perspective, view, objectProgram, objectModelViewProjectionParam);
         block.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }

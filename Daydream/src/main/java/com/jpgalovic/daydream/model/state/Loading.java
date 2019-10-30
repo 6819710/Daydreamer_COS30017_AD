@@ -10,7 +10,7 @@ import com.jpgalovic.daydream.model.object.drawable.TexturedMeshObject;
 
 public class Loading extends State {
     // Object Data
-    TexturedMeshObject loadingBar;
+    TexturedMeshObject objectLoadingBar;
 
     // State Data
     int audioFileProgress;
@@ -40,7 +40,7 @@ public class Loading extends State {
                 Data.loading_textures.get(10),
         };
 
-        loadingBar = new TexturedMeshObject("OBJ_LOADING_BAR", false, Data.loading_meshes.get(0), tex, 0.0f, 0.0f, -5.0f, 0.0f, 180.0f, 0.0f);
+        objectLoadingBar = new TexturedMeshObject("OBJ_LOADING_BAR", false, Data.loading_meshes.get(0), tex, 0.0f, 0.0f, -5.0f, 0.0f, 180.0f, 0.0f);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Loading extends State {
     @Override
     public State update() {
         // Load init other states, then load navigation state.
-        if(Data.flag_textures_loaded && Data.flag_meshes_loaded && Data.flag_audio_files_loaded) {
+        if(Data.FLAG_TEXTURES_LOADED && Data.FLAG_MESHES_LOADED && Data.FLAG_AUDIO_LOADED) {
             for(int i = 0; i < connected.size(); i++) {
                 connected.get(i).init();
             }
@@ -100,6 +100,6 @@ public class Loading extends State {
 
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
-        loadingBar.render(perspective, view, index, objectProgram, objectModelViewProjectionParam);
+        objectLoadingBar.render(perspective, view, index, objectProgram, objectModelViewProjectionParam);
     }
 }
