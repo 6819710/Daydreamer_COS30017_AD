@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Daydreamer</string>
+
+    <string-array name="OBJECT_VERTEX_SHADER">
+
+    </string-array>
+</resources>
