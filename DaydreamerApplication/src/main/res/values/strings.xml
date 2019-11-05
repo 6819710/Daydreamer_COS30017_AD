@@ -2,6 +2,24 @@
     <string name="app_name">Daydreamer</string>
 
     <string-array name="OBJECT_VERTEX_SHADER">
+        <item>uniform mat4 u_MVP;</item>
+        <item>attribute vec4 a_Position;</item>
+        <item>attribute vec2 a_UV;</item>
+        <item>varying vec2 v_UV;</item>
 
+        <item>void main() {</item>
+        <item>  v_UV = a_UV;</item>
+        <item>  gl_Position = u_MVP * a_Position;</item>
+        <item>}</item>
+    </string-array>
+
+    <string-array name="OBJECT_FRAGMENT_SHADER">
+        <item>precision mediump float;</item>
+        <item>varying vec2 v_UV;</item>
+        <item>uniform sampler2D u_Texture;</item>
+
+        <item>void main() {</item>
+        <item>  gl_FragColor = texture2D(u_Texture, vec2(v_UV.x, 1.0 - v_UV.y));</item>
+        <item>}</item>
     </string-array>
 </resources>
