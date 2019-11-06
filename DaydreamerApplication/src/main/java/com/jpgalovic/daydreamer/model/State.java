@@ -49,7 +49,7 @@ public abstract class State {
     public abstract void init();
     public abstract void input(float[] headView);
     public abstract State update();
-    public abstract void render(float[] perspective, float[] view, float[] headView, int GLESObejctProgram, int GLESViewProjectionAttribute);
+    public abstract void render(float[] perspective, float[] view, float[] headView, int GLESObjectProgram, int GLESViewProjectionAttribute);
 
     public void pass(String tag, int value){}
     public void pass(String tag, String string){}

@@ -11,6 +11,8 @@ import com.google.vr.sdk.base.GvrActivity;
 import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
+
+import com.jpgalovic.daydreamer.model.State;
 import com.jpgalovic.daydreamer.model.Util;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -21,7 +23,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private static final String TAG="ACTIVITY_BASE";
 
     // OpenGL Attributes.
-    private int GLESObejctProgram;
+    private int GLESObjectProgram;
     private int GLESViewProjectionAttribute;
     private int GLESObjectProjectionAttribute;
     private int GLESObjectUVAttribute;
@@ -31,6 +33,9 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     private float[] view;
     private float[] headView;
     private float[] headRotation;
+
+    // State Engine.
+    private State state;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -43,8 +48,9 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         headView = new float[16];
         headRotation = new  float[16];
 
-        // Init GVR View
+        // Initialise View, States and Data.
         initialiseGvrView();
+        initialiseStates();
     }
 
     /**
@@ -69,6 +75,10 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         }
 
         setGvrView(gvrView);
+    }
+
+    private void initialiseStates() {
+
     }
 
     @Override
@@ -100,11 +110,13 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         float[] perspective = eye.getPerspective(getResources().getFloat(R.dimen.Z_FAR), getResources().getFloat(R.dimen.Z_NEAR));
 
         // Draw/Render State.
+        state.render(perspective, view, headView, GLESObjectProgram, GLESViewProjectionAttribute);
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
         // Update State.
+        state = state.update();
     }
 
     @Override
@@ -119,10 +131,10 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         // Setup OpenGL Parameters
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        GLESObejctProgram = Util.compileProgram(TAG, getResources().getStringArray(R.array.OBJECT_VERTEX_SHADER), getResources().getStringArray(R.array.OBJECT_FRAGMENT_SHADER));
-        GLESObjectProjectionAttribute = GLES20.glGetAttribLocation(GLESObejctProgram, "a_Position");
-        GLESObjectUVAttribute = GLES20.glGetAttribLocation(GLESObejctProgram, "a_UV");
-        GLESViewProjectionAttribute = GLES20.glGetUniformLocation(GLESObejctProgram, "u_MVP");
+        GLESObjectProgram = Util.compileProgram(TAG, getResources().getStringArray(R.array.OBJECT_VERTEX_SHADER), getResources().getStringArray(R.array.OBJECT_FRAGMENT_SHADER));
+        GLESObjectProjectionAttribute = GLES20.glGetAttribLocation(GLESObjectProgram, "a_Position");
+        GLESObjectUVAttribute = GLES20.glGetAttribLocation(GLESObjectProgram, "a_UV");
+        GLESViewProjectionAttribute = GLES20.glGetUniformLocation(GLESObjectProgram, "u_MVP");
 
         Util.checkGLError(TAG, "OnSurfaceCreated");
 
@@ -138,5 +150,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
         super.onCardboardTrigger();
+
+        state.input(headView);
     }
 }
