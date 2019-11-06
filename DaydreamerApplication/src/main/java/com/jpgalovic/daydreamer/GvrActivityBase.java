@@ -3,6 +3,7 @@ package com.jpgalovic.daydreamer;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.vr.sdk.base.AndroidCompat;
 import com.google.vr.sdk.base.Eye;
@@ -10,6 +11,7 @@ import com.google.vr.sdk.base.GvrActivity;
 import com.google.vr.sdk.base.GvrView;
 import com.google.vr.sdk.base.HeadTransform;
 import com.google.vr.sdk.base.Viewport;
+import com.jpgalovic.daydreamer.model.Util;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -97,26 +99,44 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
         Matrix.multiplyMM(view, 0, eye.getEyeView(), 0, camera, 0);
         float[] perspective = eye.getPerspective(getResources().getFloat(R.dimen.Z_FAR), getResources().getFloat(R.dimen.Z_NEAR));
 
-        // Draw each object.
+        // Draw/Render State.
     }
 
     @Override
     public void onFinishFrame(Viewport viewport) {
-
+        // Update State.
     }
 
     @Override
     public void onSurfaceChanged(int i, int i1) {
-
+        Log.i(TAG, "onSurfaceChanged");
     }
 
     @Override
     public void onSurfaceCreated(EGLConfig eglConfig) {
+        Log.i(TAG, "onSurfaceCreated");
 
+        // Setup OpenGL Parameters
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        GLESObejctProgram = Util.compileProgram(TAG, getResources().getStringArray(R.array.OBJECT_VERTEX_SHADER), getResources().getStringArray(R.array.OBJECT_FRAGMENT_SHADER));
+        GLESObjectProjectionAttribute = GLES20.glGetAttribLocation(GLESObejctProgram, "a_Position");
+        GLESObjectUVAttribute = GLES20.glGetAttribLocation(GLESObejctProgram, "a_UV");
+        GLESViewProjectionAttribute = GLES20.glGetUniformLocation(GLESObejctProgram, "u_MVP");
+
+        Util.checkGLError(TAG, "OnSurfaceCreated");
+
+        // Load State Engine and Data.
     }
 
     @Override
     public void onRendererShutdown() {
+        Log.i(TAG, "onRendererShutdown");
+    }
 
+    @Override
+    public void onCardboardTrigger() {
+        Log.i(TAG, "onCardboardTrigger");
+        super.onCardboardTrigger();
     }
 }
