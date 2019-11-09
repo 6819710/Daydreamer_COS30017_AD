@@ -115,7 +115,7 @@ public class GvrActivityBase extends GvrActivity implements GvrView.StereoRender
 
         gvrView.setEGLConfigChooser(8,8,8,8,16,8);
         gvrView.setRenderer(this);
-        gvrView.setTransitionViewEnabled(false);
+        gvrView.setTransitionViewEnabled(true);
         
         // Enable Cardboard-trigger feedback.
         gvrView.enableCardboardTriggerEmulation();

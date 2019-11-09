@@ -17,22 +17,22 @@ public class Navigation extends State {
     private TexturedMeshObject objectSoundBytes;
 
     // State Data
-    boolean flag_load_scores;
-    boolean flag_load_find_the_block;
-    boolean flag_load_sound_bytes;
+    private boolean FLAG_LOAD_SCORES;
+    private boolean FLAG_LOAD_FIND_THE_BLOCK;
+    private boolean FLAG_LOAD_SOUND_BYTES;
 
     public Navigation(Context context) {
         super("STATE_NAVIGATION", context);
-        flag_load_scores = false;
-        flag_load_find_the_block = false;
-        flag_load_sound_bytes = false;
+        FLAG_LOAD_SCORES = false;
+        FLAG_LOAD_FIND_THE_BLOCK = false;
+        FLAG_LOAD_SOUND_BYTES = false;
     }
 
     @Override
     public void onDisplay() {
-        flag_load_scores = false;
-        flag_load_find_the_block = false;
-        flag_load_sound_bytes = false;
+        FLAG_LOAD_SCORES = false;
+        FLAG_LOAD_FIND_THE_BLOCK = false;
+        FLAG_LOAD_SOUND_BYTES = false;
     }
 
     @Override
@@ -48,23 +48,23 @@ public class Navigation extends State {
     @Override
     public void input(float[] headView) {
         if(objectCRT.isLookedAt(headView)) {
-            flag_load_scores = true;
+            FLAG_LOAD_SCORES = true;
         } else if (objectFindTheBlock.isLookedAt(headView)) {
-            flag_load_find_the_block = true;
+            FLAG_LOAD_FIND_THE_BLOCK = true;
         } else if (objectSoundBytes.isLookedAt(headView)) {
-            flag_load_sound_bytes = true;
+            FLAG_LOAD_SOUND_BYTES = true;
         }
     }
 
     @Override
     public State update() {
-        if(flag_load_scores) { // Load High Scores.
+        if(FLAG_LOAD_SCORES) { // Load High Scores.
             connected.get(0).onDisplay();
             return connected.get(0);
-        } else if (flag_load_find_the_block) { // Load Find The Block.
+        } else if (FLAG_LOAD_FIND_THE_BLOCK) { // Load Find The Block.
             connected.get(1).onDisplay();
             return connected.get(1);
-        } else if (flag_load_sound_bytes) {
+        } else if (FLAG_LOAD_SOUND_BYTES) {
             connected.get(2).onDisplay();
             return connected.get(2);
         }

@@ -1,0 +1,22 @@
+<resources>
+    <!-- Preload Object Files -->
+    <!-- Mesh -->
+    <string-array name="PRELOAD_MESH_FILES">
+
+    </string-array>
+
+    <!-- Textures -->
+    <string-array name="PRELOAD_TEXTURE_FILES">
+
+    </string-array>
+
+    <!-- Object Files -->
+    <!-- Mesh -->
+    <string-array name="OBJECT_MESH_FILES">
+
+    </string-array>
+    <!-- Textures -->
+    <string-array name="OBJECT_TEXTURE_FILES">
+
+    </string-array>
+</resources>

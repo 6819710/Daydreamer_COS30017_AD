@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jpgalovic.daydreamer">
+    package="com.jpgalovic.sandbox">
 
     <!-- GVR SDK Requires API 19+ and OoenGL ES 2+. -->
-    <uses-sdk android:targetSdkVersion="24" />
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
     <!-- App Permissions -->
@@ -22,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Navigation"
+            android:name=".sandbox.Navigation"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
             android:enableVrMode="@string/gvr_vr_mode_component"
@@ -36,7 +35,7 @@
 
         <!-- Demo Activities -->
         <activity
-            android:name=".FindTheBlock"
+            android:name=".sandbox.FindTheBlock"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
             android:enableVrMode="@string/gvr_vr_mode_component"
@@ -44,14 +43,14 @@
 
         <!-- Auxiliary Activities -->
         <activity
-            android:name=".NewHighScore"
+            android:name=".sandbox.NewHighScore"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
             android:enableVrMode="@string/gvr_vr_mode_component"
             android:resizeableActivity="false" />
 
         <activity
-            android:name=".HighScores"
+            android:name=".sandbox.HighScores"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode|navigation|density"
             android:enableVrMode="@string/gvr_vr_mode_component"

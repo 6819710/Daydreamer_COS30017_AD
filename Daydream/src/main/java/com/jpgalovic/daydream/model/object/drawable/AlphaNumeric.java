@@ -4,9 +4,6 @@ import android.content.Context;
 
 import com.jpgalovic.daydream.Data;
 import com.jpgalovic.daydream.R;
-import com.jpgalovic.daydream.model.object.compound.AlphaSelector;
-
-import java.util.ArrayList;
 
 public class AlphaNumeric {
     private static final String TAG = "OBJ_ALPHA_NUMERIC";

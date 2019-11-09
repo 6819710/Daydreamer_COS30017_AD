@@ -12,11 +12,11 @@ import com.jpgalovic.daydream.model.util.Values;
 
 public class NewHighScore extends State {
     // Object Data
-    private AlphaSelector alphaSelectorA;
-    private AlphaSelector alphaSelectorB;
-    private AlphaSelector alphaSelectorC;
+    private AlphaSelector objectSelectorA;
+    private AlphaSelector objectSelectorB;
+    private AlphaSelector objectSelectorC;
 
-    private TexturedMeshObject save;
+    private TexturedMeshObject objectSave;
 
     // State Data
     private ScoreManager scoreManager;
@@ -24,11 +24,11 @@ public class NewHighScore extends State {
     private String pathString;
     private int score;
 
-    private boolean flag_save;
+    private boolean FLAG_SAVE;
 
     @Override
     public void onDisplay() {
-        flag_save = false;
+        FLAG_SAVE = false;
     }
 
     public NewHighScore(Context context) {
@@ -41,33 +41,33 @@ public class NewHighScore extends State {
     public void init() {
         scoreManager = new ScoreManager(context, pathString);
 
-        alphaSelectorA = new AlphaSelector(context, -Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
-        alphaSelectorB = new AlphaSelector(context, 0.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
-        alphaSelectorC = new AlphaSelector(context, Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        objectSelectorA = new AlphaSelector(context, -Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        objectSelectorB = new AlphaSelector(context, 0.0f, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        objectSelectorC = new AlphaSelector(context, Values.ALPHANUMERIC_OFFSET_H, 0.0f, -5.0f, 0.0f, 0.0f, 0.0f);
 
-        save = new TexturedMeshObject("OBJ_SAVE", true, Data.getMesh(context, R.array.OBJ_LABEL_SAVE), Data.getTextures(context, R.array.OBJ_LABEL_SAVE), 0.0f, -2.0f, -5.0f, 0.0f, 0.0f, 0.0f);
-        save.setScale(0.5f, 0.5f, 0.5f);
+        objectSave = new TexturedMeshObject("OBJ_SAVE", true, Data.getMesh(context, R.array.OBJ_LABEL_SAVE), Data.getTextures(context, R.array.OBJ_LABEL_SAVE), 0.0f, -2.0f, -5.0f, 0.0f, 0.0f, 0.0f);
+        objectSave.setScale(0.5f, 0.5f, 0.5f);
     }
 
     @Override
     public void input(float[] headView) {
-        alphaSelectorA.next(headView);
-        alphaSelectorA.prev(headView);
-        alphaSelectorB.next(headView);
-        alphaSelectorB.prev(headView);
-        alphaSelectorC.next(headView);
-        alphaSelectorC.prev(headView);
+        objectSelectorA.next(headView);
+        objectSelectorA.prev(headView);
+        objectSelectorB.next(headView);
+        objectSelectorB.prev(headView);
+        objectSelectorC.next(headView);
+        objectSelectorC.prev(headView);
 
-        if(save.isLookedAt(headView)) {
-            flag_save = true;
+        if(objectSave.isLookedAt(headView)) {
+            FLAG_SAVE = true;
         }
     }
 
     @Override
     public State update() {
-        if(flag_save) {
+        if(FLAG_SAVE) {
             ScoreManager manager = new ScoreManager(context, pathString);
-            String name = String.valueOf(alphaSelectorA.getChar()) + String.valueOf(alphaSelectorB.getChar()) + String.valueOf(alphaSelectorC.getChar());
+            String name = String.valueOf(objectSelectorA.getChar()) + String.valueOf(objectSelectorB.getChar()) + String.valueOf(objectSelectorC.getChar());
             manager.setNewScore(name, score);
             connected.get(0).onDisplay();
             return connected.get(0);
@@ -78,11 +78,11 @@ public class NewHighScore extends State {
 
     @Override
     public void render(float[] perspective, float[] view, float[] headView, int objectProgram, int objectModelViewProjectionParam) {
-        alphaSelectorA.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
-        alphaSelectorB.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
-        alphaSelectorC.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectSelectorA.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectSelectorB.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectSelectorC.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
 
-        save.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
+        objectSave.render(perspective, view, headView, objectProgram, objectModelViewProjectionParam);
     }
 
     /**

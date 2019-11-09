@@ -24,13 +24,13 @@ public class Data {
     public static GvrAudioEngine audio_engine;
 
     // Data Flags
-    public static boolean flag_textures_loaded;
-    public static boolean flag_meshes_loaded;
-    public static boolean flag_audio_files_loaded;
+    public static boolean FLAG_TEXTURES_LOADED;
+    public static boolean FLAG_MESHES_LOADED;
+    public static boolean FLAG_AUDIO_LOADED;
 
     // Async References.
     private static LoadMeshes loadMeshes;
-    private static LoadAudioFiles loadAudioFiles;
+    private static LoadAudio loadAudio;
 
     public static int loadMeshesProgress;
     public static int loadAudioFilesProgress;
@@ -62,9 +62,9 @@ public class Data {
      * Runs initialisation process.
      */
     public static void initialise(Context context, int positionAttribute, int uvAttribute) {
-        flag_textures_loaded = false;
-        flag_meshes_loaded = false;
-        flag_audio_files_loaded = false;
+        FLAG_TEXTURES_LOADED = false;
+        FLAG_MESHES_LOADED = false;
+        FLAG_AUDIO_LOADED = false;
 
         String[] filePaths;
 
@@ -107,8 +107,8 @@ public class Data {
         loadMeshes = new LoadMeshes(context, positionAttribute, uvAttribute);
         loadMeshes.execute();
 
-        loadAudioFiles = new LoadAudioFiles(context);
-        loadAudioFiles.execute();
+        loadAudio = new LoadAudio(context);
+        loadAudio.execute();
     }
 
     private static void loadTextures(Context context) {
@@ -123,7 +123,7 @@ public class Data {
             for(int i = 0; i < filePaths.length; i++) {
                 textures.add(new Texture(context, filePaths[i]));
             }
-            flag_textures_loaded = true;
+            FLAG_TEXTURES_LOADED = true;
             Log.i(TAG, "Textures Loaded");
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
@@ -175,18 +175,18 @@ public class Data {
         protected void onPostExecute(ArrayList<Mesh> arrayLists) {
             super.onPostExecute(arrayLists);
 
-            flag_meshes_loaded = true;
+            FLAG_MESHES_LOADED = true;
             Log.i(TAG, "Meshes Loaded.");
 
             meshes = arrayLists;
         }
     }
 
-    private static class LoadAudioFiles extends AsyncTask<Void, Integer, GvrAudioEngine> {
+    private static class LoadAudio extends AsyncTask<Void, Integer, GvrAudioEngine> {
 
         Context context;
 
-        LoadAudioFiles(Context context) {
+        LoadAudio(Context context) {
             this.context = context;
         }
 
@@ -217,7 +217,7 @@ public class Data {
         protected void onPostExecute(GvrAudioEngine gvrAudioEngine) {
             super.onPostExecute(gvrAudioEngine);
 
-            flag_audio_files_loaded = true;
+            FLAG_AUDIO_LOADED = true;
             Log.i(TAG, "Audio Files Loaded.");
 
             audio_engine = gvrAudioEngine;
