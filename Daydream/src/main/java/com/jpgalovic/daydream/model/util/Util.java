@@ -109,8 +109,8 @@ public class Util {
      */
     public static float[] randomPosition() {
         // Calculate random yaw, pitch and distance values.
-        float pitch = (rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW;
-        float yaw = (rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH;
+        float pitch = (rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_PITCH;
+        float yaw = (rand.nextFloat() - 0.5f) * 2.0f * Values.MAX_YAW;
         float magnitude = rand.nextFloat() * (Values.MAX_TARGET_DISTANCE - Values.MIN_TARGET_DISTANCE) + Values.MIN_TARGET_DISTANCE;
 
         return calculatePosition(magnitude, pitch, yaw);
